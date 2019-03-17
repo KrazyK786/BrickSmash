@@ -1,4 +1,6 @@
 //JS code goes here
+        var paused = true;
+        var globalID;
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
 
@@ -149,10 +151,29 @@
                 }
             }
         }
+        
+        var animate = null;
+        
+        function change(){
+            var elem = document.getElementById("startButton");
+            if (elem.value == "Pause") elem.value = "Start";
+            else elem.value = "Pause";
+        }
+        
+        function stop(){
+            clearTimeout(animate);
+            animate = null;
+        }
 
+        function togglePause(){
+            if (!paused) paused = true;
+            else if (paused) paused = false;
+            change();
+            loop();
+        }
+        
         function draw(){
             //pause boolean
-            var pause = false;
             //drawing code
             ctx.clearRect(0,0, canvas.width, canvas.height);
             drawBricks();
@@ -161,7 +182,8 @@
             drawScore();
             drawLives();
             collisionDetection();
-
+            // animate = setTimeout(draw, 30000);
+            
             x += dx;
             y += dy;
 
@@ -202,9 +224,35 @@
                 paddleX -= 7;
             }
 
-            requestAnimationFrame(draw);
+            // requestAnimationFrame(draw);
+            // globalID = requestAnimationFrame(draw);
+            loop();
+
         }
 
-
+        function loop(){
+            if (!paused){
+                globalID = requestAnimationFrame(draw);
+                // draw();
+            }else {
+                cancelAnimationFrame(globalID);
+            }
+            // draw();
+        }
+        
+        function startStop(){
+            if (paused !== false){
+                stop();
+            } else{
+                draw();
+            }
+            togglePause();
+            change();
+            
+        }
+        
         draw();
+        // requestAnimationFrame(draw);
+        // loop();
+
         //setInterval(draw,10); requestAnimationFrame helps the browser render the game better
