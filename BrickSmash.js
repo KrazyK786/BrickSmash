@@ -45,7 +45,7 @@
         var score = 0;
 
         //lives variable
-        var lives = 3;
+        var lives = 2;
 
         //EventListener for key presses
         document.addEventListener("keydown",keyDownHandler, false);
@@ -201,7 +201,7 @@
                 }
                 else{
                     lives--;
-                    if (!lives){
+                    if (lives < 0){ // updated logic from '!lives' to allow lives to hit 0 before game over is given
                         alert("GAME OVER"); //if ball hits bottom of screen, alert GAME OVER
                         document.location.reload();
                     }
