@@ -54,6 +54,21 @@
         //EventLister for mouse
         document.addEventListener("mousemove", mouseMoveHandler, false);
 
+        // EventListener for touch controls
+        document.addEventListener("touchstart", touchHandler);
+        document.addEventListener("touchmove", touchHandler);
+
+        // touch handler function
+        function touchHandler(e){
+            var relativeX = e.touches[0].clientX - canvas.offsetLeft; 
+            if (e.touches){
+                if (relativeX > 0 && relativeX < canvas.width){
+                    paddleX = relativeX - paddleWidth / 2;
+                    e.preventDefault();
+                }
+            }
+        }
+
         function mouseMoveHandler(e){
             var relativeX = e.clientX - canvas.offsetLeft;
             if (relativeX > 0 && relativeX < canvas.width){
@@ -173,8 +188,7 @@
         }
         
         function draw(){
-            //pause boolean
-            //drawing code
+
             ctx.clearRect(0,0, canvas.width, canvas.height);
             drawBricks();
             drawBall();
@@ -182,7 +196,6 @@
             drawScore();
             drawLives();
             collisionDetection();
-            // animate = setTimeout(draw, 30000);
             
             x += dx;
             y += dy;
@@ -224,8 +237,6 @@
                 paddleX -= 7;
             }
 
-            // requestAnimationFrame(draw);
-            // globalID = requestAnimationFrame(draw);
             loop();
 
         }
@@ -233,11 +244,9 @@
         function loop(){
             if (!paused){
                 globalID = requestAnimationFrame(draw);
-                // draw();
             }else {
                 cancelAnimationFrame(globalID);
             }
-            // draw();
         }
         
         function startStop(){
@@ -252,7 +261,3 @@
         }
         
         draw();
-        // requestAnimationFrame(draw);
-        // loop();
-
-        //setInterval(draw,10); requestAnimationFrame helps the browser render the game better
