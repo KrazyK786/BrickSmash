@@ -214,7 +214,7 @@
                 }
                 else{
                     lives--;
-                    if (lives < 0){ // updated logic from '!lives' to allow lives to hit 0 before game over is given
+                    if (lives == -1){ // updated logic from '!lives' to allow lives to hit 0 before game over is given
                         alert("GAME OVER"); //if ball hits bottom of screen, alert GAME OVER
                         document.location.reload();
                     }

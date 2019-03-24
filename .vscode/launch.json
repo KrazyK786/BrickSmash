@@ -6,6 +6,15 @@
     "configurations": [
         {
             "type": "chrome",
+            "request": "attach",
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "pathMapping": {"https://bricksmash.azurewebsites.net/" : "${workspaceFolder}/BrickSmash.html" },
+            "url": "https://bricksmash.azurewebsites.net/",
+            "webRoot": "${workspaceFolder}",
+        },
+        {
+            "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
             "url": "${workspaceFolder}/BrickSmash.html",
