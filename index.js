@@ -1,51 +1,58 @@
+"use strict";
+
+import Ball from "./Ball.js";
+
 //JS code goes here
-        var paused = true;
-        var globalID;
-        var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext("2d");
+        let paused = true;
+        let globalID;
+        let canvas = document.getElementById("myCanvas");
+        let ctx = canvas.getContext("2d");
 
-        var ballRadius = 10;
-
+        let ballRadius = 10;
+        
         //define starting x and y coordinates of ball
-        var x = canvas.width/2;
-        var y = canvas.height-30;
+        let x = canvas.width/2;
+        let y = canvas.height-30;
+        
+        let ballOne = new Ball(x,y,ballRadius,"#0095DD");
+
 
         //define movement/speed of ball by adding dx or dy
-        var dx = 2;
-        var dy = -2;
-
+        let dx = 2;
+        let dy = -2;
+        
         //define paddle
-        var paddleHeight = 10;
-        var paddleWidth = 75;
-        var paddleX = (canvas.width - paddleWidth) / 2;
+        let paddleHeight = 10;
+        let paddleWidth = 75;
+        let paddleX = (canvas.width - paddleWidth) / 2;
 
-        //keyboard control variables
-        var rightPressed = false;
-        var leftPressed = false;
+        //keyboard control letiables
+        let rightPressed = false;
+        let leftPressed = false;
 
-        //brick variables
-        var brickRowCount = 3;
-        var brickcolumnCount = 5;
-        var brickWidth = 75;
-        var brickHeight = 20;
-        var brickPadding = 10;
-        var brickOffsetTop = 30;
-        var brickOffsetLeft = 30;
+        //brick letiables
+        let brickRowCount = 3;
+        let brickcolumnCount = 5;
+        let brickWidth = 75;
+        let brickHeight = 20;
+        let brickPadding = 10;
+        let brickOffsetTop = 30;
+        let brickOffsetLeft = 30;
 
         //two-dimensional array to hold bricks
-        var bricks = [];
-        for (c = 0; c < brickcolumnCount; c++){
+        let bricks = [];
+        for (let c = 0; c < brickcolumnCount; c++){
             bricks[c] = [];
-            for (r = 0; r < brickRowCount; r++){
+            for (let r = 0; r < brickRowCount; r++){
                 bricks[c][r] = { x:0, y:0, status: 1 };
             }
         }
 
-        //score variable
-        var score = 0;
+        //score letiable
+        let score = 0;
 
-        //lives variable
-        var lives = 2;
+        //lives letiable
+        let lives = 2;
 
         //EventListener for key presses
         document.addEventListener("keydown",keyDownHandler, false);
@@ -60,7 +67,7 @@
 
         // touch handler function
         function touchHandler(e){
-            var relativeX = e.touches[0].clientX - canvas.offsetLeft; 
+            let relativeX = e.touches[0].clientX - canvas.offsetLeft; 
             if (e.touches){
                 if (relativeX > 0 && relativeX < canvas.width){
                     paddleX = relativeX - paddleWidth / 2;
@@ -70,7 +77,7 @@
         }
 
         function mouseMoveHandler(e){
-            var relativeX = e.clientX - canvas.offsetLeft;
+            let relativeX = e.clientX - canvas.offsetLeft;
             if (relativeX > 0 && relativeX < canvas.width){
                 paddleX = relativeX - paddleWidth / 2;
             }
@@ -99,9 +106,9 @@
 
         //Brick collision detection
         function collisionDetection (){
-            for (c = 0; c < brickcolumnCount; c++){
-                for (r = 0; r < brickRowCount; r++){
-                    var b = bricks[c][r]; //b is the brick in question
+            for (let c = 0; c < brickcolumnCount; c++){
+                for (let r = 0; r < brickRowCount; r++){
+                    let b = bricks[c][r]; //b is the brick in question
                     if (b.status == 1){
 
                         if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight){
@@ -121,7 +128,7 @@
         //paint current score onto the canvas
         function drawScore(){
             ctx.font = "16px Arial";
-            ctx.fillstyle = "#0095DD";
+            ctx.fillstyle = ballOne.color;
             ctx.fillText("Score: " + score, 8, 20); //last two values are the coordinates on the canvas
         }
 
@@ -135,7 +142,7 @@
         function drawBall(){
             ctx.beginPath();
             ctx.arc(x,y,ballRadius,0, Math.PI*2);
-            ctx.fillStyle = "#0095DD";
+            ctx.fillStyle = ballOne.color;
             ctx.fill();
             ctx.closePath();
         }
@@ -149,12 +156,12 @@
         }
 
         function drawBricks(){
-            for(c = 0; c < brickcolumnCount; c++){
-                for(r=0; r < brickRowCount; r++){
+            for(let c = 0; c < brickcolumnCount; c++){
+                for(let r=0; r < brickRowCount; r++){
                     if (bricks[c][r].status == 1){
 
-                        var brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
-                        var brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+                        let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+                        let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
                         bricks[c][r].x = brickX;
                         bricks[c][r].y = brickY;
                         ctx.beginPath();
@@ -167,10 +174,10 @@
             }
         }
         
-        var animate = null;
+        let animate = null;
         
         function change(){
-            var elem = document.getElementById("startButton");
+            let elem = document.getElementById("startButton");
             if (elem.value == "Pause") elem.value = "Start";
             else elem.value = "Pause";
         }
@@ -180,6 +187,10 @@
             animate = null;
         }
 
+        // add event listener for start button click (better than using onclick method)
+        let startButton = document.getElementById('startButton');
+        
+        startButton.addEventListener('click', togglePause);
         function togglePause(){
             if (!paused) paused = true;
             else if (paused) paused = false;
@@ -197,6 +208,11 @@
             drawLives();
             collisionDetection();
             
+            // x += dx;
+            // y += dy;
+            dx = ballOne.velocity.x;
+            dy = ballOne.velocity.y;
+
             x += dx;
             y += dy;
 
