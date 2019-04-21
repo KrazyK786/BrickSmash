@@ -5,15 +5,15 @@ import Ball from "./Ball.js";
 //JS code goes here
         let paused = true;
         let globalID;
-        let canvas = document.getElementById("myCanvas");
-        let ctx = canvas.getContext("2d");
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
 
         let ballRadius = 10;
         
-        //define starting x and y coordinates of ball
+        // //define starting x and y coordinates of ball
         let x = canvas.width/2;
         let y = canvas.height-30;
-        
+
         let ballOne = new Ball(x,y,ballRadius,"#0095DD");
 
 
@@ -30,7 +30,7 @@ import Ball from "./Ball.js";
         let rightPressed = false;
         let leftPressed = false;
 
-        //brick letiables
+        //brick variables
         let brickRowCount = 3;
         let brickcolumnCount = 5;
         let brickWidth = 75;
@@ -174,7 +174,7 @@ import Ball from "./Ball.js";
             }
         }
         
-        let animate = null;
+        // let animate = null;
         
         function change(){
             let elem = document.getElementById("startButton");
@@ -182,10 +182,10 @@ import Ball from "./Ball.js";
             else elem.value = "Pause";
         }
         
-        function stop(){
-            clearTimeout(animate);
-            animate = null;
-        }
+        // function stop(){
+        //     clearTimeout(animate);
+        //     animate = null;
+        // }
 
         // add event listener for start button click (better than using onclick method)
         let startButton = document.getElementById('startButton');
@@ -195,7 +195,8 @@ import Ball from "./Ball.js";
             if (!paused) paused = true;
             else if (paused) paused = false;
             change();
-            loop();
+            // loop();
+            animate();
         }
         
         function draw(){
@@ -218,15 +219,15 @@ import Ball from "./Ball.js";
 
             //detect border collisions and reverse the direction of the ball
             if (x + dx > canvas.width - ballRadius || x + dx < ballRadius){
-                dx = -dx;
+                dx = -ballOne.velocity.x;
             }
 
             if (y + dy < ballRadius){
-                dy = -dy;
+                dy = -ballOne.velocity.y;
             }
             else if (y + dy > canvas.height - ballRadius){
                 if (x > paddleX && x < paddleX + paddleWidth && (y + dy > canvas.height - ballRadius - paddleHeight || y + dy < ballRadius + paddleHeight)){//if ball hits paddle, reverse direction
-                    dy = -dy;
+                    dy = -ballOne.velocity.y;
                 }
                 else{
                     lives--;
@@ -253,27 +254,40 @@ import Ball from "./Ball.js";
                 paddleX -= 7;
             }
 
-            loop();
+            // loop();
 
         }
 
-        function loop(){
+        // function loop(){
+        //     if (!paused){
+        //         globalID = requestAnimationFrame(draw);
+        //     }else {
+        //         cancelAnimationFrame(globalID);
+        //     }
+        // }
+
+        function animate(){
             if (!paused){
-                globalID = requestAnimationFrame(draw);
+                ctx.clearRect(0,0, canvas.width, canvas.height);
+                
+                ballOne.update();
+                globalID = requestAnimationFrame(animate);
+
             }else {
                 cancelAnimationFrame(globalID);
             }
         }
         
-        function startStop(){
-            if (paused !== false){
-                stop();
-            } else{
-                draw();
-            }
-            togglePause();
-            change();
+        // function startStop(){
+        //     if (paused !== false){
+        //         stop();
+        //     } else{
+        //         draw();
+        //     }
+        //     togglePause();
+        //     change();
             
-        }
+        // }
         
         draw();
+        animate();
