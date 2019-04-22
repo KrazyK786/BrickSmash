@@ -5,6 +5,30 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+// Create brick object
+class Brick {
+    constructor(x, y, status, height, width){
+        this.x = x;
+        this.y = y;
+        this.status = status;
+        this.height = height;
+        this.width = width;
+
+        this.draw = () =>{
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+
+        };
+
+        this.update = () =>{
+            this.draw();
+        };
+    }
+}
+
 // Create ball object
 class Ball {
     constructor(x, y, radius, color) {
@@ -47,4 +71,5 @@ class Ball {
 
 
 // export class Ball{}
-export default Ball;
+// export default Ball;
+export {Ball,Brick};

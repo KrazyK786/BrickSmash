@@ -1,6 +1,6 @@
 "use strict"; // import {Ball} from 'Ball.js';
 
-var _Ball = require("Ball.js");
+var _Ball = require("./objects.js");
 
 //JS code goes here
 var paused = true;

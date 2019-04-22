@@ -1,6 +1,6 @@
 "use strict";
 
-import Ball from "./Ball.js";
+import {Ball, Brick} from "./objects.js";
 
 //JS code goes here
         let paused = true;
@@ -31,22 +31,22 @@ import Ball from "./Ball.js";
         let leftPressed = false;
 
         //brick variables
-        let brickRowCount = 3;
-        let brickcolumnCount = 5;
-        let brickWidth = 75;
-        let brickHeight = 20;
-        let brickPadding = 10;
-        let brickOffsetTop = 30;
-        let brickOffsetLeft = 30;
+        // let brickRowCount = 3;
+        // let brickcolumnCount = 5;
+        // let brickWidth = 75;
+        // let brickHeight = 20;
+        // let brickPadding = 10;
+        // let brickOffsetTop = 30;
+        // let brickOffsetLeft = 30;
 
         //two-dimensional array to hold bricks
-        let bricks = [];
-        for (let c = 0; c < brickcolumnCount; c++){
-            bricks[c] = [];
-            for (let r = 0; r < brickRowCount; r++){
-                bricks[c][r] = { x:0, y:0, status: 1 };
-            }
-        }
+        // let bricks = [];
+        // for (let c = 0; c < brickcolumnCount; c++){
+        //     bricks[c] = [];
+        //     for (let r = 0; r < brickRowCount; r++){
+        //         bricks[c][r] = { x:0, y:0, status: 1 };
+        //     }
+        // }
 
         //score letiable
         let score = 0;
@@ -270,6 +270,9 @@ import Ball from "./Ball.js";
             if (!paused){
                 ctx.clearRect(0,0, canvas.width, canvas.height);
                 
+                bricks.forEach(brick => {
+                    brick.update();
+                });
                 ballOne.update();
                 globalID = requestAnimationFrame(animate);
 
@@ -289,5 +292,43 @@ import Ball from "./Ball.js";
             
         // }
         
-        draw();
+        // Implementation
+        let bricks;
+
+        function init(){
+
+            bricks = [];
+            let tmpBricks = [];
+
+            let brickRowCount = 3;
+            let brickcolumnCount = 5;
+            
+    
+            for (let c = 0; c < brickcolumnCount; c++){
+                tmpBricks[c] = [];
+                for (let r = 0; r < brickRowCount; r++){
+                    const brickWidth = 75;
+                    const brickHeight = 20;
+                    const brickPadding = 10;
+                    const brickOffsetTop = 30;
+                    const brickOffsetLeft = 30;
+
+                    // const brickx = 
+                    const brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+                    const brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+                    // tmpBricks[c][r].x = brickX;
+                    // tmpBricks[c][r].y = brickY;
+
+                    bricks.push(new Brick(brickX, brickY, 1, brickHeight, brickWidth));
+
+                    // tmpBricks[c][r] = { x:0, y:0, status: 1 };
+                }
+
+
+            }
+            
+        }
+
+        // draw();
+        init();
         animate();
