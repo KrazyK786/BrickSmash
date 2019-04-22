@@ -5,6 +5,22 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+function collisionDetection (brick, ball){
+        
+    if (brick.status == 1){
+
+            if (ball.x > brick.x && ball.x < brick.x + brick.width && ball.y > brick.y && ball.y < brick.y + brick.height){
+                ball.velocity.y = -ball.velocity.y; //if the center of the brick in question is within a brick, then a collission is considered to have occured
+                brick.status = 0;
+                // score++;
+                // if (score == brickRowCount * brickcolumnCount){
+                //     alert("YOU WIN, CONGRATULATIONS!!");
+                //     document.location.reload();
+                // }
+            }
+        }
+}
+
 // Create brick object
 class Brick {
     constructor(x, y, status, height, width){
@@ -23,8 +39,12 @@ class Brick {
 
         };
 
-        this.update = () =>{
-            this.draw();
+        this.update = (ball) =>{
+            if (this.status == 1){
+                    this.draw();
+
+            }
+            collisionDetection(this,ball);
         };
     }
 }

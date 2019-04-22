@@ -105,25 +105,44 @@ import {Ball, Brick} from "./objects.js";
         }
 
         //Brick collision detection
-        function collisionDetection (){
-            for (let c = 0; c < brickcolumnCount; c++){
-                for (let r = 0; r < brickRowCount; r++){
-                    let b = bricks[c][r]; //b is the brick in question
-                    if (b.status == 1){
 
-                        if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight){
-                            dy = -dy; //if the center of the brick in question is within a brick, then a collission is considered to have occured
-                            b.status = 0;
-                            score++;
-                            if (score == brickRowCount * brickcolumnCount){
-                                alert("YOU WIN, CONGRATULATIONS!!");
-                                document.location.reload();
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        // function collisionDetection (bricks, ball){
+        //     bricks.forEach(brick =>{
+                
+        //         if (brick.status == 1){
+    
+        //             if (ball.x > brick.x && x < ball.x + brick.width && ball.y > brick.y && ball.y < brick.y + brick.height){
+        //                 ball.velocity.y = -ball.velocity.y; //if the center of the brick in question is within a brick, then a collission is considered to have occured
+        //                 brick.status = 0;
+        //                 score++;
+        //                 if (score == brickRowCount * brickcolumnCount){
+        //                     alert("YOU WIN, CONGRATULATIONS!!");
+        //                     document.location.reload();
+        //                 }
+        //             }
+        //         }
+        //     });
+        // }
+
+        // function collisionDetection (){
+        //     for (let c = 0; c < brickcolumnCount; c++){
+        //         for (let r = 0; r < brickRowCount; r++){
+        //             let b = bricks[c][r]; //b is the brick in question
+        //             if (b.status == 1){
+
+        //                 if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight){
+        //                     dy = -dy; //if the center of the brick in question is within a brick, then a collission is considered to have occured
+        //                     b.status = 0;
+        //                     score++;
+        //                     if (score == brickRowCount * brickcolumnCount){
+        //                         alert("YOU WIN, CONGRATULATIONS!!");
+        //                         document.location.reload();
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
 
         //paint current score onto the canvas
         function drawScore(){
@@ -271,7 +290,7 @@ import {Ball, Brick} from "./objects.js";
                 ctx.clearRect(0,0, canvas.width, canvas.height);
                 
                 bricks.forEach(brick => {
-                    brick.update();
+                    brick.update(ballOne);
                 });
                 ballOne.update();
                 globalID = requestAnimationFrame(animate);
