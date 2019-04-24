@@ -5,58 +5,57 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
-let rightPressed = false;
-let leftPressed = false;
+
 
 //EventListener for key presses
-document.addEventListener("keydown",keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
+// document.addEventListener("keydown",keyDownHandler, false);
+// document.addEventListener("keyup", keyUpHandler, false);
 
-//EventLister for mouse
-document.addEventListener("mousemove", mouseMoveHandler, false);
+// //EventLister for mouse
+// document.addEventListener("mousemove", mouseMoveHandler, false);
 
-// EventListener for touch controls
-document.addEventListener("touchstart", touchHandler);
-document.addEventListener("touchmove", touchHandler);
+// // EventListener for touch controls
+// document.addEventListener("touchstart", touchHandler);
+// document.addEventListener("touchmove", touchHandler);
 
 // touch handler function
-function touchHandler(e){
-    let relativeX = e.touches[0].clientX - canvas.offsetLeft; 
-    if (e.touches){
-        if (relativeX > 0 && relativeX < canvas.width){
-            Paddle.prototype.paddleX = relativeX - Paddle.prototype.paddle.paddleWidth / 2;
-            e.preventDefault();
-        }
-    }
-}
+// function touchHandler(e){
+//     let relativeX = e.touches[0].clientX - canvas.offsetLeft; 
+//     if (e.touches){
+//         if (relativeX > 0 && relativeX < canvas.width){
+//             Paddle.prototype.paddleX = relativeX - Paddle.prototype.paddle.paddleWidth / 2;
+//             e.preventDefault();
+//         }
+//     }
+// }
 
-function mouseMoveHandler(e){
-    let relativeX = e.clientX - canvas.offsetLeft;
-    if (relativeX > 0 && relativeX < canvas.width){
-        Paddle.prototype.paddleX = relativeX - Paddle.prototype.paddleWidth / 2;
-    }
-}
+// function mouseMoveHandler(e){
+//     let relativeX = e.clientX - canvas.offsetLeft;
+//     if (relativeX > 0 && relativeX < canvas.width){
+//         Paddle.prototype.paddleX = relativeX - Paddle.prototype.paddleWidth / 2;
+//     }
+// }
 
-function keyDownHandler(e){
-    if (e.keyCode == 39 || e.which == 39){
-        rightPressed = true;
-        console.log(rightPressed);
-    }
+// function keyDownHandler(e){
+//     if (e.keyCode == 39 || e.which == 39){
+//         rightPressed = true;
+//         console.log(rightPressed);
+//     }
 
-    else if (e.keyCode == 37 || e.which == 37){
-        leftPressed = true;
-    }
-}
+//     else if (e.keyCode == 37 || e.which == 37){
+//         leftPressed = true;
+//     }
+// }
 
-function keyUpHandler(e){
-    if (e.keyCode == 39 || e.which == 39){
-        rightPressed = false;
-    }
+// function keyUpHandler(e){
+//     if (e.keyCode == 39 || e.which == 39){
+//         rightPressed = false;
+//     }
 
-    else if (e.keyCode == 37 || e.which == 37){
-        leftPressed = false;
-    }
-}
+//     else if (e.keyCode == 37 || e.which == 37){
+//         leftPressed = false;
+//     }
+// }
 
 
 function collisionDetection (brick, ball){
@@ -66,7 +65,7 @@ function collisionDetection (brick, ball){
             if (ball.x > brick.x && ball.x < brick.x + brick.width && ball.y > brick.y && ball.y < brick.y + brick.height){
                 ball.velocity.y = -ball.velocity.y; //if the center of the brick in question is within a brick, then a collission is considered to have occured
                 brick.status = 0;
-                // score++;
+                ball.score++;
                 // if (score == brickRowCount * brickcolumnCount){
                 //     alert("YOU WIN, CONGRATULATIONS!!");
                 //     document.location.reload();
@@ -82,6 +81,9 @@ class Paddle {
         this.paddleWidth = 75;
         this.paddleX = (canvas.width - this.paddleWidth) / 2;
 
+        this.rightPressed = false;
+        this.leftPressed = false;
+
         this.draw = () =>{
             ctx.beginPath();
             ctx.rect(this.paddleX,canvas.height - this.paddleHeight, this.paddleWidth, this.paddleHeight);
@@ -93,11 +95,11 @@ class Paddle {
         this.update = () =>{
             this.draw();
              //detect whether the paddle is off the screen and move accordingly
-             if (rightPressed && this.paddleX < canvas.width - this.paddleWidth){
+             if (this.rightPressed && this.paddleX < canvas.width - this.paddleWidth){
                 this.paddleX += 7;
             }
 
-            if (leftPressed && this.paddleX > 0){
+            if (this.leftPressed && this.paddleX > 0){
                 this.paddleX -= 7;
             }
 
@@ -156,13 +158,13 @@ class Ball {
             ctx.closePath();
         };
 
-        this.update = (paddle) => {
-            if (this.lives == -1){
+        this.update = (paddle, bricks) => {
+            if (this.score == bricks.length){
                 
-                // alert("YOU WIN, CONGRATULATIONS!!");
-                // document.location.reload();
-                alert("GAME OVER");
+                alert("YOU WIN, CONGRATULATIONS!!");
                 document.location.reload();
+                // alert("GAME OVER");
+                // document.location.reload();
             } else{
                 this.draw();
 
@@ -178,8 +180,8 @@ class Ball {
             }
 
             // handle lives
-            else if (this.y + this.velocity.y > canvas.height - this.ballRadius){
-                if (this.x > paddle.paddleX && x < paddle.paddleX + paddle.paddleWidth && (this.y + this.velocity.y > canvas.height - this.ballRadius - paddle.paddleHeight || this.y + this.velocity.y < this.ballRadius + paddle.paddleHeight)){//if ball hits paddle, reverse direction
+            else if (this.y + this.velocity.y > canvas.height - this.radius){
+                if (this.x > paddle.paddleX && this.x < paddle.paddleX + paddle.paddleWidth && (this.y + this.velocity.y > canvas.height - this.radius - paddle.paddleHeight || this.y + this.velocity.y < this.radius + paddle.paddleHeight)){//if ball hits paddle, reverse direction
                     this.velocity.y = -this.velocity.y;
                 }
                 else{

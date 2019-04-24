@@ -28,8 +28,8 @@ import {Ball, Brick, Paddle} from "./objects.js";
         // let paddleX = (canvas.width - paddleWidth) / 2;
 
         //keyboard control letiables
-        let rightPressed = false;
-        let leftPressed = false;
+        // let rightPressed = false;
+        // let leftPressed = false;
 
         //brick variables
         // let brickRowCount = 3;
@@ -55,55 +55,55 @@ import {Ball, Brick, Paddle} from "./objects.js";
         //lives letiable
         let lives = 2;
 
-        // //EventListener for key presses
-        // document.addEventListener("keydown",keyDownHandler, false);
-        // document.addEventListener("keyup", keyUpHandler, false);
+        //EventListener for key presses
+        document.addEventListener("keydown",keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
 
-        // //EventLister for mouse
-        // document.addEventListener("mousemove", mouseMoveHandler, false);
+        //EventLister for mouse
+        document.addEventListener("mousemove", mouseMoveHandler, false);
 
-        // // EventListener for touch controls
-        // document.addEventListener("touchstart", touchHandler);
-        // document.addEventListener("touchmove", touchHandler);
+        // EventListener for touch controls
+        document.addEventListener("touchstart", touchHandler);
+        document.addEventListener("touchmove", touchHandler);
 
-        // // touch handler function
-        // function touchHandler(e){
-        //     let relativeX = e.touches[0].clientX - canvas.offsetLeft; 
-        //     if (e.touches){
-        //         if (relativeX > 0 && relativeX < canvas.width){
-        //             paddle.paddleX = relativeX - paddle.paddleWidth / 2;
-        //             e.preventDefault();
-        //         }
-        //     }
-        // }
+        // touch handler function
+        function touchHandler(e){
+            let relativeX = e.touches[0].clientX - canvas.offsetLeft; 
+            if (e.touches){
+                if (relativeX > 0 && relativeX < canvas.width){
+                    paddle.paddleX = relativeX - paddle.paddleWidth / 2;
+                    e.preventDefault();
+                }
+            }
+        }
 
-        // function mouseMoveHandler(e){
-        //     let relativeX = e.clientX - canvas.offsetLeft;
-        //     if (relativeX > 0 && relativeX < canvas.width){
-        //         paddle.paddleX = relativeX - paddle.paddleWidth / 2;
-        //     }
-        // }
+        function mouseMoveHandler(e){
+            let relativeX = e.clientX - canvas.offsetLeft;
+            if (relativeX > 0 && relativeX < canvas.width){
+                paddle.paddleX = relativeX - paddle.paddleWidth / 2;
+            }
+        }
 
-        // function keyDownHandler(e){
-        //     if (e.keyCode == 39 || e.which == 39){
-        //         rightPressed = true;
-        //         console.log(rightPressed);
-        //     }
+        function keyDownHandler(e){
+            if (e.keyCode == 39 || e.which == 39){
+                paddle.rightPressed = true;
+                console.log(paddle.rightPressed);
+            }
 
-        //     else if (e.keyCode == 37 || e.which == 37){
-        //         leftPressed = true;
-        //     }
-        // }
+            else if (e.keyCode == 37 || e.which == 37){
+                paddle.leftPressed = true;
+            }
+        }
 
-        // function keyUpHandler(e){
-        //     if (e.keyCode == 39 || e.which == 39){
-        //         rightPressed = false;
-        //     }
+        function keyUpHandler(e){
+            if (e.keyCode == 39 || e.which == 39){
+                paddle.rightPressed = false;
+            }
 
-        //     else if (e.keyCode == 37 || e.which == 37){
-        //         leftPressed = false;
-        //     }
-        // }
+            else if (e.keyCode == 37 || e.which == 37){
+                paddle.leftPressed = false;
+            }
+        }
 
         //Brick collision detection
 
@@ -146,17 +146,17 @@ import {Ball, Brick, Paddle} from "./objects.js";
         // }
 
         //paint current score onto the canvas
-        function drawScore(){
+        function drawScore(ball){
             ctx.font = "16px Arial";
-            ctx.fillstyle = ballOne.color;
-            ctx.fillText("Score: " + score, 8, 20); //last two values are the coordinates on the canvas
+            ctx.fillstyle = ball.color;
+            ctx.fillText("Score: " + ball.score, 8, 20); //last two values are the coordinates on the canvas
         }
 
         //paint number of lives on to canvas
-        function drawLives(){
+        function drawLives(ball){
             ctx.font = "16px Arial";
             ctx.fillStyle = "#0095DD";
-            ctx.fillText("Lives: " + lives, canvas.width - 65, 20);
+            ctx.fillText("Lives: " + ball.lives, canvas.width - 65, 20);
         }
 
         function drawBall(){
@@ -290,11 +290,13 @@ import {Ball, Brick, Paddle} from "./objects.js";
             if (!paused){
                 ctx.clearRect(0,0, canvas.width, canvas.height);
                 
+                drawLives(ballOne);
+                drawScore(ballOne);
                 paddle.update();
                 bricks.forEach(brick => {
                     brick.update(ballOne);
                 });
-                ballOne.update();
+                ballOne.update(paddle,bricks);
                 globalID = requestAnimationFrame(animate);
 
             }else {
