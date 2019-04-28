@@ -6,58 +6,6 @@ const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
 
-
-//EventListener for key presses
-// document.addEventListener("keydown",keyDownHandler, false);
-// document.addEventListener("keyup", keyUpHandler, false);
-
-// //EventLister for mouse
-// document.addEventListener("mousemove", mouseMoveHandler, false);
-
-// // EventListener for touch controls
-// document.addEventListener("touchstart", touchHandler);
-// document.addEventListener("touchmove", touchHandler);
-
-// touch handler function
-// function touchHandler(e){
-//     let relativeX = e.touches[0].clientX - canvas.offsetLeft; 
-//     if (e.touches){
-//         if (relativeX > 0 && relativeX < canvas.width){
-//             Paddle.prototype.paddleX = relativeX - Paddle.prototype.paddle.paddleWidth / 2;
-//             e.preventDefault();
-//         }
-//     }
-// }
-
-// function mouseMoveHandler(e){
-//     let relativeX = e.clientX - canvas.offsetLeft;
-//     if (relativeX > 0 && relativeX < canvas.width){
-//         Paddle.prototype.paddleX = relativeX - Paddle.prototype.paddleWidth / 2;
-//     }
-// }
-
-// function keyDownHandler(e){
-//     if (e.keyCode == 39 || e.which == 39){
-//         rightPressed = true;
-//         console.log(rightPressed);
-//     }
-
-//     else if (e.keyCode == 37 || e.which == 37){
-//         leftPressed = true;
-//     }
-// }
-
-// function keyUpHandler(e){
-//     if (e.keyCode == 39 || e.which == 39){
-//         rightPressed = false;
-//     }
-
-//     else if (e.keyCode == 37 || e.which == 37){
-//         leftPressed = false;
-//     }
-// }
-
-
 function collisionDetection (brick, ball){
         
     if (brick.status == 1){
@@ -66,10 +14,6 @@ function collisionDetection (brick, ball){
                 ball.velocity.y = -ball.velocity.y; //if the center of the brick in question is within a brick, then a collission is considered to have occured
                 brick.status = 0;
                 ball.score++;
-                // if (score == brickRowCount * brickcolumnCount){
-                //     alert("YOU WIN, CONGRATULATIONS!!");
-                //     document.location.reload();
-                // }
             }
         }
 }
@@ -163,8 +107,6 @@ class Ball {
                 
                 alert("YOU WIN, CONGRATULATIONS!!");
                 document.location.reload();
-                // alert("GAME OVER");
-                // document.location.reload();
             } else{
                 this.draw();
 
@@ -210,8 +152,4 @@ class Ball {
     }
 }
 
-
-
-// export class Ball{}
-// export default Ball;
 export {Ball,Brick,Paddle};
