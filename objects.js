@@ -5,6 +5,21 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 
+function paddleCollision(ball, paddle){
+    //TODO figure out how to handle x becoming 0 causing ball not to change direction :(
+    var ballPos = ball.x - paddle.paddleX;
+    var relativePos = ( paddle.paddleWidth - ballPos );
+    var angle = relativePos * ( Math.PI / paddle.paddleWidth ); //translate to radians - this finds the number of radians per paddle pixel 
+
+    // Once you got the angle, take the cos of it to grab the direction. 
+    //Multiply the direction times the ball's vel, and you got the ball's new velocity
+    var newXvel = Math.cos( angle ) * ball.velocity.x;
+
+    return newXvel;
+
+}
+
+
 
 function collisionDetection (brick, ball){
         
@@ -24,6 +39,12 @@ class Paddle {
         this.paddleHeight = 10;
         this.paddleWidth = 75;
         this.paddleX = (canvas.width - this.paddleWidth) / 2;
+
+        //testingggg
+        this.velocity = {
+            x: Math.random() * (5-2) + 2,
+            y: -Math.random() * (5-2) - 2
+        };
 
         this.rightPressed = false;
         this.leftPressed = false;
@@ -59,6 +80,12 @@ class Brick {
         this.status = status;
         this.height = height;
         this.width = width;
+
+        //testingggg
+        this.velocity = {
+            x: Math.random() * (5-2) + 2,
+            y: -Math.random() * (5-2) - 2
+        };
 
         this.draw = () =>{
             ctx.beginPath();
@@ -124,6 +151,10 @@ class Ball {
             // handle lives
             else if (this.y + this.velocity.y > canvas.height - this.radius){
                 if (this.x > paddle.paddleX && this.x < paddle.paddleX + paddle.paddleWidth && (this.y + this.velocity.y > canvas.height - this.radius - paddle.paddleHeight || this.y + this.velocity.y < this.radius + paddle.paddleHeight)){//if ball hits paddle, reverse direction
+                    // adjust angle of ball coming off paddle by modifying x value
+                    this.velocity.x = this.velocity.x * paddleCollision(this, paddle);
+
+                    // reflect y velocity
                     this.velocity.y = -this.velocity.y;
                 }
                 else{
