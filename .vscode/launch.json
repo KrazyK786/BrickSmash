@@ -9,8 +9,8 @@
             "request": "attach",
             "name": "Attach to Chrome",
             "port": 9222,
-            "pathMapping": {"https://bricksmash.azurewebsites.net/" : "${workspaceFolder}/BrickSmash.html" },
-            "url": "https://bricksmash.azurewebsites.net/",
+            "pathMapping": {"http://localhost:8080/index.html" : "${workspaceFolder}/index.html" },
+            "url": "http://localhost:8080/index.html",
             "webRoot": "${workspaceFolder}",
         },
         {

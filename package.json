@@ -1,0 +1,21 @@
+{
+  "name": "bricksmashgame",
+  "version": "1.0.0",
+  "description": "BrickSmash Project",
+  "main": "index.js",
+  "scripts": {
+    "babel": "babel",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://alightinmyhair@dev.azure.com/alightinmyhair/Brick%20Smash%20Game/_git/Brick%20Smash%20Game"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3"
+  }
+}
