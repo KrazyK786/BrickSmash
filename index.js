@@ -1,3 +1,4 @@
+/*jslint node: true */
 "use strict";
 
 import {Ball, Brick, Paddle} from "./objects.js";
