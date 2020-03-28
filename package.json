@@ -16,17 +16,17 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4"
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0"
   },
   "dependencies": {
-    "ejs": "^2.7.4",
-    "body-parser": "*",
-    "express": "*",
-    "mongoose": "*",
     "bcryptjs": "*",
+    "body-parser": "*",
     "cors": "*",
+    "ejs": "^2.7.4",
+    "express": "*",
     "jsonwebtoken": "*",
+    "mongoose": "^5.9.6",
     "passport": "*",
     "passport-jwt": "*"
   }

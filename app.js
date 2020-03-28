@@ -33,25 +33,42 @@ const users = require('./routes/users');
 const port = 8080;
 
 // set static folder
-app.use(express().static(path.join((__dirname, 'public'))));
+app.use(express.static(path.join((__dirname, 'public'))));
 
+// CORS middleware
+app.use(cors());
 
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
+require('./config/passport');
 
+// TODO: do i need the 2nd line?
 // bodyparser
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({extended:false}));
+app.use(bodyParser.json());
+// app.use(bodyparser.urlencoded({extended:false}));
 
-// commenting out - Angular instead?
+// TODO: does Angular handle this?
 // ejs
 // app.engine('html', require('ejs').renderFile);
 // app.set('view engine', 'html');
 
-app.use(express.static(__dirname));
+// Routes
+// index route
+app.use('/', (req, res) => {
+    res.send('Invalid Endpoint');
+});
 
-app.use('/', rootPage);
+// users route
+// app.use('/users', users);
 
+// redirect all other traffic
+app.use('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/index.html'));
+})
 
+// Start server
 app.listen(port, ()=>{
     console.log('Server is running on port ' + port);
 });
