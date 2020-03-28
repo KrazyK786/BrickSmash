@@ -12,7 +12,9 @@ const config = require('./config/database');
 // const rootPage = require('./routes/rootPage.route');
 
 // mongodb
-mongoose.connect(config.database);
+mongoose.connect(config.database, config.options);
+
+mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
 db.on('connection', () => {
