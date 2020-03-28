@@ -1,37 +1,56 @@
 // setup
 const express = require('express');
-const bodyparser = require('body-parser');
+const bodyParser = require('body-parser');
 
-const rootPage = require('./routes/rootPage.route');
+const path = require('path');
+const cors = require('cors');
+const passport = require('passport');
+const mongoose = require('mongoose');
+const config = require('./config/database');
+
+// TODO: do i need this?
+// const rootPage = require('./routes/rootPage.route');
+
+// mongodb
+mongoose.connect(config.database);
+
+const db = mongoose.connection;
+db.on('connection', () => {
+    console.log("Connected to database " + config.database);
+});
+
+db.on('error', (err) => {
+    console.log("Database error: " + err);
+});
 
 // initialize express app
 const app = express();
 
-// mongodb
-const mongoose = require('mongoose');
-mongoose.connect("monmongodb://localhost:27017/bricksmash",{
-    useNewUrlParser:true,
-    useFindAndModify: false, //may need to change once setup for score changes - KEJ
-});
-mongoose.Promise = global.Promise;
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error: '));
+// initialize users
+const users = require('./routes/users');
+
+// set port
+const port = 8080;
+
+// set static folder
+app.use(express().static(path.join((__dirname, 'public'))));
+
+
 
 
 // bodyparser
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}));
 
+// commenting out - Angular instead?
 // ejs
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'html');
+// app.engine('html', require('ejs').renderFile);
+// app.set('view engine', 'html');
 
 app.use(express.static(__dirname));
 
 app.use('/', rootPage);
 
-// port
-let port = 8080;
 
 app.listen(port, ()=>{
     console.log('Server is running on port ' + port);
