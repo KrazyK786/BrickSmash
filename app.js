@@ -63,7 +63,7 @@ app.use('/', (req, res) => {
 });
 
 // users route
-// app.use('/users', users);
+app.use('/users', users);
 
 // redirect all other traffic
 app.use('*', (req, res) => {
