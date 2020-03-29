@@ -4,7 +4,7 @@
   "description": "BrickSmash Project",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon app",
     "babel": "babel",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

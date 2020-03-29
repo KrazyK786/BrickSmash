@@ -14,7 +14,7 @@ const config = require('./config/database');
 // mongodb
 mongoose.connect(config.database, config.options);
 
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 
 const db = mongoose.connection;
 db.on('connection', () => {
@@ -58,8 +58,8 @@ app.use(bodyParser.json());
 
 // Routes
 // index route
-app.use('/', (req, res) => {
-    res.send('Invalid Endpoint');
+app.get('/', (req, res) => {
+    res.send('Invalid Endpointtt');
 });
 
 // users route
