@@ -44,7 +44,7 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./config/passport');
+require('./config/passport')(passport);
 
 // TODO: do i need the 2nd line?
 // bodyparser
