@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import {map} from 'rxjs/operators';
 import { Observable } from "rxjs";
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { Data } from "../interfaces/data";
 
@@ -13,8 +14,8 @@ export class AuthService {
   user: any;
 
   constructor(
-    private http:HttpClient
-    // public jwtHelper: JwtHelperService
+    private http:HttpClient,
+    public jwtHelper: JwtHelperService
   ) { }
 
   registerUser(user) {
@@ -71,11 +72,11 @@ export class AuthService {
     this.authToken = token;
   }
 
-  // loggedIn(): boolean {
-  //   // explicitly named token since it no longer looks for id_token by default
-  //   // return tokenNotExpired('id_token');
-  //   return !this.jwtHelper.isTokenExpired();
-  // }
+  loggedIn(): boolean {
+    // explicitly named token since it no longer looks for id_token by default
+    // return tokenNotExpired('id_token');
+    return !this.jwtHelper.isTokenExpired();
+  }
 
   logout(){
     this.authToken = null;

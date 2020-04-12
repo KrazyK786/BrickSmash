@@ -16,6 +16,7 @@ import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import {HttpClientModule} from "@angular/common/http";
+import {JwtHelperService, JwtModule} from "@auth0/angular-jwt";
 
 
 const appRoutes: Routes = [
@@ -24,7 +25,11 @@ const appRoutes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent/*, canActivate:[AuthGuard]*/},
   {path:'profile', component: ProfileComponent/*, canActivate:[AuthGuard]*/}
-]
+];
+
+export function tokenGetter() {
+  return localStorage.getItem("id_token");
+}
 
 @NgModule({
   declarations: [
@@ -42,14 +47,21 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FormsModule,
     FlashMessagesModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    JwtModule.forRoot({
+      config:{
+        tokenGetter: tokenGetter,
+        whitelistedDomains: ["localhost:3001"],
+        blacklistedRoutes: ["example.com"]
+      }
+    })
   ],
   providers: [
     ValidateService,
-    AuthService
+    AuthService,
     // AuthGuard,
-    // JwtModule,
-    // JwtHelperService
+    JwtModule,
+    JwtHelperService
   ],
   bootstrap: [AppComponent]
 })
