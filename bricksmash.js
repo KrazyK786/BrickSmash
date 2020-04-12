@@ -2,7 +2,9 @@
 "use strict";
 
 import {Ball, Brick, Paddle} from "./objects.js";
-
+// const Ball = require("./objects");
+// const Brick = require("./objects");
+// const Paddle = require("./objects");
 
 //JS code goes here
 let paused = true;

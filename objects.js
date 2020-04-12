@@ -185,3 +185,4 @@ class Ball {
 }
 
 export {Ball,Brick,Paddle};
+// module.exports = objects;
