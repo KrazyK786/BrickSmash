@@ -76,10 +76,10 @@ export class AuthService {
   //   // return tokenNotExpired('id_token');
   //   return !this.jwtHelper.isTokenExpired();
   // }
-  //
-  // logout(){
-  //   this.authToken = null;
-  //   this.user = null;
-  //   localStorage.clear();
-  // }
+
+  logout(){
+    this.authToken = null;
+    this.user = null;
+    localStorage.clear();
+  }
 }
