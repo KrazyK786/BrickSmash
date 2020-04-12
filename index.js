@@ -3,6 +3,7 @@
 
 import {Ball, Brick, Paddle} from "./objects.js";
 
+
 //JS code goes here
 let paused = true;
 let globalID;

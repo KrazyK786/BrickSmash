@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule,Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 
-import {  ValidateService } from "./services/validate.service";
+import { ValidateService } from "./services/validate.service";
 import { FlashMessagesModule } from "angular2-flash-messages";
+import { AuthService } from "./services/auth.service";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,7 +43,11 @@ const appRoutes: Routes = [
     FlashMessagesModule.forRoot()
   ],
   providers: [
-    ValidateService
+    ValidateService,
+    AuthService
+    // AuthGuard,
+    // JwtModule,
+    // JwtHelperService
   ],
   bootstrap: [AppComponent]
 })
