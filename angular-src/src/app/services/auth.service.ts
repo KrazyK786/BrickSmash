@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import { Observable } from "rxjs";
 import { JwtHelperService } from "@auth0/angular-jwt";
 
-import { Data } from "../interfaces/data";
+import { User } from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class AuthService {
   registerUser(user) {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this.http.post<Data>('http://localhost:8080/users/register', user, {
+    return this.http.post<User>('http://localhost:8080/users/register', user, {
       headers: headers
     }).pipe(map(res => res));
   }
@@ -30,17 +30,12 @@ export class AuthService {
     // let headers = new Headers();
     let headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
-    return this.http.post<Data>('http://localhost:8080/users/authenticate', user, {
+    return this.http.post<User>('http://localhost:8080/users/authenticate', user, {
       headers:headers
     }).pipe(map(res => res));
   }
 
-  // changed headers to match Angular 6 documentation and added Observable<Data> as return type -https://angular.io/guide/http#http-headers
-  // commented code represents previous setup for Angular 2
-  getProfile(): Observable<Data>{
-    // let headers = new Headers();
-    // formerly headers
-    // let headers = new HttpHeaders();
+  getProfile(): Observable<User>{
     this.loadToken();
     const httpOptions = {
       headers: new HttpHeaders({
@@ -48,16 +43,8 @@ export class AuthService {
         'Authorization':this.authToken
       })
     }
-    // console.log(this.authToken);
-    // headers.set('Content-Type', 'application/json');
-    // headers.set('Authorization', this.authToken);
-    // console.log(headers);
-    return this.http.get<Data>('http://localhost:8080/users/profile', httpOptions
-      //   {
-      //   headers:headers
-      // }
+    return this.http.get<User>('http://localhost:8080/users/profile', httpOptions
     );
-    // }).pipe(map(res => res));
   }
 
   storeUserData(token, user){
@@ -73,8 +60,6 @@ export class AuthService {
   }
 
   loggedIn(): boolean {
-    // explicitly named token since it no longer looks for id_token by default
-    // return tokenNotExpired('id_token');
     return !this.jwtHelper.isTokenExpired();
   }
 

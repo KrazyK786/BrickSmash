@@ -1,7 +1,7 @@
-export interface Data {
-  success: boolean,
-  token: string,
-  msg: string,
+export class User {
+  success: boolean;
+  token: string;
+  msg: string;
   user: {
     id: number,
     name: string,
