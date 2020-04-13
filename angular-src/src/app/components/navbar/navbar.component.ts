@@ -11,7 +11,7 @@ import { FlashMessagesService } from "angular2-flash-messages";
 export class NavbarComponent implements OnInit {
 
   constructor(
-    private authService:AuthService,
+    public authService:AuthService,
     private router:Router,
     private flashMessage:FlashMessagesService
   ) { }
@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
 
   onLogoutClick(){
     this.authService.logout();
+    // authService.logout();
     this.flashMessage.show('You have been logged out!',{
       cssClass: 'alert-success',
       timeout:3000
