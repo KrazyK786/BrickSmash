@@ -18,6 +18,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { HttpClientModule } from "@angular/common/http";
 import { JwtHelperService, JwtModule } from "@auth0/angular-jwt";
 import { AuthGuard } from "./guards/auth.guard";
+import { BricksmashComponent } from './components/games/bricksmash/bricksmash.component';
 
 
 const appRoutes: Routes = [
@@ -25,7 +26,8 @@ const appRoutes: Routes = [
   {path:'register', component: RegisterComponent},
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
-  {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]}
+  {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
+  {path:'games/bricksmash', component: BricksmashComponent}
 ];
 
 export function tokenGetter() {
@@ -40,7 +42,8 @@ export function tokenGetter() {
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    BricksmashComponent
   ],
   imports: [
     BrowserModule,

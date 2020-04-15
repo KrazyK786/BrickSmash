@@ -1,0 +1,13 @@
+* {
+  /*font-family: "Press Start 2P", cursive;*/
+}
+
+canvas {
+  background:#eee;
+  display:block;
+  margin:0 auto;
+}
+
+.wrapper {
+  text-align: center;
+}
