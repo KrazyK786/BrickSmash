@@ -1,4 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import { Paddle } from "../../../models/Paddle";
 
 @Component({
   selector: 'app-bricksmash',
@@ -7,28 +8,48 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 })
 export class BricksmashComponent implements OnInit {
   // Get reference to canvas
-  @ViewChild("canvas", { static: true })
+  @ViewChild('brickSmashCanvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
 
   ctx: CanvasRenderingContext2D;
 
   // experimenting
-  x: number;
-  y: number;
-  ballRadius: number = 10;
+  // x: number;
+  // y: number;
+  // ballRadius: number = 10;
+  requestId: any;
+  paddle: Paddle;
+
+  @HostListener('window: keydown', ['$event'])
+  keyEvent(event: KeyboardEvent){
+    console.log(event.code);
+  }
 
   constructor() {
   }
 
   ngOnInit(): void {
+   this.initBrickSmash();
+    // this.x = this.ctx.canvas.width/2;
+    // this.y = this.ctx.canvas.height-30;
+  }
+
+  initBrickSmash(): void{
+    // Get the 2D context that we draw on
     this.ctx = this.canvas.nativeElement.getContext('2d');
-    this.x = this.ctx.canvas.width/2;
-    this.y = this.ctx.canvas.height-30;
+
+    // Calculate size of canvas from constants..?
   }
 
   startGame(): void{
     // // clears canvas
     // this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
+
+    this.paddle = new Paddle(this.ctx);
+
+    if (this.requestId){
+      cancelAnimationFrame(this.requestId);
+    }
 
     this.animate();
 
@@ -37,37 +58,20 @@ export class BricksmashComponent implements OnInit {
   }
 
   animate(): void {
+
+    this.drawBrickSmash();
+
+    // this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
+    // this.drawBall(this.x,this.y,this.ballRadius);
+    // this.moveBall();
+
+    requestAnimationFrame(this.animate);
+    // this.requestId = requestAnimationFrame(this.animate.bind(this));
+  }
+
+
+  drawBrickSmash(): void {
     this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
-    this.drawBall(this.x,this.y,this.ballRadius);
-    this.moveBall();
-
-    requestAnimationFrame(this.animate.bind(this));
+    this.paddle.draw();
   }
-
-  drawBall(x,y,ballRadius):void {
-
-    this.ctx.beginPath();
-    this.ctx.arc(x,y,ballRadius,0, Math.PI*2);
-    this.ctx.fillStyle = 'red'; // ballOne.color;
-    this.ctx.fill();
-    this.ctx.closePath();
-  }
-
-  moveBall(): void {
-    let dx = 2;
-    let dy = -2;
-
-    // collision detection with screen
-    if (this.x - this.ballRadius <= 0 || this.x + this.ballRadius >= this.ctx.canvas.width){
-      this.x = -this.x;
-    }
-
-    if (this.y - this.ballRadius <= 0 || this.y + this.ballRadius >= this.ctx.canvas.height){
-      this.y = -this.y;
-    }
-
-    this.x += dx;
-    this.y += dy;
-  }
-
 }
