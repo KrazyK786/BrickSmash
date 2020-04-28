@@ -21,29 +21,28 @@ export class BricksmashComponent implements OnInit {
   requestId: any;
   paddle: Paddle;
   moves = {
-    [KEY.RIGHT]: (paddle: Paddle) => paddle.rightPressed = true,
-    [KEY.LEFT]: (paddle: Paddle) => paddle.leftPressed = true
+    [KEY.RIGHT]: (paddle: Paddle) => {
+      paddle.rightPressed = true;
+      paddle.leftPressed = false;
+    },
+    [KEY.LEFT]: (paddle: Paddle) => {
+      paddle.leftPressed = true;
+      paddle.rightPressed = false;
+    }
   };
 
   @HostListener('window: keydown', ['$event'])
   keyEvent(event: KeyboardEvent){
     if (this.moves[event.code]){
       event.preventDefault();
-
-      if (event.code === KEY.RIGHT){
-        this.paddle.rightPressed = true;
-        this.paddle.update();
-        // this.moves[event.code];
-      }
-
-      if (event.code === KEY.LEFT){
-        this.paddle.leftPressed = true;
-        this.paddle.update();
-      }
-
+      this.moves[event.code](this.paddle);
     }
 
     console.log(event.code);
+
+    this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
+    // this.paddle.draw();
+    this.paddle.update()
   }
 
   constructor() {
@@ -64,9 +63,6 @@ export class BricksmashComponent implements OnInit {
   }
 
   startGame(): void{
-    // // clears canvas
-    // this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
-
     this.paddle = new Paddle(this.ctx);
 
     if (this.requestId){
@@ -83,12 +79,8 @@ export class BricksmashComponent implements OnInit {
 
     this.drawBrickSmash();
 
-    // this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
-    // this.drawBall(this.x,this.y,this.ballRadius);
-    // this.moveBall();
-
-    requestAnimationFrame(this.animate.bind(this));
-    // this.requestId = requestAnimationFrame(this.animate.bind(this));
+    // requestAnimationFrame(this.animate.bind(this));
+    this.requestId = requestAnimationFrame(this.animate.bind(this));
   }
 
 
