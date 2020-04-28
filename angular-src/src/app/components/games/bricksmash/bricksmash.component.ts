@@ -1,5 +1,6 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import { Paddle } from "../../../models/Paddle";
+import {KEY} from "../../../models/constants";
 
 @Component({
   selector: 'app-bricksmash',
@@ -19,9 +20,29 @@ export class BricksmashComponent implements OnInit {
   // ballRadius: number = 10;
   requestId: any;
   paddle: Paddle;
+  moves = {
+    [KEY.RIGHT]: (paddle: Paddle) => paddle.rightPressed = true,
+    [KEY.LEFT]: (paddle: Paddle) => paddle.leftPressed = true
+  };
 
   @HostListener('window: keydown', ['$event'])
   keyEvent(event: KeyboardEvent){
+    if (this.moves[event.code]){
+      event.preventDefault();
+
+      if (event.code === KEY.RIGHT){
+        this.paddle.rightPressed = true;
+        this.paddle.update();
+        // this.moves[event.code];
+      }
+
+      if (event.code === KEY.LEFT){
+        this.paddle.leftPressed = true;
+        this.paddle.update();
+      }
+
+    }
+
     console.log(event.code);
   }
 
@@ -30,6 +51,7 @@ export class BricksmashComponent implements OnInit {
 
   ngOnInit(): void {
    this.initBrickSmash();
+   this.resetGame();
     // this.x = this.ctx.canvas.width/2;
     // this.y = this.ctx.canvas.height-30;
   }
@@ -65,7 +87,7 @@ export class BricksmashComponent implements OnInit {
     // this.drawBall(this.x,this.y,this.ballRadius);
     // this.moveBall();
 
-    requestAnimationFrame(this.animate);
+    requestAnimationFrame(this.animate.bind(this));
     // this.requestId = requestAnimationFrame(this.animate.bind(this));
   }
 
@@ -73,5 +95,9 @@ export class BricksmashComponent implements OnInit {
   drawBrickSmash(): void {
     this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.paddle.draw();
+  }
+
+  resetGame(): void {
+
   }
 }
