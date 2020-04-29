@@ -1,6 +1,7 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import { Paddle } from "../../../models/Paddle";
 import {KEY} from "../../../models/constants";
+import {Ball} from "../../../models/Ball";
 
 @Component({
   selector: 'app-bricksmash',
@@ -20,6 +21,7 @@ export class BricksmashComponent implements OnInit {
   // ballRadius: number = 10;
   requestId: any;
   paddle: Paddle;
+  ball: Ball;
   moves = {
     [KEY.RIGHT]: (paddle: Paddle) => {
       paddle.rightPressed = true;
@@ -64,6 +66,7 @@ export class BricksmashComponent implements OnInit {
 
   startGame(): void{
     this.paddle = new Paddle(this.ctx);
+    this.ball = new Ball(this.ctx);
 
     if (this.requestId){
       cancelAnimationFrame(this.requestId);
@@ -87,6 +90,7 @@ export class BricksmashComponent implements OnInit {
   drawBrickSmash(): void {
     this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.paddle.draw();
+    this.ball.update();
   }
 
   resetGame(): void {
