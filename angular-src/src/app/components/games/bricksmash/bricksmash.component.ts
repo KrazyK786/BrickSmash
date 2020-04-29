@@ -67,10 +67,12 @@ export class BricksmashComponent implements OnInit {
     // Calculate size of canvas from constants..?
   }
 
+  // initialize objects for game (maybe move to init method to draw canvas before start?
   startGame(): void{
     this.paddle = new Paddle(this.ctx);
     this.ball = new Ball(this.ctx);
-    this.drawBricks();
+    this.bricks = this.initBricks();
+    // this.drawBricks();
 
     if (this.requestId){
       cancelAnimationFrame(this.requestId);
@@ -132,8 +134,8 @@ export class BricksmashComponent implements OnInit {
     });
   }
 
-  // Reset game via initializing all needed objects
+  // Reset game
   resetGame(): void {
-    this.bricks = this.initBricks();
+    // this.bricks = this.initBricks();
   }
 }
