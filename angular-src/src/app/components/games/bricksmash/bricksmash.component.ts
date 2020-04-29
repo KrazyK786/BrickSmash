@@ -2,6 +2,7 @@ import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/c
 import { Paddle } from "../../../models/Paddle";
 import {KEY} from "../../../models/constants";
 import {Ball} from "../../../models/Ball";
+import {Brick} from "../../../models/Brick";
 
 @Component({
   selector: 'app-bricksmash',
@@ -22,6 +23,7 @@ export class BricksmashComponent implements OnInit {
   requestId: any;
   paddle: Paddle;
   ball: Ball;
+  bricks: Brick[];
   moves = {
     [KEY.RIGHT]: (paddle: Paddle) => {
       paddle.rightPressed = true;
@@ -60,6 +62,7 @@ export class BricksmashComponent implements OnInit {
   initBrickSmash(): void{
     // Get the 2D context that we draw on
     this.ctx = this.canvas.nativeElement.getContext('2d');
+    // this.initBricks();
 
     // Calculate size of canvas from constants..?
   }
@@ -67,6 +70,7 @@ export class BricksmashComponent implements OnInit {
   startGame(): void{
     this.paddle = new Paddle(this.ctx);
     this.ball = new Ball(this.ctx);
+    this.drawBricks();
 
     if (this.requestId){
       cancelAnimationFrame(this.requestId);
@@ -91,9 +95,45 @@ export class BricksmashComponent implements OnInit {
     this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.paddle.draw();
     this.ball.update();
+    this.drawBricks();
   }
 
-  resetGame(): void {
+  initBricks(): Brick[]{
+    let tmpBricks = [];
 
+    let brickRowCount = 3;
+    let brickColumnCount = 5;
+
+    for (let c = 0; c < brickColumnCount; c++){
+      // let tmpBricks = [c];
+      for (let r = 0; r < brickRowCount; r++){
+
+        const brickWidth = 75;
+        const brickHeight = 20;
+        const brickPadding = 10;
+        const brickOffsetTop = 30;
+        const brickOffsetLeft = 30;
+
+        let brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+        let brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+
+        let newBrick = new Brick(this.ctx, brickX, brickY);
+        tmpBricks.push(newBrick);
+        // tmpBricks.push(new Brick(this.ctx, brickX, brickY));
+
+      }
+    }
+    return tmpBricks;
+  }
+
+  drawBricks(): void{
+    this.bricks.forEach((brick) => {
+      brick.draw();
+    });
+  }
+
+  // Reset game via initializing all needed objects
+  resetGame(): void {
+    this.bricks = this.initBricks();
   }
 }

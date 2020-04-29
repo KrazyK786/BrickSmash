@@ -15,7 +15,7 @@ export class Ball {
     this.spawn();
   }
 
-  spawn(): void{
+  private spawn(): void{
     this.x = this.ctx.canvas.width/2;
     this.y = this.ctx.canvas.height-30;
     this.velocity = {
@@ -27,13 +27,14 @@ export class Ball {
     //   y: -Math.random() * (5 - 2) - 2
     // };
     this.radius = 10;
-    this.color = 'red';
+    this.color = 'orange';
     this.mass = 1;
     this.lives = 3;
     this.score = 0;
   }
 
   draw(): void{
+    // draw circle
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.radius,0, Math.PI*2);
     this.ctx.fillStyle = this.color;
