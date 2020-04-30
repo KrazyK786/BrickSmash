@@ -1,15 +1,15 @@
 export class Ball {
-  private x: any;
-  private y: any;
-  private velocity: {
+  x: any;
+  y: any;
+  velocity: {
     x: number;
     y: number
   };
-  private radius: any;
-  private color: any;
-  private mass: number;
-  private lives: number;
-  private score: number;
+  radius: any;
+  color: any;
+  mass: number;
+  lives: number;
+  score: number;
 
   constructor(private ctx: CanvasRenderingContext2D) {
     this.spawn();

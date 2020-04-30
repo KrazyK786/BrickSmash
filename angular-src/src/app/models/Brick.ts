@@ -1,13 +1,13 @@
 export class Brick {
-  private x: any;
-  private y: any;
-  private status: any;
-  private height: any;
-  private width: any;
-  private brickPadding: number;
-  private brickOffsetTop: number;
-  private brickOffsetLeft: number;
-  private color: string;
+  x: any;
+  y: any;
+  status: any;
+  height: any;
+  width: any;
+  brickPadding: number;
+  brickOffsetTop: number;
+  brickOffsetLeft: number;
+  color: string;
 
 
   constructor(private ctx: CanvasRenderingContext2D,

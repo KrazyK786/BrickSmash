@@ -4,6 +4,8 @@ import {KEY} from "../../../models/constants";
 import {Ball} from "../../../models/Ball";
 import {Brick} from "../../../models/Brick";
 
+import { BricksmashService } from "../../../services/games/bricksmash/bricksmash.service";
+
 @Component({
   selector: 'app-bricksmash',
   templateUrl: './bricksmash.component.html',
@@ -49,7 +51,7 @@ export class BricksmashComponent implements OnInit {
     this.paddle.update()
   }
 
-  constructor() {
+  constructor(private bricksmashService: BricksmashService) {
   }
 
   ngOnInit(): void {
@@ -85,11 +87,21 @@ export class BricksmashComponent implements OnInit {
   }
 
   animate(): void {
+    this.updateBricks();
 
     this.drawBrickSmash();
 
     // requestAnimationFrame(this.animate.bind(this));
     this.requestId = requestAnimationFrame(this.animate.bind(this));
+  }
+
+  updateBricks(): void{
+    for (let i = 0; i < this.bricks.length; i++){
+      let tmpBrick = this.bricks[i];
+      if (this.bricksmashService.brickCollision(tmpBrick, this.ball)){
+        tmpBrick.status = 0;
+      }
+    }
   }
 
 
@@ -130,7 +142,9 @@ export class BricksmashComponent implements OnInit {
 
   drawBricks(): void{
     this.bricks.forEach((brick) => {
-      brick.draw();
+      if (brick.status === 1){
+        brick.draw();
+      }
     });
   }
 

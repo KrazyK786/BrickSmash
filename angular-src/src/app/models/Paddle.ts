@@ -1,6 +1,6 @@
 export class Paddle {
-  paddleHeight: number;
-  paddleWidth: number;
+  height: number;
+  width: number;
   x: number;
   velocity: { x: number; y: number };
   rightPressed: boolean;
@@ -16,9 +16,9 @@ export class Paddle {
   spawn(): void{
     this.color = 'blue';
 
-    this.paddleHeight = 10;
-    this.paddleWidth = 75;
-    this.x = (this.ctx.canvas.width - this.paddleWidth) / 2;
+    this.height = 10;
+    this.width = 75;
+    this.x = (this.ctx.canvas.width - this.width) / 2;
 
     this.rightPressed = false;
     this.leftPressed = false;
@@ -32,7 +32,7 @@ export class Paddle {
 
   draw(): void{
     this.ctx.fillStyle = this.color;
-    this.ctx.fillRect(this.x,this.ctx.canvas.height - this.paddleHeight, this.paddleWidth, this.paddleHeight);
+    this.ctx.fillRect(this.x,this.ctx.canvas.height - this.height, this.width, this.height);
     // this.ctx.rect(this.x,this.ctx.canvas.height - this.paddleHeight, this.paddleWidth, this.paddleHeight);
 
 
@@ -45,7 +45,7 @@ export class Paddle {
     this.draw();
 
     //detect whether the paddle is off the screen and move accordingly
-    if (this.rightPressed && this.x < this.ctx.canvas.width - this.paddleWidth){
+    if (this.rightPressed && this.x < this.ctx.canvas.width - this.width){
       this.x += 7;
     }
 

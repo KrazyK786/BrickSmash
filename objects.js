@@ -38,8 +38,8 @@ function collisionDetection (brick, ball){
 class Paddle {
     constructor(){
         this.paddleHeight = 10;
-        this.paddleWidth = 75;
-        this.paddleX = (canvas.width - this.paddleWidth) / 2;
+        this.width = 75;
+        this.paddleX = (canvas.width - this.width) / 2;
 
         //testingggg
         this.velocity = {
@@ -52,7 +52,7 @@ class Paddle {
 
         this.draw = () =>{
             ctx.beginPath();
-            ctx.rect(this.paddleX,canvas.height - this.paddleHeight, this.paddleWidth, this.paddleHeight);
+            ctx.rect(this.paddleX,canvas.height - this.height, this.width, this.height);
             ctx.fillStyle = "#0095DD";
             ctx.fill();
             ctx.closePath();
@@ -61,7 +61,7 @@ class Paddle {
         this.update = () =>{
             this.draw();
              //detect whether the paddle is off the screen and move accordingly
-             if (this.rightPressed && this.paddleX < canvas.width - this.paddleWidth){
+             if (this.rightPressed && this.paddleX < canvas.width - this.width){
                 this.paddleX += 7;
             }
 
