@@ -78,26 +78,34 @@ export class BricksmashComponent implements OnInit {
   // initialize objects for game (maybe move to init method to draw canvas before start?
   startGame(): void{
     if (this.paused){
+      this.paused = false;
       this.animate();
     }
 
-    this.paddle = new Paddle(this.ctx);
-    this.ball = new Ball(this.ctx);
-    this.bricks = this.initBricks();
-    // this.drawBricks();
+    else {
+      this.paddle = new Paddle(this.ctx);
+      this.ball = new Ball(this.ctx);
+      this.bricks = this.initBricks();
+      // this.drawBricks();
 
-    // if game already running, canc
-    if (this.requestId){
-      cancelAnimationFrame(this.requestId);
+      // if game already running, canc
+      if (this.requestId){
+        cancelAnimationFrame(this.requestId);
+      }
+
+      this.animate();
+
     }
-
-    this.animate();
 
 
     // console.log("now were cooking with oil!");
   }
 
   animate(): void {
+    if (this.paused){
+      return;
+    }
+
     this.updateBall();
     this.updateBricks();
 
@@ -109,10 +117,11 @@ export class BricksmashComponent implements OnInit {
 
   // Reset game
   resetGame(): void {
-    // cancelAnimationFrame(this.requestId);
     this.ball.spawn();
-    this.paddle = new Paddle(this.ctx);
+    // this.paddle = new Paddle(this.ctx);
+    this.paddle.spawn();
     this.paused = true;
+    cancelAnimationFrame(this.requestId);
     // this.bricks = this.initBricks();
   }
 
