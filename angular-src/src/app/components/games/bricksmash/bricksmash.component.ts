@@ -26,6 +26,8 @@ export class BricksmashComponent implements OnInit {
   paddle: Paddle;
   ball: Ball;
   bricks: Brick[];
+  score: number;
+  lives: number;
   moves = {
     [KEY.RIGHT]: (paddle: Paddle) => {
       paddle.rightPressed = true;
@@ -64,6 +66,8 @@ export class BricksmashComponent implements OnInit {
   initBrickSmash(): void{
     // Get the 2D context that we draw on
     this.ctx = this.canvas.nativeElement.getContext('2d');
+    this.score = 0;
+    this.lives = 3;
     // this.initBricks();
 
     // Calculate size of canvas from constants..?
@@ -96,6 +100,10 @@ export class BricksmashComponent implements OnInit {
     this.requestId = requestAnimationFrame(this.animate.bind(this));
   }
 
+  restGame(): void{
+    this.ball.x
+  }
+
   updateBall(): void{
     // this.bricksmashService.screenCollision(this.ball, this.ctx);
     // this.bricksmashService.paddleCollision(this.ball, this.paddle, this.ctx);
@@ -103,8 +111,8 @@ export class BricksmashComponent implements OnInit {
     this.bricksmashService.paddleCollision(this.ball, this.paddle, this.ctx);
     // update lives
     if (this.bricksmashService.screenCollision(this.ball, this.ctx)){
-      this.ball.lives--;
-      console.log('lives: ' + this.ball.lives);
+      this.lives--;
+      console.log('lives: ' + this.lives);
     }
   }
 
@@ -112,6 +120,7 @@ export class BricksmashComponent implements OnInit {
     for (let i = 0; i < this.bricks.length; i++){
       let tmpBrick = this.bricks[i];
       if (this.bricksmashService.brickCollision(tmpBrick, this.ball)){
+        this.score += 1;
         tmpBrick.status = 0;
       }
     }

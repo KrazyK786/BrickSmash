@@ -80,7 +80,7 @@ export class BricksmashService {
       ){
         ball.velocity.y = -ball.velocity.y; //if the center of the brick in question is within a brick, then a collision is considered to have occurred
         brick.status = 0;
-        ball.score++;
+        // ball.score++;
 
         console.log('collision detected!');
         return true;
