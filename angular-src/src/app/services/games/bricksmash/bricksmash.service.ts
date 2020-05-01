@@ -16,8 +16,41 @@ export class BricksmashService {
   //   }
   // }
 
-  paddleCollision(ball: Ball, paddle: Paddle): void{
+  // detect if ball has collided with paddle
+  paddleCollision(ball: Ball, paddle: Paddle, ctx: CanvasRenderingContext2D): boolean{
 
+    if ((ball.x > paddle.x) &&
+      (ball.x < paddle.x + paddle.width) &&
+      (
+        (ball.y + ball.velocity.y > ctx.canvas.height - ball.radius - paddle.height) ||
+        (ball.y + ball.velocity.y < ball.radius + paddle.height)
+      )){//if ball hits paddle, reverse direction
+      // adjust angle of ball coming off paddle by modifying x value
+      // ball.velocity.x = ball.velocity.x * paddleCollision(ball, paddle);
+
+      // reflect y velocity
+      ball.velocity.y = -ball.velocity.y;
+
+      return true;
+    }
+    else{
+      ball.lives--;
+      console.log('lives: ' + ball.lives);
+      return false;
+      // if (ball.lives == -1){ // updated logic from '!lives' to allow lives to hit 0 before game over is given
+      //   alert("GAME OVER"); //if ball hits bottom of screen, alert GAME OVER
+      //   document.location.reload();
+      // }
+      // else{
+      //   ball.x = ctx.canvas.width / 2;
+      //   ball.y = ctx.canvas.height - 30;
+      //   ball.velocity = {
+      //     x: Math.random() * (5-2) + 2,
+      //     y: -Math.random() * (5-2) - 2
+      //   };
+      //   paddle.paddleX = (canvas.width - paddle.paddleWidth) / 2;
+      // }
+    }
 
 
     // //TODO figure out how to handle x becoming 0 causing ball not to change direction :(
@@ -35,6 +68,7 @@ export class BricksmashService {
 
 
 
+  // detect if ball has collided with brick
   brickCollision(brick: Brick, ball: Ball): boolean{
 
     if (brick.status === 1){
@@ -56,5 +90,27 @@ export class BricksmashService {
 
     return false;
 
+  }
+
+  screenCollision(ball: Ball, ctx: CanvasRenderingContext2D): boolean{
+    let collisionOccurred = false;
+    // collision detection with screen
+    if (ball.x - ball.radius <= 0 || ball.x + ball.radius >= ctx.canvas.width){
+      ball.velocity.x = -ball.velocity.x;
+      // this.x = -this.x;
+      collisionOccurred = true;
+    }
+
+    if (ball.y - ball.radius <= 0 || ball.y + ball.radius >= ctx.canvas.height){
+      ball.velocity.y = -ball.velocity.y;
+      // this.y = -this.y;
+      collisionOccurred = true;
+    }
+
+
+    ball.x += ball.velocity.x;
+    ball.y += ball.velocity.y;
+
+    return collisionOccurred;
   }
 }

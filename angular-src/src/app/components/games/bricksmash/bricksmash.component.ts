@@ -87,12 +87,18 @@ export class BricksmashComponent implements OnInit {
   }
 
   animate(): void {
+    this.updateBall();
     this.updateBricks();
 
     this.drawBrickSmash();
 
     // requestAnimationFrame(this.animate.bind(this));
     this.requestId = requestAnimationFrame(this.animate.bind(this));
+  }
+
+  updateBall(): void{
+    this.bricksmashService.paddleCollision(this.ball, this.paddle, this.ctx);
+    this.bricksmashService.screenCollision(this.ball, this.ctx);
   }
 
   updateBricks(): void{
@@ -108,7 +114,7 @@ export class BricksmashComponent implements OnInit {
   drawBrickSmash(): void {
     this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.paddle.draw();
-    this.ball.update();
+    this.ball.draw();
     this.drawBricks();
   }
 
