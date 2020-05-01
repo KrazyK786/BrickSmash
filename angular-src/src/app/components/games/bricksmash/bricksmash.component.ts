@@ -28,6 +28,7 @@ export class BricksmashComponent implements OnInit {
   bricks: Brick[];
   score: number;
   lives: number;
+  paused: boolean;
   moves = {
     [KEY.RIGHT]: (paddle: Paddle) => {
       paddle.rightPressed = true;
@@ -58,7 +59,7 @@ export class BricksmashComponent implements OnInit {
 
   ngOnInit(): void {
    this.initBrickSmash();
-   this.resetGame();
+   // this.resetGame();
     // this.x = this.ctx.canvas.width/2;
     // this.y = this.ctx.canvas.height-30;
   }
@@ -68,6 +69,7 @@ export class BricksmashComponent implements OnInit {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.score = 0;
     this.lives = 3;
+    this.paused = false;
     // this.initBricks();
 
     // Calculate size of canvas from constants..?
@@ -75,11 +77,16 @@ export class BricksmashComponent implements OnInit {
 
   // initialize objects for game (maybe move to init method to draw canvas before start?
   startGame(): void{
+    if (this.paused){
+      this.animate();
+    }
+
     this.paddle = new Paddle(this.ctx);
     this.ball = new Ball(this.ctx);
     this.bricks = this.initBricks();
     // this.drawBricks();
 
+    // if game already running, canc
     if (this.requestId){
       cancelAnimationFrame(this.requestId);
     }
@@ -100,8 +107,13 @@ export class BricksmashComponent implements OnInit {
     this.requestId = requestAnimationFrame(this.animate.bind(this));
   }
 
-  restGame(): void{
-    this.ball.x
+  // Reset game
+  resetGame(): void {
+    this.ball.spawn();
+    this.paddle = new Paddle(this.ctx);
+    cancelAnimationFrame(this.requestId);
+    this.paused = true;
+    // this.bricks = this.initBricks();
   }
 
   updateBall(): void{
@@ -113,6 +125,7 @@ export class BricksmashComponent implements OnInit {
     if (this.bricksmashService.screenCollision(this.ball, this.ctx)){
       this.lives--;
       console.log('lives: ' + this.lives);
+      this.resetGame();
     }
   }
 
@@ -168,10 +181,5 @@ export class BricksmashComponent implements OnInit {
         brick.draw();
       }
     });
-  }
-
-  // Reset game
-  resetGame(): void {
-    // this.bricks = this.initBricks();
   }
 }
