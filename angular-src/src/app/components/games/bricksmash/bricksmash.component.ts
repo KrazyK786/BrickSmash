@@ -83,7 +83,7 @@ export class BricksmashComponent implements OnInit {
     this.animate();
 
 
-    console.log("now were cooking with oil!");
+    // console.log("now were cooking with oil!");
   }
 
   animate(): void {
@@ -97,8 +97,15 @@ export class BricksmashComponent implements OnInit {
   }
 
   updateBall(): void{
+    // this.bricksmashService.screenCollision(this.ball, this.ctx);
+    // this.bricksmashService.paddleCollision(this.ball, this.paddle, this.ctx);
+
     this.bricksmashService.paddleCollision(this.ball, this.paddle, this.ctx);
-    this.bricksmashService.screenCollision(this.ball, this.ctx);
+    // update lives
+    if (this.bricksmashService.screenCollision(this.ball, this.ctx)){
+      this.ball.lives--;
+      console.log('lives: ' + this.ball.lives);
+    }
   }
 
   updateBricks(): void{

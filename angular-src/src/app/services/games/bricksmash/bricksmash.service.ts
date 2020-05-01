@@ -34,8 +34,8 @@ export class BricksmashService {
       return true;
     }
     else{
-      ball.lives--;
-      console.log('lives: ' + ball.lives);
+      // ball.lives--;
+      // console.log('lives: ' + ball.lives);
       return false;
       // if (ball.lives == -1){ // updated logic from '!lives' to allow lives to hit 0 before game over is given
       //   alert("GAME OVER"); //if ball hits bottom of screen, alert GAME OVER
@@ -92,17 +92,18 @@ export class BricksmashService {
 
   }
 
+  // Did ball 'collide' with bottom of screen
   screenCollision(ball: Ball, ctx: CanvasRenderingContext2D): boolean{
     let collisionOccurred = false;
     // collision detection with screen
     if (ball.x - ball.radius <= 0 || ball.x + ball.radius >= ctx.canvas.width){
       ball.velocity.x = -ball.velocity.x;
       // this.x = -this.x;
-      collisionOccurred = true;
+      // collisionOccurred = true;
     }
 
     if (ball.y - ball.radius <= 0 || ball.y + ball.radius >= ctx.canvas.height){
-      ball.velocity.y = -ball.velocity.y;
+      // ball.velocity.y = -ball.velocity.y;
       // this.y = -this.y;
       collisionOccurred = true;
     }
