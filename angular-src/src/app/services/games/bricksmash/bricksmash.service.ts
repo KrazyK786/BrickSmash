@@ -107,9 +107,10 @@ export class BricksmashService {
     if (ball.y - ball.radius <= 0){
       ball.velocity.y = -ball.velocity.y;
       ball.y = -ball.y;
-      if (ball.y + ball.radius >= ctx.canvas.height){
-        collisionOccurred = true;
-      }
+    }
+
+    if (ball.y + ball.radius >= ctx.canvas.height){
+      collisionOccurred = true;
     }
 
 

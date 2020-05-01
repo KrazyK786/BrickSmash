@@ -109,9 +109,9 @@ export class BricksmashComponent implements OnInit {
 
   // Reset game
   resetGame(): void {
+    // cancelAnimationFrame(this.requestId);
     this.ball.spawn();
     this.paddle = new Paddle(this.ctx);
-    cancelAnimationFrame(this.requestId);
     this.paused = true;
     // this.bricks = this.initBricks();
   }
@@ -126,6 +126,7 @@ export class BricksmashComponent implements OnInit {
       this.lives--;
       console.log('lives: ' + this.lives);
       this.resetGame();
+      // return;
     }
   }
 
