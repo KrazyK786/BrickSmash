@@ -29,6 +29,8 @@ export class BricksmashComponent implements OnInit {
   score: number;
   lives: number;
   paused: boolean;
+  gameStarted: boolean;
+  highScore: any;
   moves = {
     [KEY.RIGHT]: (paddle: Paddle) => {
       paddle.rightPressed = true;
@@ -47,11 +49,17 @@ export class BricksmashComponent implements OnInit {
       this.moves[event.code](this.paddle);
     }
 
-    console.log(event.code);
+    // console.log(event.code);
 
     this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
     // this.paddle.draw();
     this.paddle.update()
+  }
+
+  // hacky 'debugging' for x/y coordinates
+  @HostListener('document:mouseup', ['$event'])
+  onMouseMove(e){
+    console.log(e);
   }
 
   constructor(private bricksmashService: BricksmashService) {
@@ -68,7 +76,11 @@ export class BricksmashComponent implements OnInit {
     // Get the 2D context that we draw on
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.score = 0;
-    this.lives = 3;
+
+    // Development purposes
+    this.lives = 0;
+    // this.lives = 3;
+
     this.paused = false;
     // this.initBricks();
 
@@ -92,6 +104,7 @@ export class BricksmashComponent implements OnInit {
       if (this.requestId){
         cancelAnimationFrame(this.requestId);
       }
+      this.gameStarted = true;
 
       this.animate();
 
@@ -107,6 +120,11 @@ export class BricksmashComponent implements OnInit {
     }
 
     this.updateBall();
+
+    if (this.gameStarted === false){
+      return;
+    }
+
     this.updateBricks();
 
     this.drawBrickSmash();
@@ -134,7 +152,14 @@ export class BricksmashComponent implements OnInit {
     if (this.bricksmashService.screenCollision(this.ball, this.ctx)){
       this.lives--;
       console.log('lives: ' + this.lives);
-      this.resetGame();
+      if (this.lives === -1){
+        this.gameOver();
+        // return;
+      }
+      else{
+        this.resetGame();
+        // return;
+      }
       // return;
     }
   }
@@ -191,5 +216,21 @@ export class BricksmashComponent implements OnInit {
         brick.draw();
       }
     });
+  }
+
+  gameOver(): void {
+    this.gameStarted = false;
+    cancelAnimationFrame(this.requestId);
+    this.highScore = this.score > this.highScore ? this.score : this.highScore;
+    this.ctx.fillStyle = 'black';
+    this.ctx.fillRect(0, this.ctx.canvas.height/3, this.ctx.canvas.width, this.ctx.canvas.height/3);
+    // this.ctx.fillRect(1, 3, 8, 1.2);
+    this.ctx.font = '50px Arial';
+    // this.ctx.font = '1px Arial';
+    this.ctx.fillStyle = 'red';
+    this.ctx.fillText('GAME OVER', this.ctx.canvas.width/5, this.ctx.canvas.height/2);
+    // this.ctx.fillText('GAME OVER', 1.8, 4);
+    console.log('Game over');
+    // return;
   }
 }
