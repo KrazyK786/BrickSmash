@@ -45,16 +45,18 @@ export class BricksmashComponent implements OnInit {
 
   @HostListener('window: keydown', ['$event'])
   keyEvent(event: KeyboardEvent){
-    if (this.moves[event.code]){
-      event.preventDefault();
-      this.moves[event.code](this.paddle);
+    if (this.gameStarted){
+      if (this.moves[event.code]){
+        event.preventDefault();
+        this.moves[event.code](this.paddle);
+      }
+
+      // console.log(event.code);
+
+      this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
+      // this.paddle.draw();
+      this.paddle.update()
     }
-
-    // console.log(event.code);
-
-    this.ctx.clearRect(0,0, this.ctx.canvas.width, this.ctx.canvas.height);
-    // this.paddle.draw();
-    this.paddle.update()
   }
 
   // hacky 'debugging' for x/y coordinates
@@ -76,15 +78,8 @@ export class BricksmashComponent implements OnInit {
   initBrickSmash(): void{
     // Get the 2D context that we draw on
     this.ctx = this.canvas.nativeElement.getContext('2d');
-    this.score = 0;
 
-    // Development purposes
-    this.lives = 0;
-    // this.lives = 3;
-
-    this.paused = false;
-
-    this.pauseButtonText = 'Pause';
+    this.resetGame();
     // this.initBricks();
 
     // Calculate size of canvas from constants..?
@@ -92,26 +87,41 @@ export class BricksmashComponent implements OnInit {
 
   // initialize objects for game (maybe move to init method to draw canvas before start?
   startGame(): void{
-    if (this.paused){
-      this.paused = false;
-      this.animate();
+    this.resetGame();
+    this.paddle = new Paddle(this.ctx);
+    this.ball = new Ball(this.ctx);
+    this.bricks = this.initBricks();
+    // this.drawBricks();
+
+    // if game already running, canc
+    if (this.requestId){
+      cancelAnimationFrame(this.requestId);
     }
+    this.gameStarted = true;
 
-    else {
-      this.paddle = new Paddle(this.ctx);
-      this.ball = new Ball(this.ctx);
-      this.bricks = this.initBricks();
-      // this.drawBricks();
+    this.animate();
 
-      // if game already running, canc
-      if (this.requestId){
-        cancelAnimationFrame(this.requestId);
-      }
-      this.gameStarted = true;
 
-      this.animate();
-
-    }
+    // if (this.paused){
+    //   this.paused = false;
+    //   this.animate();
+    // }
+    //
+    // else {
+    //   this.paddle = new Paddle(this.ctx);
+    //   this.ball = new Ball(this.ctx);
+    //   this.bricks = this.initBricks();
+    //   // this.drawBricks();
+    //
+    //   // if game already running, canc
+    //   if (this.requestId){
+    //     cancelAnimationFrame(this.requestId);
+    //   }
+    //   this.gameStarted = true;
+    //
+    //   this.animate();
+    //
+    // }
 
 
     // console.log("now were cooking with oil!");
@@ -153,8 +163,20 @@ export class BricksmashComponent implements OnInit {
 
   }
 
+  resetGame(): void{
+    this.score = 0;
+
+    // Development purposes
+    this.lives = 0;
+    // this.lives = 3;
+
+    this.paused = false;
+
+    this.pauseButtonText = 'Pause';
+  }
+
   // Reset game
-  resetGame(): void {
+  respawn(): void {
     this.ball.spawn();
     // this.paddle = new Paddle(this.ctx);
     this.paddle.spawn();
@@ -177,7 +199,7 @@ export class BricksmashComponent implements OnInit {
         // return;
       }
       else{
-        this.resetGame();
+        this.respawn();
         // return;
       }
       // return;
