@@ -3,7 +3,30 @@
   <canvas #brickSmashCanvas id="myCanvas" width="480" height="320"></canvas>
 
   <div class="wrapper">
-    <input class="btn btn-primary" type="button" value="Start"  id="startButton" (click)="startGame()" >
+    <input
+      class="btn btn-primary"
+      type="button"
+      value="Play"
+      id="startButton"
+      (click)="startGame()"
+      *ngIf="!gameStarted"
+    >
+    <input
+      class="btn btn-warning"
+      type="button"
+      value="{{ pauseButtonText }}"
+      id="pauseButton"
+      (click)="pause()"
+      *ngIf="gameStarted"
+    >
+    <input
+      class="btn btn-danger"
+      type="button"
+      value="Quit"
+      id="stopButton"
+      (click)="gameOver()"
+      *ngIf="gameStarted"
+    >
   </div>
 
 </div>

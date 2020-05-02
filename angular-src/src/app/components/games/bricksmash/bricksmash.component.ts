@@ -31,6 +31,7 @@ export class BricksmashComponent implements OnInit {
   paused: boolean;
   gameStarted: boolean;
   highScore: any;
+  pauseButtonText: string;
   moves = {
     [KEY.RIGHT]: (paddle: Paddle) => {
       paddle.rightPressed = true;
@@ -82,6 +83,8 @@ export class BricksmashComponent implements OnInit {
     // this.lives = 3;
 
     this.paused = false;
+
+    this.pauseButtonText = 'Pause';
     // this.initBricks();
 
     // Calculate size of canvas from constants..?
@@ -131,6 +134,23 @@ export class BricksmashComponent implements OnInit {
 
     // requestAnimationFrame(this.animate.bind(this));
     this.requestId = requestAnimationFrame(this.animate.bind(this));
+  }
+
+  pause(): void{
+    this.paused = !this.paused;
+
+    if (this.paused){
+      this.pauseButtonText = 'Play';
+      cancelAnimationFrame(this.requestId);
+      return;
+    }
+
+    else {
+      this.pauseButtonText = 'Pause';
+      this.animate();
+    }
+
+
   }
 
   // Reset game
