@@ -59,10 +59,21 @@ export class BricksmashComponent implements OnInit {
     }
   }
 
-  // hacky 'debugging' for x/y coordinates
-  @HostListener('document:mouseup', ['$event'])
-  onMouseMove(e){
-    console.log(e);
+  // // hacky 'debugging' for x/y coordinates
+  // @HostListener('document:mouseup', ['$event'])
+  // onMouseUp(e){
+  //   console.log(e);
+  // }
+
+  @HostListener('document:mousemove', ['$event'])
+    onMouseMove(e){
+    if (this.gameStarted) {
+      let relativeX = e.clientX - this.ctx.canvas.offsetLeft;
+      if (relativeX > 0 && relativeX < this.ctx.canvas.width) {
+        this.paddle.x = relativeX - this.paddle.width / 2;
+      }
+      // console.log(e);
+    }
   }
 
   constructor(private bricksmashService: BricksmashService) {
