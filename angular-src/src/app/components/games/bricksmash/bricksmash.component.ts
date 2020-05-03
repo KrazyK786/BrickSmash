@@ -173,6 +173,10 @@ export class BricksmashComponent implements OnInit {
     this.paused = false;
 
     this.pauseButtonText = 'Pause';
+
+    if (!this.highScore){
+      this.highScore = 0;
+    }
   }
 
   // Reset game
