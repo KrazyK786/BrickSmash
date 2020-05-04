@@ -282,7 +282,8 @@ export class BricksmashComponent implements OnInit {
     this.ctx.fillStyle = 'black';
     this.ctx.fillRect(0, this.ctx.canvas.height/3, this.ctx.canvas.width, this.ctx.canvas.height/3);
     // this.ctx.fillRect(1, 3, 8, 1.2);
-    this.ctx.font = '50px Arial';
+    this.ctx.font = '25px "Press Start 2P", Arial';
+    // this.ctx.font = '50px Arial';
     // this.ctx.font = '1px Arial';
     this.ctx.fillStyle = 'red';
     this.ctx.fillText('GAME OVER', this.ctx.canvas.width/5, this.ctx.canvas.height/2);
