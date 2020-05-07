@@ -18,6 +18,14 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    bricksmashscore: {
+        type: Number,
+        default: 0
+    },
+    tetrisscore: {
+        type: Number,
+        default: 0
     }
 });
 

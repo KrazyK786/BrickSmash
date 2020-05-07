@@ -5,6 +5,8 @@ import {Ball} from "../../../models/Ball";
 import {Brick} from "../../../models/Brick";
 
 import { BricksmashService } from "../../../services/games/bricksmash/bricksmash.service";
+import {UserData} from "../../../models/UserData";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'app-bricksmash',
@@ -12,6 +14,9 @@ import { BricksmashService } from "../../../services/games/bricksmash/bricksmash
   styleUrls: ['./bricksmash.component.css']
 })
 export class BricksmashComponent implements OnInit {
+  // Set User
+  user: UserData;
+
   // Get reference to canvas
   @ViewChild('brickSmashCanvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
@@ -30,7 +35,7 @@ export class BricksmashComponent implements OnInit {
   lives: number;
   paused: boolean;
   gameStarted: boolean;
-  highScore: any;
+  highScore: number;
   pauseButtonText: string;
   moves = {
     [KEY.RIGHT]: (paddle: Paddle) => {
@@ -76,10 +81,25 @@ export class BricksmashComponent implements OnInit {
     }
   }
 
-  constructor(private bricksmashService: BricksmashService) {
+  constructor(
+    private bricksmashService: BricksmashService,
+    private authService: AuthService
+              ) {
   }
 
   ngOnInit(): void {
+    this.authService.getProfile().subscribe(profile => {
+      console.log(profile);
+      this.user = profile.user;
+
+      // set highscore on page load
+      this.highScore = this.user.bricksmashscore;
+    },
+      err => {
+      console.log(err);
+      return false;
+      });
+
    this.initBrickSmash();
    // this.resetGame();
     // this.x = this.ctx.canvas.width/2;
@@ -185,9 +205,11 @@ export class BricksmashComponent implements OnInit {
 
     this.pauseButtonText = 'Pause';
 
-    if (!this.highScore){
-      this.highScore = 0;
-    }
+    // this.highScore = this.user.bricksmashscore;
+
+    // if (!this.highScore){
+    //   this.highScore = 0;
+    // }
   }
 
   // Reset game
