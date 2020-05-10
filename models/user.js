@@ -56,3 +56,44 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
         callback(null, isMatch);
     });
 }
+
+// Update Score
+module.exports.updateBrickSmashScore = function(id, score, callback){
+    // const user = User.findById(id, callback);
+    // const user = User.findOneAndUpdate(
+    // User.findOneAndUpdate(
+    //     {'_id' : id },
+    //     { '$set' : {
+    //         'bricksmashscore' : score
+    //         }}
+    // ).exec(
+    //     function (err, user) {
+    //         if (err) {
+    //             console.log(err);
+    //             res.status(500).send(err);
+    //         }
+    //         else {
+    //             res.status(200).send(user);
+    //         }
+    //
+    //     }
+    // );
+    
+    User.findOne(
+        { _id : id },
+        function (err, user) {
+            if (err){
+                console.log(err);
+                return;
+            }
+            
+            user.bricksmashscore = score;
+            user.save(callback);
+            console.log(user.bricksmashscore);
+        }
+    );
+    
+    // user.bricksmashscore = score;
+    //
+    // user.save(callback);
+}

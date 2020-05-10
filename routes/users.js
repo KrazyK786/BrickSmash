@@ -93,4 +93,16 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
     });
 });
 
+// Update Score
+router.put('/update-bricksmash-score', (req, res, next) => {
+    const userId = req.body.userId;
+    const newHighScore = req.body.score;
+    
+    console.log(`userId is ${userId} and new highscore is ${newHighScore}`);
+    
+    User.updateBrickSmashScore(userId, newHighScore, (err) => {
+        if (err) throw err;
+    })
+});
+
 module.exports = router;

@@ -7,6 +7,7 @@ import {Brick} from "../../../models/Brick";
 import { BricksmashService } from "../../../services/games/bricksmash/bricksmash.service";
 import {UserData} from "../../../models/UserData";
 import {AuthService} from "../../../services/auth.service";
+import {GameService} from "../../../services/games/game.service";
 
 @Component({
   selector: 'app-bricksmash',
@@ -83,7 +84,8 @@ export class BricksmashComponent implements OnInit {
 
   constructor(
     private bricksmashService: BricksmashService,
-    private authService: AuthService
+    private authService: AuthService,
+    private gameService: GameService
               ) {
   }
 
@@ -300,7 +302,17 @@ export class BricksmashComponent implements OnInit {
   gameOver(): void {
     this.gameStarted = false;
     cancelAnimationFrame(this.requestId);
-    this.highScore = this.score > this.highScore ? this.score : this.highScore;
+
+    // update highscore
+    if (this.score > this.highScore){
+      this.gameService.updateScore('bricksmash', this.score).subscribe( user => {
+        console.log(user);
+      });
+      this.highScore = this.score;
+    }
+    // this.highScore = this.score > this.highScore ? this.score : this.highScore;
+
+
     this.ctx.fillStyle = 'black';
     this.ctx.fillRect(0, this.ctx.canvas.height/3, this.ctx.canvas.width, this.ctx.canvas.height/3);
     // this.ctx.fillRect(1, 3, 8, 1.2);
