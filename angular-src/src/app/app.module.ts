@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
-  {path:'games/bricksmash', component: BricksmashComponent}
+  {path:'games/bricksmash', component: BricksmashComponent, canActivate:[AuthGuard]}
 ];
 
 export function tokenGetter() {
