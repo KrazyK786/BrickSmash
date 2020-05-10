@@ -305,10 +305,12 @@ export class BricksmashComponent implements OnInit {
 
     // update highscore
     if (this.score > this.highScore){
-      this.gameService.updateScore('bricksmash', this.score).subscribe( user => {
-        console.log(user);
+      this.gameService.updateScore('bricksmash', this.score).subscribe( res => {
+        // console.log(res);
+        if (res.success === true){
+          this.highScore = res.user.bricksmashscore;
+        }
       });
-      this.highScore = this.score;
     }
     // this.highScore = this.score > this.highScore ? this.score : this.highScore;
 

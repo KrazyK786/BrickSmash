@@ -79,12 +79,28 @@ module.exports.updateBrickSmashScore = function(id, score, callback){
     //     }
     // );
     
-    User.findOne(
-        { _id : id },
+    // User.findOne(
+    //     { _id : id },
+    //     function (err, user) {
+    //         if (err){
+    //             // console.log(err);
+    //             // return;
+    //             throw err;
+    //         }
+    //
+    //         user.bricksmashscore = score;
+    //         user.save(callback);
+    //         console.log(user.bricksmashscore);
+    //     }
+    // );
+    
+    User.findById(
+        id,
         function (err, user) {
             if (err){
-                console.log(err);
-                return;
+                // console.log(err);
+                // return;
+                throw err;
             }
             
             user.bricksmashscore = score;
@@ -92,8 +108,4 @@ module.exports.updateBrickSmashScore = function(id, score, callback){
             console.log(user.bricksmashscore);
         }
     );
-    
-    // user.bricksmashscore = score;
-    //
-    // user.save(callback);
 }

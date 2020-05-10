@@ -100,8 +100,14 @@ router.put('/update-bricksmash-score', (req, res, next) => {
     
     console.log(`userId is ${userId} and new highscore is ${newHighScore}`);
     
-    User.updateBrickSmashScore(userId, newHighScore, (err) => {
+    User.updateBrickSmashScore(userId, newHighScore, (err, user) => {
         if (err) throw err;
+        // console.log(user);
+        res.json({
+            success : true,
+            user : user
+            }
+        )
     })
 });
 
