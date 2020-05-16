@@ -29,7 +29,7 @@ const appRoutes: Routes = [
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'games/bricksmash', component: BricksmashComponent, canActivate:[AuthGuard]},
-  {path:'games/tetris', component: TetrisComponent}
+  {path:'games/tetris', component: TetrisComponent, canActivate:[AuthGuard]}
 ];
 
 export function tokenGetter() {
