@@ -19,6 +19,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { JwtHelperService, JwtModule } from "@auth0/angular-jwt";
 import { AuthGuard } from "./guards/auth.guard";
 import { BricksmashComponent } from './components/games/bricksmash/bricksmash.component';
+import { TetrisComponent } from './components/games/tetris/tetris.component';
 
 
 const appRoutes: Routes = [
@@ -27,7 +28,8 @@ const appRoutes: Routes = [
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
-  {path:'games/bricksmash', component: BricksmashComponent, canActivate:[AuthGuard]}
+  {path:'games/bricksmash', component: BricksmashComponent, canActivate:[AuthGuard]},
+  {path:'games/tetris', component: TetrisComponent}
 ];
 
 export function tokenGetter() {
@@ -43,7 +45,8 @@ export function tokenGetter() {
     HomeComponent,
     DashboardComponent,
     ProfileComponent,
-    BricksmashComponent
+    BricksmashComponent,
+    TetrisComponent
   ],
   imports: [
     BrowserModule,
