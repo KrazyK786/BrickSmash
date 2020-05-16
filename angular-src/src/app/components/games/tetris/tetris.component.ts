@@ -2,6 +2,9 @@ import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/c
 import {BLOCK_SIZE, COLORS, COLS, KEY, LEVEL, LINES_PER_LEVEL, POINTS, ROWS} from "../../../models/constants";
 import {IPiece, Piece} from "../../../models/Piece";
 import {TetrisService} from "../../../services/games/tetris/tetris.service";
+import {AuthService} from "../../../services/auth.service";
+import {GameService} from "../../../services/games/game.service";
+import {UserData} from "../../../models/UserData";
 
 @Component({
   selector: 'app-tetris',
@@ -9,6 +12,9 @@ import {TetrisService} from "../../../services/games/tetris/tetris.service";
   styleUrls: ['./tetris.component.css']
 })
 export class TetrisComponent implements OnInit {
+  // Set User
+  user: UserData;
+
   // Get reference to canvas
   @ViewChild('board', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
@@ -86,10 +92,24 @@ export class TetrisComponent implements OnInit {
 
 
   constructor(
-    private tetrisService: TetrisService
+    private tetrisService: TetrisService,
+    private authService: AuthService,
+    private gameService: GameService
   ) { }
 
   ngOnInit(): void {
+    this.authService.getProfile().subscribe(profile => {
+        console.log(profile);
+        this.user = profile.user;
+
+        // set highscore on page load
+        this.highScore = this.user.tetrisscore;
+      },
+      err => {
+        console.log(err);
+        return false;
+      });
+
     this.initBoard();
     this.initNext();
     this.resetGame();
@@ -270,6 +290,18 @@ export class TetrisComponent implements OnInit {
   gameOver(): void {
     this.gameStarted = false;
     cancelAnimationFrame(this.requestId);
+
+    // update highscore
+    if (this.points > this.highScore){
+      this.gameService.updateScore('tetris', this.points).subscribe( res => {
+        // console.log(res);
+        if (res.success === true){
+          this.highScore = res.user.tetrisscore;
+        }
+      });
+    }
+    // this.highScore = this.points > this.highScore ? this.points : this.highScore;
+
     this.highScore = this.points > this.highScore ? this.points : this.highScore;
     this.ctx.fillStyle = 'black';
     this.ctx.fillRect(1, 3, 8, 1.2);

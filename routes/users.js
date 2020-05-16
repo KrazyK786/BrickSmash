@@ -93,7 +93,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
     });
 });
 
-// Update Score
+// Update Bricksmash Score
 router.put('/update-bricksmash-score', (req, res, next) => {
     const userId = req.body.userId;
     const newHighScore = req.body.score;
@@ -106,6 +106,24 @@ router.put('/update-bricksmash-score', (req, res, next) => {
         res.json({
             success : true,
             user : user
+            }
+        )
+    })
+});
+
+// Update Tetris Score
+router.put('/update-tetris-score', (req, res, next) => {
+    const userId = req.body.userId;
+    const newHighScore = req.body.score;
+    
+    console.log(`userId is ${userId} and new highscore is ${newHighScore}`);
+    
+    User.updateTetrisScore(userId, newHighScore, (err, user) => {
+        if (err) throw err;
+        // console.log(user);
+        res.json({
+                success : true,
+                user : user
             }
         )
     })

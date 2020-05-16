@@ -57,42 +57,8 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     });
 }
 
-// Update Score
+// Update BrickSmash Score
 module.exports.updateBrickSmashScore = function(id, score, callback){
-    // const user = User.findById(id, callback);
-    // const user = User.findOneAndUpdate(
-    // User.findOneAndUpdate(
-    //     {'_id' : id },
-    //     { '$set' : {
-    //         'bricksmashscore' : score
-    //         }}
-    // ).exec(
-    //     function (err, user) {
-    //         if (err) {
-    //             console.log(err);
-    //             res.status(500).send(err);
-    //         }
-    //         else {
-    //             res.status(200).send(user);
-    //         }
-    //
-    //     }
-    // );
-    
-    // User.findOne(
-    //     { _id : id },
-    //     function (err, user) {
-    //         if (err){
-    //             // console.log(err);
-    //             // return;
-    //             throw err;
-    //         }
-    //
-    //         user.bricksmashscore = score;
-    //         user.save(callback);
-    //         console.log(user.bricksmashscore);
-    //     }
-    // );
     
     User.findById(
         id,
@@ -106,6 +72,25 @@ module.exports.updateBrickSmashScore = function(id, score, callback){
             user.bricksmashscore = score;
             user.save(callback);
             console.log(user.bricksmashscore);
+        }
+    );
+}
+
+// Update Tetris Score
+module.exports.updateTetrisScore = function(id, score, callback){
+    
+    User.findById(
+        id,
+        function (err, user) {
+            if (err){
+                // console.log(err);
+                // return;
+                throw err;
+            }
+            
+            user.tetrisscore = score;
+            user.save(callback);
+            console.log(user.tetrisscore);
         }
     );
 }
