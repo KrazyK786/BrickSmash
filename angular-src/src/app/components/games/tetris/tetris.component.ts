@@ -45,7 +45,7 @@ export class TetrisComponent implements OnInit {
   @HostListener('window: keydown', ['$event'])
   keyEvent(event: KeyboardEvent){
     if (event.code === KEY.ESC){
-      // this.gameOver();
+      this.gameOver();
     }
     //event.keyCode is deprecated
     if (this.moves[event.code]){
