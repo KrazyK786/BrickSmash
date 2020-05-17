@@ -1,13 +1,31 @@
-* {
-  font-family: "Press Start 2P", cursive;
+/** {*/
+/*  font-family: "Press Start 2P", cursive;*/
+/*}*/
+
+.gameCanvas {
+  /*display: grid;*/
+  /*grid-template-columns: 320px 200px;*/
+  background: #eeeeee;
+  display: block;
+  margin: auto;
 }
 
-canvas {
-  background:#eee;
-  display:block;
-  margin:0 auto;
-}
+/*canvas {*/
+/*  background:#eee;*/
+/*  display:block;*/
+/*  !*margin:0 auto;*!*/
+/*}*/
 
 .wrapper {
   text-align: center;
+
+  padding: 20px;
+}
+
+#pauseButton {
+  margin-right: 10px;
+}
+
+#stopButton {
+  margin-left: 10px;
 }

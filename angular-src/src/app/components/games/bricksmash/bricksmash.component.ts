@@ -38,6 +38,7 @@ export class BricksmashComponent implements OnInit {
   gameStarted: boolean;
   highScore: number;
   pauseButtonText: string;
+  pauseButtonClass: string;
   moves = {
     [KEY.RIGHT]: (paddle: Paddle) => {
       paddle.rightPressed = true;
@@ -184,12 +185,14 @@ export class BricksmashComponent implements OnInit {
 
     if (this.paused){
       this.pauseButtonText = 'Play';
+      this.pauseButtonClass = 'btn btn-success';
       cancelAnimationFrame(this.requestId);
       return;
     }
 
     else {
       this.pauseButtonText = 'Pause';
+      this.pauseButtonClass = 'btn btn-warning';
       this.animate();
     }
 
@@ -206,6 +209,7 @@ export class BricksmashComponent implements OnInit {
     this.paused = false;
 
     this.pauseButtonText = 'Pause';
+    this.pauseButtonClass = 'btn btn-warning';
 
     // this.highScore = this.user.bricksmashscore;
 

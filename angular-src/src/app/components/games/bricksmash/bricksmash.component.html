@@ -7,11 +7,11 @@
     <p>High Score: {{ highScore }}</p>
   </div>
 
-  <canvas #brickSmashCanvas id="myCanvas" width="480" height="320"></canvas>
+  <canvas #brickSmashCanvas class="gameCanvas" width="480" height="320"></canvas>
 
   <div class="wrapper">
     <input
-      class="btn btn-primary"
+      class="btn btn-success"
       type="button"
       value="Play"
       id="startButton"
@@ -19,7 +19,7 @@
       *ngIf="!gameStarted"
     >
     <input
-      class="btn btn-warning"
+      class="{{ pauseButtonClass }}"
       type="button"
       value="{{ pauseButtonText }}"
       id="pauseButton"
@@ -34,6 +34,6 @@
       (click)="gameOver()"
       *ngIf="gameStarted"
     >
-  </div>
+<!--  </div>-->
 
 </div>

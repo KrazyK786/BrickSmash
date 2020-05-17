@@ -12,10 +12,36 @@
       <canvas #next class="next"></canvas>
     </div>
     <div class="button-container">
-      <button
+<!--      <button-->
+<!--        (click)="play()"-->
+<!--        class="play-button"-->
+<!--      >Play</button>-->
+
+      <input
+        class="btn btn-success"
+        type="button"
+        value="Play"
+        id="startButton"
         (click)="play()"
-        class="play-button"
-      >Play</button>
+        *ngIf="!gameStarted"
+      >
+      <input
+        class="{{ pauseButtonClass }}"
+        type="button"
+        value="{{ pauseButtonText }}"
+        id="pauseButton"
+        (click)="pause()"
+        *ngIf="gameStarted"
+      >
+      <input
+        class="btn btn-danger"
+        type="button"
+        value="Quit"
+        id="stopButton"
+        (click)="gameOver()"
+        *ngIf="gameStarted"
+      >
+
     </div>
   </div>
 </div>

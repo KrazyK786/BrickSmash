@@ -34,6 +34,8 @@ export class TetrisComponent implements OnInit {
   highScore: number;
   paused: boolean;
   gameStarted: boolean;
+  pauseButtonText: string;
+  pauseButtonClass: string;
   // time: Time;
   time: {
     start: number;
@@ -281,6 +283,9 @@ export class TetrisComponent implements OnInit {
     this.board = this.tetrisService.getEmptyBoard();
     this.time = { start: 0, elapsed: 0, level: LEVEL[this.level] };
     this.paused = false;
+
+    this.pauseButtonText = 'Pause';
+    this.pauseButtonClass = 'btn btn-warning';
     // this.addOutlines();
   }
 
@@ -308,6 +313,21 @@ export class TetrisComponent implements OnInit {
     this.ctx.font = '1px Arial';
     this.ctx.fillStyle = 'red';
     this.ctx.fillText('GAME OVER', 1.8, 4);
+  }
+
+  pause(): void {
+    this.paused = !this.paused;
+
+    if (this.paused) {
+      this.pauseButtonText = 'Play';
+      this.pauseButtonClass = 'btn btn-success';
+      cancelAnimationFrame(this.requestId);
+      return;
+    } else {
+      this.pauseButtonText = 'Pause';
+      this.pauseButtonClass = 'btn btn-warning';
+      this.animate();
+    }
   }
 
 }
