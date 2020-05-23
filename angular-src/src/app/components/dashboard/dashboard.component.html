@@ -4,4 +4,29 @@
     <!--  Welcome to your Dashboard!-->
     Welcome to your Dashboard {{user.name}}!
   </p>
+
+  <div class="jumbotron text-center">
+    <h1>{{user.name}}'s Arcade Library</h1>
+<!--    <p class="lead">Welcome to The Arcade Library!! Low-tech fun in a high-tech world :)</p>-->
+    <div>
+      <a class="btn btn-primary" [routerLink]="['/games/bricksmash']">BrickSmash</a>
+      <a class="btn btn-secondary" [routerLink]="['/games/tetris']">Tetris</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4" >
+      <h3>High Scores</h3>
+      <p>Coming soon!</p>
+    </div>
+<!--    <div class="col-md-4">-->
+<!--      <h3>Profi</h3>-->
+<!--      <p>Angular-CLI to generate components, services and more.  Local dev server and easy compilation</p>-->
+<!--    </div>-->
+<!--    <div class="col-md-4">-->
+<!--      <h3>JWT Tokens</h3>-->
+<!--      <p>Full featured authentication using JSON web tokens.  Login and store user data</p>-->
+<!--    </div>-->
+  </div>
+
 </div>
