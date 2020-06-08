@@ -3,6 +3,14 @@ export class UserData {
   name: string;
   username: string;
   email: string;
-  bricksmashscore: number;
-  tetrisscore: number;
+  games: {
+    bricksmash: {
+      highscore: number
+    },
+    tetris: {
+      highscore: number
+    }
+  }
+  // bricksmashscore: number;
+  // tetrisscore: number;
 }

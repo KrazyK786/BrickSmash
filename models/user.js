@@ -2,6 +2,23 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 
+// Comment Schema
+const CommentSchema = mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    body: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now()
+    }
+});
+
 // User Schema
 const UserSchema = mongoose.Schema({
     name: {
@@ -19,14 +36,29 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    bricksmashscore: {
-        type: Number,
-        default: 0
-    },
-    tetrisscore: {
-        type: Number,
-        default: 0
+    comments: [CommentSchema],
+    games: {
+        bricksmash:{
+            highscore: {
+                type: Number,
+                default: 0
+            }
+        },
+        tetris:{
+            highscore: {
+                type: Number,
+                default: 0
+            }
+        }
     }
+    // bricksmashscore: {
+    //     type: Number,
+    //     default: 0
+    // },
+    // tetrisscore: {
+    //     type: Number,
+    //     default: 0
+    // }
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -69,9 +101,10 @@ module.exports.updateBrickSmashScore = function(id, score, callback){
                 throw err;
             }
             
-            user.bricksmashscore = score;
+            user.games.bricksmash.highscore = score;
+            // user.bricksmashscore = score;
             user.save(callback);
-            console.log(user.bricksmashscore);
+            // console.log(user.bricksmashscore);
         }
     );
 }
@@ -87,10 +120,10 @@ module.exports.updateTetrisScore = function(id, score, callback){
                 // return;
                 throw err;
             }
-            
-            user.tetrisscore = score;
+            user.games.tetris.highscore = score;
+            // user.tetrisscore = score;
             user.save(callback);
-            console.log(user.tetrisscore);
+            // console.log(user.tetrisscore);
         }
     );
 }

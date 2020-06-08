@@ -105,7 +105,7 @@ export class TetrisComponent implements OnInit {
         this.user = profile.user;
 
         // set highscore on page load
-        this.highScore = this.user.tetrisscore;
+        this.highScore = this.user.games.tetris.highscore;
       },
       err => {
         console.log(err);
@@ -115,7 +115,7 @@ export class TetrisComponent implements OnInit {
     this.initBoard();
     this.initNext();
     this.resetGame();
-    this.highScore = 0;
+    // this.highScore = 0;
 
     // Scale so we don't need to give size on every draw
     this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
@@ -301,7 +301,7 @@ export class TetrisComponent implements OnInit {
       this.gameService.updateScore('tetris', this.points).subscribe( res => {
         // console.log(res);
         if (res.success === true){
-          this.highScore = res.user.tetrisscore;
+          this.highScore = res.user.games.tetris.highscore;
         }
       });
     }

@@ -96,7 +96,8 @@ export class BricksmashComponent implements OnInit {
       this.user = profile.user;
 
       // set highscore on page load
-      this.highScore = this.user.bricksmashscore;
+      // this.highScore = this.user.bricksmashscore;
+      this.highScore = this.user.games.bricksmash.highscore;
     },
       err => {
       console.log(err);
@@ -312,7 +313,8 @@ export class BricksmashComponent implements OnInit {
       this.gameService.updateScore('bricksmash', this.score).subscribe( res => {
         // console.log(res);
         if (res.success === true){
-          this.highScore = res.user.bricksmashscore;
+          // this.highScore = res.user.bricksmashscore;
+          this.highScore = res.user.games.bricksmash.highscore;
         }
       });
     }
