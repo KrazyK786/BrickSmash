@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
 const User = require('../models/user');
+const Comment = require('../models/user');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -128,5 +129,37 @@ router.put('/update-tetris-score', (req, res, next) => {
         )
     })
 });
+
+// Update comment
+router.put('/addComment', (req, res, next) => {
+    const toId = req.body.toId;
+    let newComment = new Comment({
+        user: req.body.userId,
+        body: req.body.commentBody
+    });
+    
+    User.addComment(toId, newComment, (err, user) => {
+        if (err) throw err;
+        
+        res.json({
+            success: true,
+            user: user
+        })
+    })
+});
+
+// Delete comment
+router.delete('/deleteComment/:id', (req, res, next) => {
+    const commentId = req.params.id;
+    
+    User.deleteComment(commentId, (err, user) => {
+        if (err) throw err;
+        
+        res.json({
+            success: true,
+            user: user
+        })
+    });
+})
 
 module.exports = router;

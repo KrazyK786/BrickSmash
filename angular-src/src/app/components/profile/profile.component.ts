@@ -10,6 +10,7 @@ import {UserData} from "../../models/UserData";
 })
 export class ProfileComponent implements OnInit {
   user:UserData;
+  testDate: string;
 
   constructor(
     private authService:AuthService,
@@ -19,12 +20,16 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getProfile().subscribe(profile => {
         this.user = profile.user;
-        // console.log(this.user);
+        console.log(this.user);
+        this.testDate = new Date(this.user.comments[2].date).toDateString();
+        // console.log(typeof this.testDate);
+        console.log(typeof this.user.comments[2].date);
       },
       err => {
         console.log(err);
         return false;
       });
+
   }
 
 }

@@ -4,4 +4,17 @@
     <li class="list-group-item">Username: {{user.username}}</li>
     <li class="list-group-item">Email: {{user.email}}</li>
   </ul>
+
+  <div>
+    <p *ngFor="let comment of user.comments">
+      Date: {{ comment.date | date }} <br>
+      Comment: {{ comment.body }}
+    </p>
+  </div>
+<!--  <div>-->
+<!--    <p>{{ user.comments[0].body }}</p>-->
+<!--    <p>{{ user.comments[0].user.username }}</p>-->
+<!--    <p>{{ user.comments[2].date }}</p>-->
+<!--    <p>{{ this.testDate }}</p>-->
+<!--  </div>-->
 </div>

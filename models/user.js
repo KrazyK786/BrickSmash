@@ -15,7 +15,7 @@ const CommentSchema = mongoose.Schema({
     },
     date: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     }
 });
 
@@ -62,9 +62,10 @@ const UserSchema = mongoose.Schema({
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
+const Comment = module.exports = mongoose.model('Comment', CommentSchema);
 
 module.exports.getUserById = function(id, callback){
-    User.findById(id, callback);
+    User.findById(id, callback).populate('comments.user');
 }
 
 module.exports.getUserByUsername = function(username, callback){
@@ -126,4 +127,46 @@ module.exports.updateTetrisScore = function(id, score, callback){
             // console.log(user.tetrisscore);
         }
     );
+}
+
+module.exports.addComment = function(id, comment, callback) {
+    
+    User.findById(
+        id,
+        function (err, user) {
+            if (err){
+                throw err;
+            }
+            
+            user.comments.push(comment);
+            user.save(callback);
+        }
+    );
+    
+}
+
+module.exports.deleteComment = function(commentId, callback){
+    // User.findById(
+    //     userId,
+    //     function (err, user) {
+    //         if (err) throw err;
+    //
+    //         user.comments.id(commentId).remove();
+    //         user.save(callback);
+    //     }
+    // )
+    
+    User.findOne({
+        'comments':{
+            $elemMatch: {
+                '_id': commentId
+            }
+        }
+    },
+    function (err, user) {
+        if (err) throw err;
+
+        user.comments.id(commentId).remove();
+        user.save(callback);
+    });
 }

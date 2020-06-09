@@ -1,3 +1,5 @@
+import {Comment} from "./Comment";
+
 export class User {
   success: boolean;
   token: string;
@@ -7,6 +9,7 @@ export class User {
     name: string,
     username: string,
     email: string,
+    comments: Comment[],
     games: {
       bricksmash: {
         highscore: number
