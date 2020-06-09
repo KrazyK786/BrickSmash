@@ -4,4 +4,5 @@ export class Comment {
   };
   body: string;
   date: Date;
+  _id: number;
 }

@@ -39,7 +39,7 @@
         <tr *ngFor="let comment of user.comments">
           <td>{{ comment.date | date }}</td>
           <td>{{ comment.body }}</td>
-          <td><button>Delete</button></td>
+          <td><button (click)="deleteComment(comment._id)" >Delete</button></td>
         </tr>
       </table>
 <!--      <p *ngFor="let comment of user.comments">-->
