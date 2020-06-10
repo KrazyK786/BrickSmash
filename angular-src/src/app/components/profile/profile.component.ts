@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
 import {UserData} from "../../models/UserData";
+import {CommentsService} from "../../services/comments/comments.service";
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private authService:AuthService,
-    private router:Router
+    private router:Router,
+    private commentsService: CommentsService
   ) { }
 
   ngOnInit(): void {
@@ -33,7 +35,18 @@ export class ProfileComponent implements OnInit {
   }
 
   addComment(): void{
+    // TODO: implement browsing to other profile pages and adding comments to them
+
+    // TODO: refactor test code
+    this.commentsService.addComment(this.user.id, this.comment).subscribe( res => {
+      if (res.success === true){
+        this.user = res.user;
+      }
+    })
+
     console.log(this.comment);
+
+    // reset input field
     this.comment = '';
   }
 

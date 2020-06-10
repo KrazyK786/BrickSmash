@@ -18,11 +18,12 @@ export class CommentsService {
     ).pipe();
   }
 
-  addComment(toId: number, comment: string): Observable<User> {
+  // TODO: refactor test code (recipientId
+  addComment(recipientId: number, comment: string): Observable<User> {
     const userId: number = JSON.parse(localStorage.getItem('user')).id;
 
     const body = {
-      toId: toId,
+      toId: userId,
       userId: userId,
       commentBody: comment
     }
@@ -32,6 +33,7 @@ export class CommentsService {
         'Content-Type': 'application/json',
       })
     }
+
 
     return this.http.put<User>(`http://localhost:8080/users/addComment`,
       body,
