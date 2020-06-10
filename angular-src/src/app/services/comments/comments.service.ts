@@ -14,12 +14,28 @@ export class CommentsService {
   ) { }
 
   deleteComment(commentId: number): Observable<User> {
-    const httpOptions = {
-      // headers: new HttpHeaders({
-      //   'Content-Type'
-      // })
-    }
     return this.http.delete<User>(`http://localhost:8080/users/deleteComment/${commentId}`
+    ).pipe();
+  }
+
+  addComment(toId: number, comment: string): Observable<User> {
+    const userId: number = JSON.parse(localStorage.getItem('user')).id;
+
+    const body = {
+      toId: toId,
+      userId: userId,
+      commentBody: comment
+    }
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    }
+
+    return this.http.put<User>(`http://localhost:8080/users/addComment`,
+      body,
+      httpOptions
     ).pipe();
   }
 }

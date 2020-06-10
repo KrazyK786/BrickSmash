@@ -10,7 +10,7 @@ import {UserData} from "../../models/UserData";
 })
 export class ProfileComponent implements OnInit {
   user:UserData;
-  testDate: string;
+  comment: string;
 
   constructor(
     private authService:AuthService,
@@ -21,15 +21,20 @@ export class ProfileComponent implements OnInit {
     this.authService.getProfile().subscribe(profile => {
         this.user = profile.user;
         console.log(this.user);
-        this.testDate = new Date(this.user.comments[2].date).toDateString();
+        // this.testDate = new Date(this.user.comments[2].date).toDateString();
         // console.log(typeof this.testDate);
-        console.log(typeof this.user.comments[2].date);
+        // console.log(typeof this.user.comments[2].date);
       },
       err => {
         console.log(err);
         return false;
       });
 
+  }
+
+  addComment(): void{
+    console.log(this.comment);
+    this.comment = '';
   }
 
 }
