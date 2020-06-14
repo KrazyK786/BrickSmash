@@ -90,6 +90,20 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     });
 }
 
+// Return users sorted by BrickSmash highscore
+module.exports.getBrickSmashHighScores = function(callback){
+    // User.find(callback).sort({'games.bricksmash.highscore': -1}).populate('comments.user');
+    User.find({})
+        .sort({'games.bricksmash.highscore': -1})
+        .populate('comments.user')
+        .exec((callback));
+    // User.find({}).exec((err, userArr) => {
+    //     if (err) throw err;
+    //
+    //     console.log(userArr);
+    // });
+}
+
 // Update BrickSmash Score
 module.exports.updateBrickSmashScore = function(id, score, callback){
     

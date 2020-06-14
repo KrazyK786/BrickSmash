@@ -94,6 +94,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
     });
 });
 
+// TODO: update to 'profile/:id' ?
 // User data by id
 router.get('/:id', (req, res, next) => {
     const id = req.params.id;
@@ -143,6 +144,19 @@ router.put('/update-tetris-score', (req, res, next) => {
         )
     })
 });
+
+// TODO: update endpoint?
+// Get BrickSmash Highscores
+router.get('/games/bricksmashScores', (req, res, next) => {
+    User.getBrickSmashHighScores((err, usersArray) => {
+        if (err) throw err;
+        
+        res.json({
+            success: true,
+            sortedUsers : usersArray
+        })
+    })
+})
 
 // Add comment
 router.put('/addComment', (req, res, next) => {
