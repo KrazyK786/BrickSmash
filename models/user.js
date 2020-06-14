@@ -138,6 +138,7 @@ module.exports.addComment = function(id, comment, callback) {
                 throw err;
             }
             
+            
             user.comments.push(comment);
             user.save(callback);
         }

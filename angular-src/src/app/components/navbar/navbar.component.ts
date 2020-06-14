@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
 import { FlashMessagesService } from "angular2-flash-messages";
+import {UserData} from "../../models/UserData";
 
 @Component({
   selector: 'app-navbar',
@@ -9,6 +10,8 @@ import { FlashMessagesService } from "angular2-flash-messages";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  user: UserData;
+  id: string;
 
   constructor(
     public authService:AuthService,
@@ -17,6 +20,15 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.id = JSON.parse(localStorage.getItem('user')).id;
+    // console.log(this.user._id);
+    console.log(this.id);
+
+  }
+
+  getLoggedInIdAndRoute(): void{
+    this.id = JSON.parse(localStorage.getItem('user')).id;
+    this.router.navigate((['/profile', this.id]));
   }
 
   onLogoutClick(){

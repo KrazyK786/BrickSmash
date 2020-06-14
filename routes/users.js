@@ -94,6 +94,20 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
     });
 });
 
+// User data by id
+router.get('/:id', (req, res, next) => {
+    const id = req.params.id;
+    
+    User.getUserById(id, (err, user) => {
+        if (err) throw err;
+        
+        res.json({
+            success: true,
+            user: user
+        });
+    });
+});
+
 // Update Bricksmash Score
 router.put('/update-bricksmash-score', (req, res, next) => {
     const userId = req.body.userId;
@@ -130,13 +144,17 @@ router.put('/update-tetris-score', (req, res, next) => {
     })
 });
 
-// Update comment
+// Add comment
 router.put('/addComment', (req, res, next) => {
     const toId = req.body.toId;
+    
+    console.log(toId);
+    
     let newComment = new Comment({
         user: req.body.userId,
         body: req.body.commentBody
     });
+    
     
     User.addComment(toId, newComment, (err, user) => {
         if (err) throw err;

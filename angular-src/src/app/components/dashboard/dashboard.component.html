@@ -36,6 +36,9 @@
           <th>Comment</th>
           <th></th>
         </tr>
+        <tr *ngIf="user.comments.length == 0">
+          <td>'No Comment' :P</td>
+        </tr>
         <tr *ngFor="let comment of user.comments">
           <td>{{ comment.date | date }}</td>
           <td>{{ comment.body }}</td>

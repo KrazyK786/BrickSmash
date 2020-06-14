@@ -19,11 +19,11 @@ export class CommentsService {
   }
 
   // TODO: refactor test code (recipientId
-  addComment(recipientId: number, comment: string): Observable<User> {
+  addComment(recipientId: string, comment: string): Observable<User> {
     const userId: number = JSON.parse(localStorage.getItem('user')).id;
 
     const body = {
-      toId: userId,
+      toId: recipientId,
       userId: userId,
       commentBody: comment
     }
@@ -34,6 +34,7 @@ export class CommentsService {
       })
     }
 
+    console.log('Recipient id: ' + recipientId);
 
     return this.http.put<User>(`http://localhost:8080/users/addComment`,
       body,

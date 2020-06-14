@@ -47,6 +47,22 @@ export class AuthService {
     );
   }
 
+  // TODO: make new api endpoint for user by id?
+  getUserById(id: string): Observable<User> {
+    // this.loadToken();
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+        // 'Authorization':this.authToken
+      })
+    }
+
+    console.log('The id of the profile is: '+ id);
+    return this.http.get<User>(`http://localhost:8080/users/${id}`, httpOptions
+    );
+  }
+
   storeUserData(token, user){
     localStorage.setItem('id_token', token);
     localStorage.setItem('user', JSON.stringify(user));

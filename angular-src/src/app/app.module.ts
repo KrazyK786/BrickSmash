@@ -27,7 +27,7 @@ const appRoutes: Routes = [
   {path:'register', component: RegisterComponent},
   {path:'login', component: LoginComponent},
   {path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
-  {path:'profile', component: ProfileComponent, canActivate:[AuthGuard]},
+  {path:'profile/:id', component: ProfileComponent, canActivate:[AuthGuard]},
   {path:'games/bricksmash', component: BricksmashComponent, canActivate:[AuthGuard]},
   {path:'games/tetris', component: TetrisComponent, canActivate:[AuthGuard]}
 ];
