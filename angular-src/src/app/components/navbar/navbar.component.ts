@@ -20,9 +20,12 @@ export class NavbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.id = JSON.parse(localStorage.getItem('user')).id;
+    // double check if anyone is logged in
+    if (JSON.parse(localStorage.getItem('user'))){
+      this.id = JSON.parse(localStorage.getItem('user')).id;
+    }
     // console.log(this.user._id);
-    console.log(this.id);
+    // console.log(this.id);
 
   }
 

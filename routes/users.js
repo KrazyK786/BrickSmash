@@ -12,7 +12,7 @@ router.post('/register', (req, res, next) => {
     let newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        username: req.body.username.toLowerCase(),
+        username: req.body.username,
         password: req.body.password
     });
     
@@ -37,7 +37,7 @@ router.post('/authenticate', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
     
-    User.getUserByUsername(username.toLowerCase(), (err, user) => {
+    User.getUserByUsername(new RegExp("^" + username + "$", "i"), (err, user) => {
         if (err) throw err;
         
         if (!user){
