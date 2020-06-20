@@ -71,7 +71,9 @@ const User = module.exports = mongoose.model('User', UserSchema);
 const Comment = module.exports = mongoose.model('Comment', CommentSchema);
 
 module.exports.getUserById = function(id, callback){
-    User.findById(id, callback).populate('comments.user');
+    User.findById(id, callback).
+    populate('comments.user').
+    populate('friends');
 }
 
 module.exports.getUserByUsername = function(username, callback){
@@ -102,6 +104,7 @@ module.exports.getBrickSmashHighScores = function(callback){
     User.find({})
         .sort({'games.bricksmash.highscore': -1})
         .populate('comments.user')
+        .populate('friends')
         .exec((callback));
     // User.find({}).exec((err, userArr) => {
     //     if (err) throw err;
@@ -195,7 +198,7 @@ module.exports.deleteComment = function(commentId, callback){
     });
 }
 
-//  Friends
+//  Friend
 // Add friend
 module.exports.addFriend = function(id, friendId, callback) {
     
@@ -227,3 +230,24 @@ module.exports.deleteFriend = function(id, friendId, callback){
             user.save(callback);
         });
 }
+
+// Transform _id to id
+// module.exports.transform = function (user) {
+//     let obj = user.toObject();
+//
+//     // Rename field
+//     obj.id = obj._id;
+//     delete obj._id;
+//
+//     return obj;
+// }
+
+UserSchema.method('transform', function () {
+    let obj = this.toObject();
+    
+    // Rename field
+    obj.id = obj._id;
+    // delete obj._id;
+    
+    return obj;
+} )

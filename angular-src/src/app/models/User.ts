@@ -1,4 +1,5 @@
 import {Comment} from "./Comment";
+import {Friend} from "./Friend";
 
 export class User {
   success: boolean;
@@ -10,6 +11,7 @@ export class User {
     username: string,
     email: string,
     comments: Comment[],
+    friends: Friend[],
     games: {
       bricksmash: {
         highscore: number

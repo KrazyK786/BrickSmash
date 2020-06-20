@@ -1,4 +1,5 @@
 import {Comment} from "./Comment";
+import {Friend} from "./Friend";
 
 export class UserData {
   id: number;
@@ -6,6 +7,7 @@ export class UserData {
   username: string;
   email: string;
   comments: Comment[];
+  friends: Friend[];
   games: {
     bricksmash: {
       highscore: number

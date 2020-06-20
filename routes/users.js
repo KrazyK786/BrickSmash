@@ -194,7 +194,7 @@ router.delete('/deleteComment/:id', (req, res, next) => {
     });
 })
 
-//  Friends
+//  Friend
 // Add Friend
 router.put('/addFriend', (req, res, next) => {
     const id = req.body.id;
