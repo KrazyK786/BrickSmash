@@ -37,6 +37,12 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     comments: [CommentSchema],
+    friends: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
     games: {
         bricksmash:{
             highscore: {
@@ -143,6 +149,8 @@ module.exports.updateTetrisScore = function(id, score, callback){
     );
 }
 
+//  Comments
+// Add Comment
 module.exports.addComment = function(id, comment, callback) {
     
     User.findById(
@@ -160,6 +168,7 @@ module.exports.addComment = function(id, comment, callback) {
     
 }
 
+// Delete Comment
 module.exports.deleteComment = function(commentId, callback){
     // User.findById(
     //     userId,
@@ -184,4 +193,23 @@ module.exports.deleteComment = function(commentId, callback){
         user.comments.id(commentId).remove();
         user.save(callback);
     });
+}
+
+//  Friends
+// Add friend
+module.exports.addFriend = function(id, friendId, callback) {
+    
+    User.findById(
+        id,
+        function (err, user) {
+            if (err){
+                throw err;
+            }
+            
+            user.friends.push(friendId);
+            
+            user.save(callback);
+        }
+    );
+    
 }

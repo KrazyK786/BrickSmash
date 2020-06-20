@@ -33,8 +33,8 @@ export class ProfileComponent implements OnInit {
     // TODO: make get profile by id method on authservice?
     this.authService.getUserById(this.id).subscribe(profile => {
       this.profile = profile.user;
-      console.log('the profile is: ');
-      console.log(this.profile);
+      // console.log('the profile is: ');
+      // console.log(this.profile);
     },
       error => {
       console.log(error);
@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit {
       }
     })
 
-    console.log(this.comment);
+    // console.log(this.comment);
 
     // reset input field
     this.comment = '';

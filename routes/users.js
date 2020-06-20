@@ -194,4 +194,26 @@ router.delete('/deleteComment/:id', (req, res, next) => {
     });
 })
 
+//  Friends
+// Add Friend
+router.put('/addFriend', (req, res, next) => {
+    const id = req.body.id;
+    
+    console.log(`id is: ${id}`);
+    
+    const friendId = req.body.friendId;
+    
+    console.log(`friendId is: ${friendId}`);
+    
+    
+    User.addFriend(id, friendId, (err, user) => {
+        if (err) throw err;
+        
+        res.json({
+            success: true,
+            user: user
+        })
+    })
+});
+
 module.exports = router;
