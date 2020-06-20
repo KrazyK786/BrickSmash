@@ -211,5 +211,19 @@ module.exports.addFriend = function(id, friendId, callback) {
             user.save(callback);
         }
     );
-    
+}
+
+// Delete friend
+module.exports.deleteFriend = function(id, friendId, callback){
+    User.findById(
+        id,
+        function (err, user) {
+            if (err) throw err;
+            
+            user.friends.pull({
+                _id: friendId
+            });
+            // user.friends.id(friendId).remove();
+            user.save(callback);
+        });
 }

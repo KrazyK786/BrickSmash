@@ -216,4 +216,18 @@ router.put('/addFriend', (req, res, next) => {
     })
 });
 
+// Delete Friend
+router.delete('/deleteFriend', (req, res, next) => {
+    const id = req.body.id;
+    const friendId = req.body.friendId;
+    
+    User.deleteFriend(id, friendId, (err, user) => {
+        if (err) throw err;
+        
+        res.json({
+            success: true,
+            user: user
+        })
+    });
+})
 module.exports = router;
