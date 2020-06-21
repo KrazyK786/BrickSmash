@@ -3,6 +3,7 @@ import { AuthService } from "../../services/auth.service";
 import {ActivatedRoute, Router, ParamMap} from "@angular/router";
 import {UserData} from "../../models/UserData";
 import {CommentsService} from "../../services/comments/comments.service";
+import {FriendsService} from "../../services/friends/friends.service";
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +21,8 @@ export class ProfileComponent implements OnInit {
     private authService:AuthService,
     private router:Router,
     private commentsService: CommentsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private friendsService: FriendsService
   ) {  }
 
   ngOnInit(): void {
@@ -69,6 +71,22 @@ export class ProfileComponent implements OnInit {
 
     // reset input field
     this.comment = '';
+  }
+
+  addFriend(): void{
+    this.friendsService.addFriend(this.id).subscribe(res => {
+      if (res.success === true){
+        this.user = res.user;
+      }
+    })
+  }
+
+  removeFriend(): void{
+    this.friendsService.deleteFriend(this.id).subscribe(res => {
+      if (res.success === true){
+        this.user = res.user;
+      }
+    })
   }
 
 }
