@@ -8,6 +8,7 @@ import { BricksmashService } from "../../../services/games/bricksmash/bricksmash
 import {UserData} from "../../../models/UserData";
 import {AuthService} from "../../../services/auth.service";
 import {GameService} from "../../../services/games/game.service";
+import {User} from "../../../models/User";
 
 @Component({
   selector: 'app-bricksmash',
@@ -24,10 +25,8 @@ export class BricksmashComponent implements OnInit {
 
   ctx: CanvasRenderingContext2D;
 
-  // experimenting
-  // x: number;
-  // y: number;
-  // ballRadius: number = 10;
+  highscoreUserArray: UserData[];
+
   requestId: any;
   paddle: Paddle;
   ball: Ball;
@@ -100,12 +99,17 @@ export class BricksmashComponent implements OnInit {
       // this.highScore = this.user.bricksmashscore;
       this.highScore = this.user.games.bricksmash.highscore;
     },
-      err => {
-      console.log(err);
-      return false;
-      });
+    err => {
+    console.log(err);
+    return false;
+    }
+    );
+    this.gameService.getHighScores().subscribe( resArray => {
+      console.log(resArray);
+      this.highscoreUserArray = resArray;
+    })
 
-   this.initBrickSmash();
+    this.initBrickSmash();
    // this.resetGame();
     // this.x = this.ctx.canvas.width/2;
     // this.y = this.ctx.canvas.height-30;

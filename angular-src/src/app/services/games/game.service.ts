@@ -3,7 +3,9 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "../auth.service";
 import {Observable} from "rxjs";
 import {User} from "../../models/User";
-import {catchError} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
+import {HighScoreResponse} from "../../models/HighScoreResponse";
+import {UserData} from "../../models/UserData";
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +49,20 @@ export class GameService {
     // return this.http.post('http://localhost:8080/users/update-' + scoreToUpdate + '-score', body, {
     //   headers: headers
     // }); //.pipe(map(res => res));
+  }
+
+  getHighScores(): Observable<UserData[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    }
+
+    // TODO: update url to take parameter
+    return this.http.get<HighScoreResponse>(`http://localhost:8080/users/games/bricksmashScores`,
+      httpOptions)
+      .pipe(
+        map(res => res.sortedUsers)
+      );
   }
 }

@@ -1,4 +1,23 @@
-<div class="container">
+<div class="row">
+
+  <div class="col-md-0">
+<!--    <p>test</p>-->
+    <h3>High Scores</h3>
+
+    <table>
+      <tr>
+        <th>User</th>
+        <th>Score</th>
+      </tr>
+      <tr *ngFor="let user of this.highscoreUserArray">
+<!--        TODO: why are these types messed up? -->
+        <td>{{ user.username }}</td>
+        <td>{{ user.games.bricksmash.highscore }}</td>
+      </tr>
+    </table>
+  </div>
+
+<div class="container col-md-6">
 
   <div class="wrapper scoreboard">
     <h1>Bricksmash</h1>
@@ -35,5 +54,7 @@
       *ngIf="gameStarted"
     >
 <!--  </div>-->
+
+</div>
 
 </div>
