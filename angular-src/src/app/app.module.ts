@@ -51,7 +51,9 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {
+      onSameUrlNavigation: 'reload'
+    }),
     FormsModule,
     FlashMessagesModule.forRoot(),
     HttpClientModule,

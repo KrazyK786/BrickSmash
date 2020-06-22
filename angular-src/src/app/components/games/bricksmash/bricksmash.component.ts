@@ -91,6 +91,7 @@ export class BricksmashComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // TODO: use local storage?
     this.authService.getProfile().subscribe(profile => {
       console.log(profile);
       this.user = profile.user;
@@ -313,6 +314,7 @@ export class BricksmashComponent implements OnInit {
       this.gameService.updateScore('bricksmash', this.score).subscribe( res => {
         // console.log(res);
         if (res.success === true){
+          // TODO: add this.authService.updateUserData(res.user) ?
           // this.highScore = res.user.bricksmashscore;
           this.highScore = res.user.games.bricksmash.highscore;
         }

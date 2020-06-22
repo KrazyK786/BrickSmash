@@ -2,7 +2,7 @@ import {Comment} from "./Comment";
 import {Friend} from "./Friend";
 
 export class UserData {
-  id: number;
+  _id: number;
   name: string;
   username: string;
   email: string;

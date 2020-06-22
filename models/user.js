@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../config/database');
+const CommentSchema = require('./comment');
 
-// Comment Schema
-const CommentSchema = mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    body: {
-        type: String,
-        required: true
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
-});
+// // Comment Schema
+// const CommentSchema = mongoose.Schema({
+//     user: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: 'User'
+//         // required: true
+//     },
+//     body: {
+//         type: String
+//         // required: true
+//     },
+//     date: {
+//         type: Date,
+//         default: Date.now
+//     }
+// });
 
 // User Schema
 const UserSchema = mongoose.Schema({
@@ -36,7 +37,7 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    comments: [CommentSchema],
+    comments: [CommentSchema.schema],
     friends: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -68,7 +69,7 @@ const UserSchema = mongoose.Schema({
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
-const Comment = module.exports = mongoose.model('Comment', CommentSchema);
+// const Comment = module.exports = mongoose.model('Comment', CommentSchema);
 
 module.exports.getUserById = function(id, callback){
     User.findById(id, callback).

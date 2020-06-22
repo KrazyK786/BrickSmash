@@ -29,6 +29,8 @@
     >
     <button  >Submit</button>
   </form>
-  <button (click)="addFriend()">Add to Friends!</button>
-  <button (click)="removeFriend()">Remove Friend</button>
+<!--  TODO: Why is isFriend() run 4 times per call-->
+  <button *ngIf="!isFriend() && !isMyProfile()" (click)="addFriend()">Add to Friends!</button>
+  <button *ngIf="isFriend() && !isMyProfile()" (click)="deleteFriend()">Remove Friend</button>
+  <button *ngIf="isMyProfile()" (click)="editProfile()">Edit Profile</button>
 </div>

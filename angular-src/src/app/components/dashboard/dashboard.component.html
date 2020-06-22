@@ -29,7 +29,7 @@
 <!--      <p>Coming soon!</p>-->
       <table>
         <tr *ngIf="user.friends.length == 0">
-          <td></td>
+          <td style="font-style: italic">Add some friends!</td>
         </tr>
         <tr *ngFor="let friend of user.friends">
           <td>
@@ -48,7 +48,7 @@
           <th></th>
         </tr>
         <tr *ngIf="user.comments.length == 0">
-          <td>'No Comment' :P</td>
+          <td style="font-style: italic">'No Comment' :P</td>
         </tr>
         <tr *ngFor="let comment of user.comments">
           <td>{{ comment.date | date }}</td>

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
-import {ActivatedRoute, Router, ParamMap} from "@angular/router";
+import {ActivatedRoute, Router, ParamMap, RouterEvent, NavigationEnd} from "@angular/router";
 import {UserData} from "../../models/UserData";
 import {CommentsService} from "../../services/comments/comments.service";
 import {FriendsService} from "../../services/friends/friends.service";
+import {filter, takeUntil} from "rxjs/operators";
+import {Subject} from "rxjs";
+import {Friend} from "../../models/Friend";
 
 @Component({
   selector: 'app-profile',
@@ -17,6 +20,9 @@ export class ProfileComponent implements OnInit {
 
   id: string;
 
+  // TODO: What is this..?
+  public destroyed = new Subject<any>();
+
   constructor(
     private authService:AuthService,
     private router:Router,
@@ -26,6 +32,23 @@ export class ProfileComponent implements OnInit {
   ) {  }
 
   ngOnInit(): void {
+    this.fetchData();
+
+    // re-fetch data on navigation
+    this.router.events.pipe(
+      filter((event: RouterEvent) => event instanceof NavigationEnd),
+      takeUntil(this.destroyed)
+    ).subscribe(() => {
+        this.fetchData();
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
+  }
+
+  fetchData(): void{
     // console.log(this.route.snapshot.paramMap.get('id'));
     this.id = this.route.snapshot.paramMap.get('id');
     // console.log(this.id);
@@ -34,27 +57,14 @@ export class ProfileComponent implements OnInit {
 
     // TODO: make get profile by id method on authservice?
     this.authService.getUserById(this.id).subscribe(profile => {
-      this.profile = profile.user;
-      // console.log('the profile is: ');
-      // console.log(this.profile);
-    },
+        this.profile = profile.user;
+        // console.log('the profile is: ');
+        // console.log(this.profile);
+      },
       error => {
-      console.log(error);
-      return false;
+        console.log(error);
+        return false;
       });
-
-    // this.authService.getProfile().subscribe(profile => {
-    //     this.user = profile.user;
-    //     console.log(this.user);
-    //     // this.testDate = new Date(this.user.comments[2].date).toDateString();
-    //     // console.log(typeof this.testDate);
-    //     // console.log(typeof this.user.comments[2].date);
-    //   },
-    //   err => {
-    //     console.log(err);
-    //     return false;
-    //   });
-
   }
 
   addComment(): void{
@@ -63,6 +73,7 @@ export class ProfileComponent implements OnInit {
     // TODO: refactor test code
     this.commentsService.addComment(this.id, this.comment).subscribe( res => {
       if (res.success === true){
+        // no user update needed; comment added to another user
         this.user = res.user;
       }
     })
@@ -76,17 +87,59 @@ export class ProfileComponent implements OnInit {
   addFriend(): void{
     this.friendsService.addFriend(this.id).subscribe(res => {
       if (res.success === true){
+        // update user data
+        this.authService.updateUserData(res.user);
         this.user = res.user;
       }
     })
   }
 
-  removeFriend(): void{
+  deleteFriend(): void{
     this.friendsService.deleteFriend(this.id).subscribe(res => {
       if (res.success === true){
+        // update user data
+        this.authService.updateUserData(res.user);
         this.user = res.user;
       }
     })
+  }
+
+  isMyProfile(): boolean{
+    let self: string = String(this.user._id);
+    let profileId: string = this.id;
+
+    if (self === profileId){
+      return true;
+    }
+
+    return false;
+  }
+
+  isFriend(): boolean{
+    // console.log(this.user);
+
+    let profileId: string = this.id;
+    let friendsArr: Friend[] = this.user.friends;
+
+    for (let i = 0; i < friendsArr.length; i++){
+      // console.log(friendsArr[i]);
+      let friendId: string = String(friendsArr[i]);
+      if (friendId === profileId) return true;
+    }
+
+    return false;
+    //
+    // let friend: Friend = this.user.friends.find((tmpFriend) => {
+    //   return tmpFriend._id === friendId;
+    // });
+    //
+    // if (friend) return true
+    // else return false;
+
+  }
+
+  editProfile(): void{
+
   }
 
 }

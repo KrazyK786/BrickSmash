@@ -19,8 +19,11 @@
 <!--        <a class="nav-link" [routerLink]="['/profile', id]" >Profile <span class="sr-only">(current)</span></a>-->
 <!--      </li>-->
       <!--      TODO: figure out why'hover' action is different after removing routerLink :o   -->
+<!--      <li  class="nav-item active" *ngIf="authService.loggedIn()">-->
+<!--        <a class="nav-link"  (click)="getLoggedInIdAndRoute()" >Profile <span class="sr-only">(current)</span></a>-->
+<!--      </li>-->
       <li  class="nav-item active" *ngIf="authService.loggedIn()">
-        <a class="nav-link"  (click)="getLoggedInIdAndRoute()" >Profile <span class="sr-only">(current)</span></a>
+        <a class="nav-link"  [routerLink]="['/profile', authService.getLocalId()]" >Profile <span class="sr-only">(current)</span></a>
       </li>
       <li  class="nav-item active" *ngIf="!authService.loggedIn()">
         <a class="nav-link" [routerLink]="['/login']" >Login <span class="sr-only">(current)</span></a>

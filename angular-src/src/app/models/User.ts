@@ -6,7 +6,7 @@ export class User {
   token: string;
   msg: string;
   user: {
-    id: number,
+    _id: number,
     name: string,
     username: string,
     email: string,

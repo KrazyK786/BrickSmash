@@ -20,7 +20,7 @@ export class CommentsService {
 
   // TODO: refactor test code (recipientId
   addComment(recipientId: string, comment: string): Observable<User> {
-    const userId: number = JSON.parse(localStorage.getItem('user')).id;
+    const userId: number = JSON.parse(localStorage.getItem('user'))._id;
 
     const body = {
       toId: recipientId,

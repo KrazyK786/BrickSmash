@@ -18,7 +18,7 @@ export class GameService {
     ) { }
 
   updateScore(scoreToUpdate: string, score: number): Observable<User> {
-    const userId: number = JSON.parse(localStorage.getItem('user')).id;
+    const userId: number = JSON.parse(localStorage.getItem('user'))._id;
     const body = {
       userId: userId,
       score: score

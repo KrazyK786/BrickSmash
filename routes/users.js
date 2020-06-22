@@ -18,12 +18,14 @@ router.post('/register', (req, res, next) => {
     
     User.addUser(newUser, (err, user) => {
         if (err){
+            console.log(err);
             res.json({
                 success: false,
                 msg: 'Failed to register user :('
             });
         }
         else {
+            console.log(user);
             res.json({
                 success: true,
                 msg: 'User registered!'
@@ -66,14 +68,16 @@ router.post('/authenticate', (req, res, next) => {
                 res.json({
                     success: true,
                     token: 'JWT ' + token,
-                    user:{
-                        id: user._id,
-                        name: user.name,
-                        username: user.username,
-                        email: user.email,
-                        bricksmashscore: user.bricksmashscore,
-                        tetrisscore: user.tetrisscore
-                    }
+                    user:user
+                    // TODO: why was this like this and not just the user?
+                    // user:{
+                    //     id: user._id,
+                    //     name: user.name,
+                    //     username: user.username,
+                    //     email: user.email,
+                    //     bricksmashscore: user.bricksmashscore,
+                    //     tetrisscore: user.tetrisscore
+                    // }
                 });
             }
             

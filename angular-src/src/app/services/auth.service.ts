@@ -70,6 +70,11 @@ export class AuthService {
     this.user = user;
   }
 
+  updateUserData(user){
+    localStorage.setItem('user', JSON.stringify(user));
+    this.user = user;
+  }
+
   loadToken(){
     const token = localStorage.getItem('id_token');
     this.authToken = token;
@@ -83,5 +88,9 @@ export class AuthService {
     this.authToken = null;
     this.user = null;
     localStorage.clear();
+  }
+
+  getLocalId(): string {
+    return JSON.parse(localStorage.getItem('user'))._id;
   }
 }

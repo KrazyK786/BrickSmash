@@ -13,7 +13,7 @@ export class FriendsService {
   ) { }
 
   addFriend(friendId: string): Observable<User> {
-    const id: number = JSON.parse(localStorage.getItem('user')).id;
+    const id: number = JSON.parse(localStorage.getItem('user'))._id;
 
     const body = {
       id: id,
@@ -35,7 +35,7 @@ export class FriendsService {
   }
 
   deleteFriend(friendId: string): Observable<User> {
-    const id: number = JSON.parse(localStorage.getItem('user')).id;
+    const id: number = JSON.parse(localStorage.getItem('user'))._id;
 
     // const body = {
     //   id: id,
