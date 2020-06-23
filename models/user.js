@@ -100,18 +100,23 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 }
 
 // Return users sorted by BrickSmash highscore
-module.exports.getBrickSmashHighScores = function(callback){
+module.exports.getHighScores = function(game, callback){
     // User.find(callback).sort({'games.bricksmash.highscore': -1}).populate('comments.user');
-    User.find({})
-        .sort({'games.bricksmash.highscore': -1})
-        .populate('comments.user')
-        .populate('friends')
-        .exec((callback));
-    // User.find({}).exec((err, userArr) => {
-    //     if (err) throw err;
-    //
-    //     console.log(userArr);
-    // });
+    if (game === 'bricksmash'){
+        User.find({})
+            .sort({'games.bricksmash.highscore': -1})
+            .populate('comments.user')
+            .populate('friends')
+            .exec((callback));
+    }
+    
+    if (game === 'tetris'){
+        User.find({})
+            .sort({'games.tetris.highscore': -1})
+            .populate('comments.user')
+            .populate('friends')
+            .exec((callback));
+    }
 }
 
 // Update BrickSmash Score
@@ -232,23 +237,3 @@ module.exports.deleteFriend = function(id, friendId, callback){
         });
 }
 
-// Transform _id to id
-// module.exports.transform = function (user) {
-//     let obj = user.toObject();
-//
-//     // Rename field
-//     obj.id = obj._id;
-//     delete obj._id;
-//
-//     return obj;
-// }
-
-UserSchema.method('transform', function () {
-    let obj = this.toObject();
-    
-    // Rename field
-    obj.id = obj._id;
-    // delete obj._id;
-    
-    return obj;
-} )

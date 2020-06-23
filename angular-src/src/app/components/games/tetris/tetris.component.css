@@ -6,10 +6,27 @@
 /*  background: #eeeeee;*/
 /*}*/
 
+table {
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+
+/*TODO: Add padding to other divs..?*/
+.left-column{
+  padding: 10px;
+}
+
+
 .grid {
   display: grid;
-  grid-template-columns: 320px 200px;
+  /*grid-template-columns: 200px 320px 200px;*/
+  grid-template-columns: auto auto auto;
 }
+
+/*.grid {*/
+/*  display: grid;*/
+/*  grid-template-columns: 320px 200px;*/
+/*}*/
 
 .right-column {
   display: flex;

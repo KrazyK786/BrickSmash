@@ -150,9 +150,11 @@ router.put('/update-tetris-score', (req, res, next) => {
 });
 
 // TODO: update endpoint?
-// Get BrickSmash Highscores
-router.get('/games/bricksmashScores', (req, res, next) => {
-    User.getBrickSmashHighScores((err, usersArray) => {
+// Get High Scores
+router.get('/games/highScores/:game', (req, res, next) => {
+    const game = req.params.game;
+    
+    User.getHighScores(game,(err, usersArray) => {
         if (err) throw err;
         
         res.json({

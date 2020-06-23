@@ -104,10 +104,11 @@ export class BricksmashComponent implements OnInit {
     return false;
     }
     );
-    this.gameService.getHighScores().subscribe( resArray => {
+
+    this.gameService.getHighScores('bricksmash').subscribe( resArray => {
       console.log(resArray);
       this.highscoreUserArray = resArray;
-    })
+    });
 
     this.initBrickSmash();
    // this.resetGame();

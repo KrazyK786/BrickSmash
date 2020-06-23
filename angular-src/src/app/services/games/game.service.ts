@@ -51,7 +51,7 @@ export class GameService {
     // }); //.pipe(map(res => res));
   }
 
-  getHighScores(): Observable<UserData[]> {
+  getHighScores(game: string): Observable<UserData[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export class GameService {
     }
 
     // TODO: update url to take parameter
-    return this.http.get<HighScoreResponse>(`http://localhost:8080/users/games/bricksmashScores`,
+    return this.http.get<HighScoreResponse>(`http://localhost:8080/users/games/highScores/${game}`,
       httpOptions)
       .pipe(
         map(res => res.sortedUsers)

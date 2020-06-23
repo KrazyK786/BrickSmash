@@ -10,6 +10,11 @@
   margin: auto;
 }
 
+table {
+  border-collapse: separate;
+  border-spacing: 5px;
+}
+
 /*canvas {*/
 /*  background:#eee;*/
 /*  display:block;*/

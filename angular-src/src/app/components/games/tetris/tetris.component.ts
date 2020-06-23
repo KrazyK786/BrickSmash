@@ -36,6 +36,7 @@ export class TetrisComponent implements OnInit {
   gameStarted: boolean;
   pauseButtonText: string;
   pauseButtonClass: string;
+  highscoreUserArray: UserData[];
   // time: Time;
   time: {
     start: number;
@@ -111,6 +112,11 @@ export class TetrisComponent implements OnInit {
         console.log(err);
         return false;
       });
+
+    this.gameService.getHighScores('tetris').subscribe( resArray => {
+      console.log(resArray);
+      this.highscoreUserArray = resArray;
+    });
 
     this.initBoard();
     this.initNext();
