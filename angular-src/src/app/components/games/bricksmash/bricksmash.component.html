@@ -11,7 +11,9 @@
       </tr>
       <tr *ngFor="let user of this.highscoreUserArray">
 <!--        TODO: why are these types messed up? -->
-        <td>{{ user.username }}</td>
+        <td>
+          <a [routerLink]="['/profile', user._id]">{{ user.username }}</a>
+        </td>
         <td>{{ user.games.bricksmash.highscore }}</td>
       </tr>
     </table>
