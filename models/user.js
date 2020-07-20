@@ -3,22 +3,6 @@ const bcrypt = require('bcryptjs');
 const config = require('../config/database');
 const CommentSchema = require('./comment');
 
-// // Comment Schema
-// const CommentSchema = mongoose.Schema({
-//     user: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'User'
-//         // required: true
-//     },
-//     body: {
-//         type: String
-//         // required: true
-//     },
-//     date: {
-//         type: Date,
-//         default: Date.now
-//     }
-// });
 
 // User Schema
 const UserSchema = mongoose.Schema({
@@ -36,6 +20,10 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    profile: {
+        type: String,
+        default: ""
     },
     comments: [CommentSchema.schema],
     friends: [
@@ -58,14 +46,6 @@ const UserSchema = mongoose.Schema({
             }
         }
     }
-    // bricksmashscore: {
-    //     type: Number,
-    //     default: 0
-    // },
-    // tetrisscore: {
-    //     type: Number,
-    //     default: 0
-    // }
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -235,5 +215,20 @@ module.exports.deleteFriend = function(id, friendId, callback){
             // user.friends.id(friendId).remove();
             user.save(callback);
         });
+}
+
+// Update profile
+module.exports.editProfile = function(id, profile, callback) {
+    User.findById(
+        id,
+        function (err, user) {
+            if (err){
+                throw err;
+            }
+            
+            user.profile = profile;
+            user.save(callback);
+        }
+    )
 }
 

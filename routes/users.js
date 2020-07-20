@@ -240,3 +240,20 @@ router.delete('/deleteFriend/:id/:friendId', (req, res, next) => {
     });
 })
 module.exports = router;
+
+// Update Profile
+router.put('/edit-profile', (req, res, next) => {
+    const userId = req.body.userId;
+    const profile = req.body.profile;
+    
+    console.log(`New profile is ${profile}`);
+    
+    User.editProfile(userId, profile, (err, user) => {
+        if (err) throw err;
+        
+        res.json({
+            success: true,
+            user : user
+        });
+    })
+})
