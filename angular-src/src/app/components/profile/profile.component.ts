@@ -7,6 +7,7 @@ import {FriendsService} from "../../services/friends/friends.service";
 import {filter, takeUntil} from "rxjs/operators";
 import {Subject} from "rxjs";
 import {Friend} from "../../models/Friend";
+import {ProfileService} from "../../services/profile/profile.service";
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +31,8 @@ export class ProfileComponent implements OnInit {
     private router:Router,
     private commentsService: CommentsService,
     private route: ActivatedRoute,
-    private friendsService: FriendsService
+    private friendsService: FriendsService,
+    private profileService: ProfileService
   ) {  }
 
   ngOnInit(): void {
@@ -146,11 +148,20 @@ export class ProfileComponent implements OnInit {
 
   editProfile(): void{
     this.editingProfile = true;
-    console.log(this.profile.profile);
+    // console.log(this.profile.profile);
   }
 
   submitEditProfile(): void{
     console.log(this.newProfile);
+
+    this.profileService.editProfile(this.newProfile).subscribe( res => {
+      if (res.success === true){
+        this.authService.updateUserData(res.user);
+        this.user = res.user;
+        this.profile = res.user;
+      }
+    })
+
     this.editingProfile = false;
   }
 
