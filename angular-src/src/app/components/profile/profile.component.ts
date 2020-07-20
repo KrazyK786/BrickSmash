@@ -139,7 +139,7 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile(): void{
-
+    console.log("edit this!");
   }
 
 }

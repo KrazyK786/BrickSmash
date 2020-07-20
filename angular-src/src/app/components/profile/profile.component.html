@@ -12,14 +12,13 @@
       <!--      <h1>Tetris</h1>-->
       <p>Tetris: {{ profile.games.tetris.highscore }}</p>
     </li>
+    <li class="list-group-item">
+      <h3>About Me</h3>
+      <p>pull this from the DB :o</p>
+      <button *ngIf="isMyProfile()" (click)="editProfile()">Edit Profile</button>
+    </li>
   </ul>
 
-<!--  <div>-->
-<!--    <p *ngFor="let comment of user.comments">-->
-<!--      Date: {{ comment.date | date }} <br>-->
-<!--      Comment: {{ comment.body }}-->
-<!--    </p>-->
-<!--  </div>-->
   <form (ngSubmit)="addComment()">
     <label>Comment:</label>
     <input
@@ -32,5 +31,5 @@
 <!--  TODO: Why is isFriend() run 4 times per call-->
   <button *ngIf="!isFriend() && !isMyProfile()" (click)="addFriend()">Add to Friends!</button>
   <button *ngIf="isFriend() && !isMyProfile()" (click)="deleteFriend()">Remove Friend</button>
-  <button *ngIf="isMyProfile()" (click)="editProfile()">Edit Profile</button>
+
 </div>
