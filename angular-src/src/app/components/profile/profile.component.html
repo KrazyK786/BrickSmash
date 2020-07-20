@@ -14,8 +14,18 @@
     </li>
     <li class="list-group-item">
       <h3>About Me</h3>
-      <p>pull this from the DB :o</p>
-      <button *ngIf="isMyProfile()" (click)="editProfile()">Edit Profile</button>
+      <p *ngIf="!editingProfile" >{{ profile.profile }}</p>
+      <button *ngIf="isMyProfile() && !editingProfile; else elseBlock" (click)="editProfile()">Edit Profile</button>
+      <ng-template #elseBlock>
+        <form (ngSubmit)="submitEditProfile()" >
+          <input
+            type="text"
+            name="newProfile"
+            [(ngModel)]="newProfile"
+          >
+          <button>Submit</button>
+        </form>
+      </ng-template>
     </li>
   </ul>
 

@@ -18,4 +18,5 @@ export class UserData {
   }
   // bricksmashscore: number;
   // tetrisscore: number;
+  profile: string;
 }

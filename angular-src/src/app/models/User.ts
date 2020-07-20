@@ -10,6 +10,7 @@ export class User {
     name: string,
     username: string,
     email: string,
+    profile: string,
     comments: Comment[],
     friends: Friend[],
     games: {
@@ -20,7 +21,5 @@ export class User {
         highscore: number
       }
     }
-    // bricksmashscore: number,
-    // tetrisscore: number
   }
 }

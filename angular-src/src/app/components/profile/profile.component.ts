@@ -17,6 +17,8 @@ export class ProfileComponent implements OnInit {
   user:UserData;
   profile:UserData;
   comment: string;
+  editingProfile: boolean;
+  newProfile: string;
 
   id: string;
 
@@ -33,6 +35,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchData();
+
+    // set profile variables?
+    this.editingProfile = false;
+
 
     // re-fetch data on navigation
     this.router.events.pipe(
@@ -58,8 +64,8 @@ export class ProfileComponent implements OnInit {
     // TODO: make get profile by id method on authservice?
     this.authService.getUserById(this.id).subscribe(profile => {
         this.profile = profile.user;
-        // console.log('the profile is: ');
-        // console.log(this.profile);
+
+        this.newProfile = this.profile.profile;
       },
       error => {
         console.log(error);
@@ -139,7 +145,13 @@ export class ProfileComponent implements OnInit {
   }
 
   editProfile(): void{
-    console.log("edit this!");
+    this.editingProfile = true;
+    console.log(this.profile.profile);
+  }
+
+  submitEditProfile(): void{
+    console.log(this.newProfile);
+    this.editingProfile = false;
   }
 
 }
