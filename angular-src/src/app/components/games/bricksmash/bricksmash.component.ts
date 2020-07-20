@@ -72,13 +72,16 @@ export class BricksmashComponent implements OnInit {
   // }
 
   @HostListener('document:mousemove', ['$event'])
-    onMouseMove(e){
+    onMouseMove(e: MouseEvent){
     if (this.gameStarted) {
+      e.preventDefault();
+
+      // TODO: resolve mouse movement with page layout
       let relativeX = e.clientX - this.ctx.canvas.offsetLeft;
       if (relativeX > 0 && relativeX < this.ctx.canvas.width) {
         this.paddle.x = relativeX - this.paddle.width / 2;
       }
-      // console.log(e);
+      console.log(e);
     }
   }
 
