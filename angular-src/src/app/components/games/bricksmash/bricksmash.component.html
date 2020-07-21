@@ -1,6 +1,6 @@
-<div class="row">
+<div class="grid">
 
-  <div class="col-md-0">
+  <div class="left-column">
 <!--    <p>test</p>-->
     <h3>High Scores</h3>
 
@@ -19,44 +19,46 @@
     </table>
   </div>
 
-<div class="container col-md-6">
-
-  <div class="wrapper scoreboard">
-    <h1>Bricksmash</h1>
-    <p>Score: {{ score }}</p>
-    <p>Lives: {{ lives }}</p>
-    <p>High Score: {{ highScore }}</p>
-  </div>
-
   <canvas #brickSmashCanvas class="gameCanvas" width="480" height="320"></canvas>
+<!--  <canvas #brickSmashCanvas class="gameCanvas" width="720" height="480"></canvas>-->
 
-  <div class="wrapper">
-    <input
-      class="btn btn-success"
-      type="button"
-      value="Play"
-      id="startButton"
-      (click)="startGame()"
-      *ngIf="!gameStarted"
-    >
-    <input
-      class="{{ pauseButtonClass }}"
-      type="button"
-      value="{{ pauseButtonText }}"
-      id="pauseButton"
-      (click)="pause()"
-      *ngIf="gameStarted"
-    >
-    <input
-      class="btn btn-danger"
-      type="button"
-      value="Quit"
-      id="stopButton"
-      (click)="gameOver()"
-      *ngIf="gameStarted"
-    >
+  <div class="right-column">
+
+    <div class="wrapper scoreboard">
+      <h1>Bricksmash</h1>
+      <p>Score: {{ score }}</p>
+      <p>Lives: {{ lives }}</p>
+      <p>High Score: {{ highScore }}</p>
+    </div>
+
+
+    <div class="wrapper">
+      <input
+        class="btn btn-success"
+        type="button"
+        value="Play"
+        id="startButton"
+        (click)="startGame()"
+        *ngIf="!gameStarted"
+      >
+      <input
+        class="{{ pauseButtonClass }}"
+        type="button"
+        value="{{ pauseButtonText }}"
+        id="pauseButton"
+        (click)="pause()"
+        *ngIf="gameStarted"
+      >
+      <input
+        class="btn btn-danger"
+        type="button"
+        value="Quit"
+        id="stopButton"
+        (click)="gameOver()"
+        *ngIf="gameStarted"
+      >
+    </div>
+
   </div>
-
-</div>
 
 </div>

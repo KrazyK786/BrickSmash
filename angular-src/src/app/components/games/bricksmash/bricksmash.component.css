@@ -2,13 +2,14 @@
 /*  font-family: "Press Start 2P", cursive;*/
 /*}*/
 
-.gameCanvas {
-  /*display: grid;*/
-  /*grid-template-columns: 320px 200px;*/
-  background: #eeeeee;
-  display: block;
-  margin: auto;
-}
+/*test*/
+/*.gameCanvas {*/
+/*  !*display: grid;*!*/
+/*  !*grid-template-columns: 320px 200px;*!*/
+/*  background: #eeeeee;*/
+/*  display: block;*/
+/*  margin: auto;*/
+/*}*/
 
 table {
   border-collapse: separate;
@@ -22,7 +23,7 @@ table {
 /*}*/
 
 .wrapper {
-  text-align: center;
+  /*text-align: center;*/
 
   padding: 20px;
 }
@@ -33,4 +34,36 @@ table {
 
 #stopButton {
   margin-left: 10px;
+}
+
+/*TODO: Add padding to other divs..?*/
+.left-column{
+  /*padding: 10px;*/
+}
+
+
+.grid {
+  display: grid;
+  /*grid-template-columns: 200px 320px 200px;*/
+  grid-template-columns: auto auto auto;
+  /*grid-template-columns: 1fr;*/
+  padding: 10px;
+  column-gap: 1%;
+}
+
+/*.grid {*/
+/*  display: grid;*/
+/*  grid-template-columns: 320px 200px;*/
+/*}*/
+
+.right-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /*width: 300px;*/
+}
+
+.gameCanvas {
+  border: solid 2px;
+  background: #eeeeee;
 }

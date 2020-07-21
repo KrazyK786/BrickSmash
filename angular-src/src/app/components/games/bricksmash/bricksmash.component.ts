@@ -65,23 +65,34 @@ export class BricksmashComponent implements OnInit {
     }
   }
 
-  // // hacky 'debugging' for x/y coordinates
-  // @HostListener('document:mouseup', ['$event'])
-  // onMouseUp(e){
-  //   console.log(e);
-  // }
+  // hacky 'debugging' for x/y coordinates
+  @HostListener('document:mouseup', ['$event'])
+  onMouseUp(e){
+    console.log(e);
+  }
 
   @HostListener('document:mousemove', ['$event'])
     onMouseMove(e: MouseEvent){
     if (this.gameStarted) {
-      e.preventDefault();
+      // e.preventDefault();
 
       // TODO: resolve mouse movement with page layout
-      let relativeX = e.clientX - this.ctx.canvas.offsetLeft;
+
+      let relativeX = e.x - this.ctx.canvas.offsetLeft;
       if (relativeX > 0 && relativeX < this.ctx.canvas.width) {
         this.paddle.x = relativeX - this.paddle.width / 2;
       }
-      console.log(e);
+
+      // let relativeX = e.x - this.ctx.canvas.width;
+      // if (relativeX > 0 && relativeX < this.ctx.canvas.width) {
+      //   this.paddle.x = relativeX - this.paddle.width / 2;
+      // }
+
+      // let relativeX = e.clientX - this.ctx.canvas.offsetLeft;
+      // if (relativeX > 0 && relativeX < this.ctx.canvas.width) {
+      //   this.paddle.x = relativeX - this.paddle.width / 2;
+      // }
+      // console.log(e);
     }
   }
 
@@ -212,9 +223,9 @@ export class BricksmashComponent implements OnInit {
   resetGame(): void{
     this.score = 0;
 
-    // Development purposes
-    this.lives = 0;
-    // this.lives = 3;
+    // // Development purposes
+    // this.lives = 0;
+    this.lives = 3;
 
     this.paused = false;
 
@@ -233,7 +244,8 @@ export class BricksmashComponent implements OnInit {
     this.ball.spawn();
     // this.paddle = new Paddle(this.ctx);
     this.paddle.spawn();
-    this.paused = true;
+    // this.paused = true;
+    this.pause();
     cancelAnimationFrame(this.requestId);
     // this.bricks = this.initBricks();
   }
@@ -248,6 +260,7 @@ export class BricksmashComponent implements OnInit {
       this.lives--;
       console.log('lives: ' + this.lives);
       if (this.lives === -1){
+        this.lives = 0;
         this.gameOver();
         // return;
       }
