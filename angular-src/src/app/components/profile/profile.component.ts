@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit {
   editingProfile: boolean;
   newProfile: string;
 
+  rows: string;
+
   id: string;
 
   // TODO: What is this..?
@@ -68,6 +70,22 @@ export class ProfileComponent implements OnInit {
         this.profile = profile.user;
 
         this.newProfile = this.profile.profile;
+
+        // grab rows for profile
+        let rowCount = 1;
+        let profileString = this.newProfile;
+
+        for(let i = 0; i < profileString.length; i++){
+          let char = profileString[i];
+
+          if (char === '\n'){
+            rowCount++;
+          }
+        }
+
+        this.rows = String(rowCount);
+        // console.log(this.rows);
+
       },
       error => {
         console.log(error);
@@ -152,7 +170,7 @@ export class ProfileComponent implements OnInit {
   }
 
   submitEditProfile(): void{
-    console.log(this.newProfile);
+    // console.log(this.newProfile);
 
     this.profileService.editProfile(this.newProfile).subscribe( res => {
       if (res.success === true){

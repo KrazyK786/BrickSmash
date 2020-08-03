@@ -18,12 +18,18 @@
       <ng-template [ngIf]="isMyProfile()">
         <button *ngIf="!editingProfile; else elseBlock" (click)="editProfile()">Edit Profile</button>
         <ng-template #elseBlock>
-          <form (ngSubmit)="submitEditProfile()" >
-            <input
-              type="text"
+          <form (ngSubmit)="submitEditProfile()">
+<!--            <input-->
+<!--              type="text"-->
+<!--              name="newProfile"-->
+<!--              [(ngModel)]="newProfile"-->
+<!--            >-->
+            <textarea
+              rows="{{ this.rows }}"
               name="newProfile"
               [(ngModel)]="newProfile"
-            >
+            ></textarea>
+            <br>
             <button>Submit</button>
           </form>
         </ng-template>
