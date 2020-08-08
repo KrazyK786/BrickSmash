@@ -1,0 +1,12 @@
+<div class="grid">
+  <div class="searchBox">
+    <form (ngSubmit)="submitSearch()">
+      <label>User Search: </label>
+      <input
+        name="searchValue"
+        [(ngModel)]="searchValue"
+        type="text"/>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</div>
