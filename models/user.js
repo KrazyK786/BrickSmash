@@ -7,8 +7,7 @@ const CommentSchema = require('./comment');
 // User Schema
 const UserSchema = mongoose.Schema({
     name: {
-        type: String,
-        index: true
+        type: String
     },
     email: {
         type: String,
@@ -241,13 +240,31 @@ module.exports.editProfile = function(id, profile, callback) {
 // Search users
 module.exports.searchUsers = function(searchTerm, callback){
     User.find({
-        name: {
-            $regex: searchTerm,
-            $options: 'i'
-        }
+        $or: [{
+            name: {
+                $regex: searchTerm,
+                $options: 'i'
+            }
+        },{
+            username: {
+                $regex: searchTerm,
+                $options: 'i'
+            }
+        }]
     })
         .sort({name: -1})
         // .populate('comments.user')
         // .populate('friends')
         .exec((callback));
+    
+    // User.find({
+    //     name: {
+    //         $regex: searchTerm,
+    //         $options: 'i'
+    //     }
+    // })
+    //     .sort({name: -1})
+    //     // .populate('comments.user')
+    //     // .populate('friends')
+    //     .exec((callback));
 }
