@@ -100,7 +100,7 @@ router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res
 
 // TODO: update to 'profile/:id' ?
 // User data by id
-router.get('/:id', (req, res, next) => {
+router.get('/profile/:id', (req, res, next) => {
     const id = req.params.id;
     
     User.getUserById(id, (err, user) => {
@@ -257,3 +257,19 @@ router.put('/edit-profile', (req, res, next) => {
         });
     })
 })
+
+// Search Users
+router.get('/searchUsers/', ((req, res, next) => {
+    const reqObj = req.query;
+    const searchTerm = reqObj.searchTerm;
+    console.log(searchTerm);
+    
+    User.searchUsers(searchTerm, (err, usersArray) => {
+        if (err) throw err;
+
+        res.json({
+            success: true,
+            sortedUsers: usersArray
+        })
+    })
+} ))

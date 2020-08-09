@@ -59,7 +59,7 @@ export class AuthService {
     }
 
     console.log('The id of the profile is: '+ id);
-    return this.http.get<User>(`http://localhost:8080/users/${id}`, httpOptions
+    return this.http.get<User>(`http://localhost:8080/users/profile/${id}`, httpOptions
     );
   }
 

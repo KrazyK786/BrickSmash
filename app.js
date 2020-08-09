@@ -12,6 +12,8 @@ const config = require('./config/database');
 // const rootPage = require('./routes/rootPage.route');
 
 // mongodb
+mongoose.set('useCreateIndex', true); // resolve deprecation warning
+
 mongoose.connect(config.database, config.options);
 
 // mongoose.Promise = global.Promise;

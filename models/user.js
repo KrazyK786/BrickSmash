@@ -7,7 +7,8 @@ const CommentSchema = require('./comment');
 // User Schema
 const UserSchema = mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        index: true
     },
     email: {
         type: String,
@@ -48,6 +49,11 @@ const UserSchema = mongoose.Schema({
     }
 });
 
+// // index name field for searching
+// UserSchema.index({
+//     name: 'text'
+// });
+
 const User = module.exports = mongoose.model('User', UserSchema);
 // const Comment = module.exports = mongoose.model('Comment', CommentSchema);
 
@@ -79,7 +85,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
     });
 }
 
-// Return users sorted by BrickSmash highscore
+// Return users sorted by highscore
 module.exports.getHighScores = function(game, callback){
     // User.find(callback).sort({'games.bricksmash.highscore': -1}).populate('comments.user');
     if (game === 'bricksmash'){
@@ -232,3 +238,16 @@ module.exports.editProfile = function(id, profile, callback) {
     )
 }
 
+// Search users
+module.exports.searchUsers = function(searchTerm, callback){
+    User.find({
+        name: {
+            $regex: searchTerm,
+            $options: 'i'
+        }
+    })
+        .sort({name: -1})
+        // .populate('comments.user')
+        // .populate('friends')
+        .exec((callback));
+}
