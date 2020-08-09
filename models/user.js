@@ -238,33 +238,51 @@ module.exports.editProfile = function(id, profile, callback) {
 }
 
 // Search users
-module.exports.searchUsers = function(searchTerm, callback){
-    User.find({
-        $or: [{
+module.exports.searchUsers = function(searchTerm, type = 'all', callback){
+    // search users
+    if (type === 'name'){
+        User.find({
             name: {
                 $regex: searchTerm,
                 $options: 'i'
             }
-        },{
+        })
+            .sort({name: -1})
+            // .populate('comments.user')
+            // .populate('friends')
+            .exec((callback));
+    }
+    // search usernames
+    else if (type === 'username'){
+        User.find({
             username: {
                 $regex: searchTerm,
                 $options: 'i'
             }
-        }]
-    })
-        .sort({name: -1})
-        // .populate('comments.user')
-        // .populate('friends')
-        .exec((callback));
-    
-    // User.find({
-    //     name: {
-    //         $regex: searchTerm,
-    //         $options: 'i'
-    //     }
-    // })
-    //     .sort({name: -1})
-    //     // .populate('comments.user')
-    //     // .populate('friends')
-    //     .exec((callback));
+        })
+            .sort({name: -1})
+            // .populate('comments.user')
+            // .populate('friends')
+            .exec((callback));
+    }
+    // search both
+    else {
+        User.find({
+            $or: [{
+                name: {
+                    $regex: searchTerm,
+                    $options: 'i'
+                }
+            },{
+                username: {
+                    $regex: searchTerm,
+                    $options: 'i'
+                }
+            }]
+        })
+            .sort({name: -1})
+            // .populate('comments.user')
+            // .populate('friends')
+            .exec((callback));
+    }
 }

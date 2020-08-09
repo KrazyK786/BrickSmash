@@ -262,9 +262,11 @@ router.put('/edit-profile', (req, res, next) => {
 router.get('/searchUsers/', ((req, res, next) => {
     const reqObj = req.query;
     const searchTerm = reqObj.searchTerm;
-    console.log(searchTerm);
+    let type = reqObj.type;
     
-    User.searchUsers(searchTerm, (err, usersArray) => {
+    console.log(type);
+    
+    User.searchUsers(searchTerm, type, (err, usersArray) => {
         if (err) throw err;
 
         res.json({
