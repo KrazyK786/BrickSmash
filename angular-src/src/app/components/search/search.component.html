@@ -1,13 +1,19 @@
 <div class="grid">
-  <div class="searchBox">
+  <div class="searchContainer">
+
     <form (ngSubmit)="submitSearch()">
-      <label>User Search:
-        <input
-          name="searchValue"
-          [(ngModel)]="searchTerm"
-          type="text"/>
+      <div class="searchBox" >
+
+        <label>User Search:
+          <input
+            name="searchValue"
+            [(ngModel)]="searchTerm"
+            type="text"/>
+        </label>
+
         <button type="submit">Search</button>
-      </label>
+
+      </div>
 
       <div class="radioOptions">
         <div class="options">
@@ -25,10 +31,61 @@
             <input (click)="type='all'" type="radio" name="type" checked  />
           </label>
         </div>
-
-
       </div>
-
     </form>
+
+  </div>
+
+  <div class="resultsBox">
+    <h3>Results</h3>
+    <table *ngFor="let user of returnedUsers">
+<!--      <tr>-->
+<!--        <th>Name</th>-->
+<!--        <th>Username</th>-->
+<!--        <th>Scores</th>-->
+<!--        <th></th>-->
+<!--        <td>************************************************</td>-->
+<!--      </tr>-->
+      <tr *ngIf="!returnedUsers">
+<!--        <td style="font-style: italic">Awaiting input...</td>-->
+        <td style="font-style: italic"></td>
+      </tr>
+      <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Scores</th>
+        <th></th>
+<!--        <td>{{ user.name }}</td>-->
+      </tr>
+      <tr>
+<!--        <th>Username:</th>-->
+<!--        <td>{{ user.username }}</td>-->
+        <td>{{ user.name }}</td>
+        <td>{{ user.username }}</td>
+        <td>Bricksmash: {{ user.games.bricksmash.highscore }}</td>
+<!--        <td>Tetris: {{ user.games.tetris.highscore }}</td>-->
+        <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>Tetris: {{ user.games.tetris.highscore }}</td>
+      </tr>
+      <th colspan="4" >*****************************************************************</th>
+<!--      <tr>-->
+<!--        <th>Bricksmash:</th>-->
+<!--        <td>{{ user.games.bricksmash.highscore }}</td>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <th>Tetris:</th>-->
+<!--        <td>{{ user.games.tetris.highscore }}</td>-->
+<!--&lt;!&ndash;        <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>&ndash;&gt;-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>-->
+<!--      </tr>-->
+    </table>
   </div>
 </div>
