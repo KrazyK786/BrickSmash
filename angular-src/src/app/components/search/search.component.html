@@ -1,0 +1,34 @@
+<div class="grid">
+  <div class="searchBox">
+    <form (ngSubmit)="submitSearch()">
+      <label>User Search:
+        <input
+          name="searchValue"
+          [(ngModel)]="searchTerm"
+          type="text"/>
+        <button type="submit">Search</button>
+      </label>
+
+      <div class="radioOptions">
+        <div class="options">
+          <label>Name
+            <input (click)="type='name'" type="radio" name="type"  />
+          </label>
+        </div>
+        <div class="options">
+          <label>Username
+            <input (click)="type='username'" type="radio" name="type"  />
+          </label>
+        </div>
+        <div class="options">
+          <label>All
+            <input (click)="type='all'" type="radio" name="type" checked  />
+          </label>
+        </div>
+
+
+      </div>
+
+    </form>
+  </div>
+</div>

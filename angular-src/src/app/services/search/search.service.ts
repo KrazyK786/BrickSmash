@@ -14,7 +14,10 @@ export class SearchService {
     private http: HttpClient
   ) { }
 
-  searchUsers(searchTerm: string, type: string): Observable<UserData[]>{
+  searchUsers(searchTerm: string, type: string):Observable<UserData[]>{
+    // console.log("Search term: " + searchTerm);
+    // console.log("Search type: " + type);
+
     // TODO: make httpOptions into classes? (reuse code)
     let params = new HttpParams();
     params = params.append('searchTerm', searchTerm);
