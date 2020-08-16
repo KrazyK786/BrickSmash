@@ -45,3 +45,8 @@ table {
 label {
   padding: 5px;
 }
+
+tr {
+  /*border-bottom: 2px solid white;*/
+  padding: 15px;
+}

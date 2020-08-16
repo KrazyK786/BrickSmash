@@ -37,55 +37,75 @@
   </div>
 
   <div class="resultsBox">
-    <h3>Results</h3>
-    <table *ngFor="let user of returnedUsers">
+    <h3 *ngIf="returnedUsers">Results</h3>
+    <table>
+      <thead *ngIf="returnedUsers">
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Bricksmash</th>
+          <th>Tetris</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of returnedUsers">
+          <td>{{ user.name }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.games.bricksmash.highscore }}</td>
+          <td>{{ user.games.tetris.highscore }}</td>
+          <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>
+        </tr>
+      </tbody>
+    </table>
+<!--    <table *ngFor="let user of returnedUsers">-->
+<!--&lt;!&ndash;      <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <th>Name</th>&ndash;&gt;-->
+<!--&lt;!&ndash;        <th>Username</th>&ndash;&gt;-->
+<!--&lt;!&ndash;        <th>Scores</th>&ndash;&gt;-->
+<!--&lt;!&ndash;        <th></th>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td>************************************************</td>&ndash;&gt;-->
+<!--&lt;!&ndash;      </tr>&ndash;&gt;-->
+<!--      <tr *ngIf="!returnedUsers">-->
+<!--&lt;!&ndash;        <td style="font-style: italic">Awaiting input...</td>&ndash;&gt;-->
+<!--        <td style="font-style: italic"></td>-->
+<!--      </tr>-->
 <!--      <tr>-->
 <!--        <th>Name</th>-->
 <!--        <th>Username</th>-->
 <!--        <th>Scores</th>-->
 <!--        <th></th>-->
-<!--        <td>************************************************</td>-->
+<!--&lt;!&ndash;        <td>{{ user.name }}</td>&ndash;&gt;-->
 <!--      </tr>-->
-      <tr *ngIf="!returnedUsers">
-<!--        <td style="font-style: italic">Awaiting input...</td>-->
-        <td style="font-style: italic"></td>
-      </tr>
-      <tr>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Scores</th>
-        <th></th>
+<!--      <tr>-->
+<!--&lt;!&ndash;        <th>Username:</th>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td>{{ user.username }}</td>&ndash;&gt;-->
 <!--        <td>{{ user.name }}</td>-->
-      </tr>
-      <tr>
-<!--        <th>Username:</th>-->
 <!--        <td>{{ user.username }}</td>-->
-        <td>{{ user.name }}</td>
-        <td>{{ user.username }}</td>
-        <td>Bricksmash: {{ user.games.bricksmash.highscore }}</td>
-<!--        <td>Tetris: {{ user.games.tetris.highscore }}</td>-->
-        <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td>Tetris: {{ user.games.tetris.highscore }}</td>
-      </tr>
-      <th colspan="4" >*****************************************************************</th>
-<!--      <tr>-->
-<!--        <th>Bricksmash:</th>-->
-<!--        <td>{{ user.games.bricksmash.highscore }}</td>-->
-<!--      </tr>-->
-<!--      <tr>-->
-<!--        <th>Tetris:</th>-->
-<!--        <td>{{ user.games.tetris.highscore }}</td>-->
-<!--&lt;!&ndash;        <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>&ndash;&gt;-->
-<!--      </tr>-->
-<!--      <tr>-->
-<!--        <td></td>-->
-<!--        <td></td>-->
+<!--        <td>Bricksmash: {{ user.games.bricksmash.highscore }}</td>-->
+<!--&lt;!&ndash;        <td>Tetris: {{ user.games.tetris.highscore }}</td>&ndash;&gt;-->
 <!--        <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>-->
 <!--      </tr>-->
-    </table>
+<!--      <tr>-->
+<!--        <td></td>-->
+<!--        <td></td>-->
+<!--        <td>Tetris: {{ user.games.tetris.highscore }}</td>-->
+<!--      </tr>-->
+<!--      <th colspan="4" >*****************************************************************</th>-->
+<!--&lt;!&ndash;      <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <th>Bricksmash:</th>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td>{{ user.games.bricksmash.highscore }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;      </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;      <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <th>Tetris:</th>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td>{{ user.games.tetris.highscore }}</td>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;        <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;      </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;      <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td></td>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td></td>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td><button [routerLink]="['/profile', user._id]" >View Profile</button></td>&ndash;&gt;-->
+<!--&lt;!&ndash;      </tr>&ndash;&gt;-->
+<!--    </table>-->
   </div>
 </div>

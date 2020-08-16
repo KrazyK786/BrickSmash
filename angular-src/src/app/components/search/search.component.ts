@@ -19,14 +19,27 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
     // set type to all to match 'chekced'
     this.type = 'all';
+
+    // initialize search term
+    this.searchTerm = '';
   }
 
   submitSearch(): void {
+
+    // set search term to return all if blank
+    if (this.searchTerm.trim() === ''){
+      this.searchTerm = '.*';
+    }
 
     this.searchService.searchUsers(this.searchTerm, this.type).subscribe( resArray => {
       console.log(resArray);
       this.returnedUsers = resArray;
     });
+
+    // check if searchTerm was .* and reset to empty string
+    if (this.searchTerm === '.*'){
+      this.searchTerm = '';
+    }
     // console.log("Search value:" + this.searchValue);
   }
 
