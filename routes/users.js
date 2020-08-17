@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/database');
 
 const User = require('../models/user');
-const Comment = require('../models/user');
+// const Comment = require('../models/user');
+const Comment = require('../models/comment');
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -168,13 +169,16 @@ router.get('/games/highScores/:game', (req, res, next) => {
 router.put('/addComment', (req, res, next) => {
     const toId = req.body.toId;
     
-    console.log(toId);
+    console.log('toId: '+ toId);
+    console.log('user: '+ req.body.userId);
+    console.log('body: '+ req.body.commentBody);
     
     let newComment = new Comment({
         user: req.body.userId,
         body: req.body.commentBody
     });
     
+    console.log(newComment);
     
     User.addComment(toId, newComment, (err, user) => {
         if (err) throw err;
