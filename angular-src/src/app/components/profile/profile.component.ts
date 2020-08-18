@@ -100,7 +100,9 @@ export class ProfileComponent implements OnInit {
     this.commentsService.addComment(this.id, this.comment).subscribe( res => {
       if (res.success === true){
         // no user update needed; comment added to another user
-        this.user = res.user;
+
+        // TODO: why did I do this? is it necessary?
+        // this.user = res.user;
       }
     })
 

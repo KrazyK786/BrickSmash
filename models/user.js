@@ -56,6 +56,7 @@ const UserSchema = mongoose.Schema({
 const User = module.exports = mongoose.model('User', UserSchema);
 // const Comment = module.exports = mongoose.model('Comment', CommentSchema);
 
+// TODO: implement post save method to populate comments and friends?
 module.exports.getUserById = function(id, callback){
     User.findById(id, callback).
     populate('comments.user').
@@ -186,7 +187,11 @@ module.exports.deleteComment = function(commentId, callback){
 
         user.comments.id(commentId).remove();
         user.save(callback);
-    });
+        
+        // added below to populate comments user and friends after deleting comment (for dashboard)
+    }).
+    populate('comments.user').
+    populate('friends');
 }
 
 //  Friend

@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
     this.commentsService.deleteComment(id).subscribe(res => {
       if (res.success === true){
         this.user = res.user;
+        console.log(res.user);
       }
     });
   }
