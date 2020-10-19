@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
         console.log(profile);
       },
       err => {
+        console.log(err);
         return false;
       });
   }
