@@ -37,7 +37,7 @@ export class GameService {
     // let headers = new HttpHeaders();
     // headers.append('Content-Type', 'application/json');
     // `http://localhost:8080/users/update-${scoreToUpdate}-score`
-    return this.http.put<User>(`http://localhost:8080/users/update-${scoreToUpdate}-score`,
+    return this.http.put<User>(`users/update-${scoreToUpdate}-score`,
       body,
       httpOptions
     ).pipe(
@@ -46,7 +46,7 @@ export class GameService {
       // })
     );
 
-    // return this.http.post('http://localhost:8080/users/update-' + scoreToUpdate + '-score', body, {
+    // return this.http.post('users/update-' + scoreToUpdate + '-score', body, {
     //   headers: headers
     // }); //.pipe(map(res => res));
   }
@@ -59,7 +59,7 @@ export class GameService {
     }
 
     // TODO: update url to take parameter
-    return this.http.get<HighScoreResponse>(`http://localhost:8080/users/games/highScores/${game}`,
+    return this.http.get<HighScoreResponse>(`users/games/highScores/${game}`,
       httpOptions)
       .pipe(
         map(res => res.sortedUsers)

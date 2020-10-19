@@ -14,7 +14,7 @@ export class CommentsService {
   ) { }
 
   deleteComment(commentId: number): Observable<User> {
-    return this.http.delete<User>(`http://localhost:8080/users/deleteComment/${commentId}`
+    return this.http.delete<User>(`users/deleteComment/${commentId}`
     ).pipe();
   }
 
@@ -36,7 +36,7 @@ export class CommentsService {
 
     console.log('Recipient id: ' + recipientId);
 
-    return this.http.put<User>(`http://localhost:8080/users/addComment`,
+    return this.http.put<User>(`users/addComment`,
       body,
       httpOptions
     ).pipe();

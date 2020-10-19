@@ -21,7 +21,7 @@ export class AuthService {
   registerUser(user) {
     let headers = new HttpHeaders();
     headers.append('Content-Type', 'application/json');
-    return this.http.post<User>('http://localhost:8080/users/register', user, {
+    return this.http.post<User>('users/register', user, {
       headers: headers
     }).pipe(map(res => res));
   }
@@ -30,7 +30,7 @@ export class AuthService {
     // let headers = new Headers();
     let headers = new HttpHeaders();
     headers.append('Content-Type','application/json');
-    return this.http.post<User>('http://localhost:8080/users/authenticate', user, {
+    return this.http.post<User>('users/authenticate', user, {
       headers:headers
     }).pipe(map(res => res));
   }
@@ -43,7 +43,7 @@ export class AuthService {
         'Authorization':this.authToken
       })
     }
-    return this.http.get<User>('http://localhost:8080/users/profile', httpOptions
+    return this.http.get<User>('users/profile', httpOptions
     );
   }
 
@@ -59,7 +59,7 @@ export class AuthService {
     }
 
     console.log('The id of the profile is: '+ id);
-    return this.http.get<User>(`http://localhost:8080/users/profile/${id}`, httpOptions
+    return this.http.get<User>(`users/profile/${id}`, httpOptions
     );
   }
 

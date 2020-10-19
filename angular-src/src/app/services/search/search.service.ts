@@ -31,7 +31,7 @@ export class SearchService {
     }
 
     return this.http.get<HighScoreResponse>(
-      `http://localhost:8080/users/searchUsers`,
+      `users/searchUsers`,
       httpOptions
     )
       .pipe(

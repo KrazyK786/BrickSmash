@@ -28,7 +28,7 @@ export class FriendsService {
 
     console.log(`friend id is ${friendId}`);
 
-    return this.http.put<User>(`http://localhost:8080/users/addFriend`,
+    return this.http.put<User>(`users/addFriend`,
       body,
       httpOptions
     ).pipe();
@@ -50,7 +50,7 @@ export class FriendsService {
 
     console.log(`friend id is ${friendId}`);
 
-    return this.http.delete<User>(`http://localhost:8080/users/deleteFriend/${id}/${friendId}`,
+    return this.http.delete<User>(`users/deleteFriend/${id}/${friendId}`,
       ).pipe();
   }
 }

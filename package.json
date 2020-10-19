@@ -23,6 +23,7 @@
     "bcryptjs": "*",
     "body-parser": "*",
     "cors": "*",
+    "dotenv": "^8.2.0",
     "ejs": "^2.7.4",
     "express": "*",
     "jsonwebtoken": "*",

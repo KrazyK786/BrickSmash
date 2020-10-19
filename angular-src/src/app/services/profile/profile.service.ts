@@ -26,7 +26,7 @@ export class ProfileService {
       })
     }
 
-    return this.http.put<User>(`http://localhost:8080/users/edit-profile`,
+    return this.http.put<User>(`users/edit-profile`,
       body,
       httpOptions
     ).pipe();
