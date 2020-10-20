@@ -7,7 +7,8 @@ const CommentSchema = require('./comment');
 // User Schema
 const UserSchema = mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        index: true
     },
     email: {
         type: String,
@@ -36,13 +37,15 @@ const UserSchema = mongoose.Schema({
         bricksmash:{
             highscore: {
                 type: Number,
-                default: 0
+                default: 0,
+                index: true
             }
         },
         tetris:{
             highscore: {
                 type: Number,
-                default: 0
+                default: 0,
+                index: true
             }
         }
     }
