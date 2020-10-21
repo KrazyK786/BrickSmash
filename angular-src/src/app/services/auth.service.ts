@@ -64,12 +64,12 @@ export class AuthService {
   }
 
   storeUserData(token, user){
-    let decodedToken = this.jwtHelper.decodeToken(token);
-    // localStorage.setItem('id_token', token);
-    localStorage.setItem('id_token', decodedToken);
+    // let decodedToken = this.jwtHelper.decodeToken(token);
+    localStorage.setItem('id_token', token);
+    // localStorage.setItem('id_token', decodedToken);
     localStorage.setItem('user', JSON.stringify(user));
-    // this.authToken = token;
-    this.authToken = decodedToken;
+    this.authToken = token;
+    // this.authToken = decodedToken;
     this.user = user;
   }
 
