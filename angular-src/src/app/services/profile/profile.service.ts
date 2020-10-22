@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../../models/User";
+import {API_ENDPOINT} from "../../config/config";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class ProfileService {
       })
     }
 
-    return this.http.put<User>(`users/edit-profile`,
+    return this.http.put<User>(`${API_ENDPOINT}/users/edit-profile`,
       body,
       httpOptions
     ).pipe();

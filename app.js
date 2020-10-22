@@ -35,7 +35,8 @@ const users = require('./routes/users');
 
 // set port
 // const port = 8080;
-const port = process.env.MONGODB_URI || 8080;
+// const port = process.env.MONGODB_URI || 8080;
+const port = process.env.port || 8080;
 
 // set static folder
 app.use(express.static(path.join((__dirname, 'public'))));

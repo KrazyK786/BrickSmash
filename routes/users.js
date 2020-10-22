@@ -68,7 +68,8 @@ router.post('/authenticate', (req, res, next) => {
                 
                 res.json({
                     success: true,
-                    token: 'JWT ' + token,
+                    // token: 'JWT ' + token,
+                    token: `Bearer ${token}`,
                     user:user
                     // TODO: why was this like this and not just the user?
                     // user:{

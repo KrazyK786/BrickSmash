@@ -6,6 +6,8 @@ import {User} from "../../models/User";
 import {catchError, map} from "rxjs/operators";
 import {HighScoreResponse} from "../../models/HighScoreResponse";
 import {UserData} from "../../models/UserData";
+import {API_ENDPOINT} from "../../config/config";
+// import {apiEndpoint} from "../../app.module";
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +39,7 @@ export class GameService {
     // let headers = new HttpHeaders();
     // headers.append('Content-Type', 'application/json');
     // `http://localhost:8080/users/update-${scoreToUpdate}-score`
-    return this.http.put<User>(`users/update-${scoreToUpdate}-score`,
+    return this.http.put<User>(`${API_ENDPOINT}/users/update-${scoreToUpdate}-score`,
       body,
       httpOptions
     ).pipe(
@@ -59,7 +61,7 @@ export class GameService {
     }
 
     // TODO: update url to take parameter
-    return this.http.get<HighScoreResponse>(`users/games/highScores/${game}`,
+    return this.http.get<HighScoreResponse>(`${API_ENDPOINT}/users/games/highScores/${game}`,
       httpOptions)
       .pipe(
         map(res => res.sortedUsers)

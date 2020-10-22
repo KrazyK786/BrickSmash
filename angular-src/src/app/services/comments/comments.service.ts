@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import { Comment } from "../../models/Comment";
 import {User} from "../../models/User";
+import {API_ENDPOINT} from "../../config/config";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class CommentsService {
   ) { }
 
   deleteComment(commentId: number): Observable<User> {
-    return this.http.delete<User>(`users/deleteComment/${commentId}`
+    return this.http.delete<User>(`${API_ENDPOINT}/users/deleteComment/${commentId}`
     ).pipe();
   }
 
@@ -36,7 +37,7 @@ export class CommentsService {
 
     console.log('Recipient id: ' + recipientId);
 
-    return this.http.put<User>(`users/addComment`,
+    return this.http.put<User>(`${API_ENDPOINT}/users/addComment`,
       body,
       httpOptions
     ).pipe();

@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {UserData} from "../../models/UserData";
 import {HighScoreResponse} from "../../models/HighScoreResponse";
 import {map} from "rxjs/operators";
+import {API_ENDPOINT} from "../../config/config";
+// import {apiEndpoint} from "../../app.module";
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +33,7 @@ export class SearchService {
     }
 
     return this.http.get<HighScoreResponse>(
-      `users/searchUsers`,
+      `${API_ENDPOINT}/users/searchUsers`,
       httpOptions
     )
       .pipe(

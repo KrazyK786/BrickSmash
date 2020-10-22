@@ -82,7 +82,7 @@ export class BricksmashService {
         brick.status = 0;
         // ball.score++;
 
-        console.log('collision detected!');
+        // console.log('collision detected!');
         return true;
       }
 
