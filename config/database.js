@@ -5,6 +5,7 @@ const env = require('dotenv').config();
 
 // // LOCAL
 // module.exports = {
+//     tokenType: 'Bearer',
 //     database: "mongodb://localhost:27017/bricksmash",
 //     secret: "teamRK",
 //     options: {
@@ -16,6 +17,7 @@ const env = require('dotenv').config();
 
 // AZURE
 module.exports = {
+    tokenType: '',
     database: `mongodb://${process.env.COSMOSDB_HOST}:${process.env.COSMOSDB_PORT}/${process.env.COSMOSDB_DBNAME}?ssl=true&replicaSet=globaldb&retrywrites=false`,
     secret: "teamRK",
     options: {

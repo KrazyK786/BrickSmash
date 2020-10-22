@@ -1,3 +1,5 @@
+// import {tokenType} from "../config/database";
+
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -7,6 +9,7 @@ const config = require('../config/database');
 const User = require('../models/user');
 // const Comment = require('../models/user');
 const Comment = require('../models/comment');
+const tokenType = require("../config/database").tokenType;
 
 // Register
 router.post('/register', (req, res, next) => {
@@ -69,7 +72,8 @@ router.post('/authenticate', (req, res, next) => {
                 res.json({
                     success: true,
                     // token: 'JWT ' + token,
-                    token: `Bearer ${token}`,
+                    // token: `Bearer ${token}`,
+                    token: `${tokenType} ${token}`,
                     user:user
                     // TODO: why was this like this and not just the user?
                     // user:{
