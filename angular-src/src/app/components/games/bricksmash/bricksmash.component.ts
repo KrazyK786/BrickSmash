@@ -280,13 +280,26 @@ export class BricksmashComponent implements OnInit {
   }
 
   updateBricks(): void{
+    let areAllBricksZero = true;
+
     for (let i = 0; i < this.bricks.length; i++){
       let tmpBrick = this.bricks[i];
       if (this.bricksmashService.brickCollision(tmpBrick, this.ball)){
         this.score += 1;
         tmpBrick.status = 0;
       }
+
+      // check if status is 0 after update to update areAllBricksZero
+      if (tmpBrick.status === 1){
+        areAllBricksZero = false;
+      }
     }
+
+    // check if bricks are 0 and reset if so
+    if (areAllBricksZero){
+      this.resetBrickStatus();
+    }
+
   }
 
 
@@ -372,5 +385,12 @@ export class BricksmashComponent implements OnInit {
       console.log(resArray);
       this.highscoreUserArray = resArray;
     });
+  }
+
+  resetBrickStatus(): void{
+    for (let i = 0; i < this.bricks.length; i++){
+      let tmpBrick = this.bricks[i];
+      tmpBrick.status = 1;
+    }
   }
 }
