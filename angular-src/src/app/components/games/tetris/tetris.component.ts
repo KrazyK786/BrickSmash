@@ -12,6 +12,9 @@ import {UserData} from "../../../models/UserData";
   styleUrls: ['./tetris.component.css']
 })
 export class TetrisComponent implements OnInit {
+  // Set game
+  game: string;
+
   // Set User
   user: UserData;
 
@@ -101,6 +104,11 @@ export class TetrisComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // Set game
+    this.game = 'tetris';
+
+    // TODO: why 'subscribe' as opposed to just getting the information
+    // Get user information
     this.authService.getProfile().subscribe(profile => {
         console.log(profile);
         this.user = profile.user;
@@ -113,10 +121,11 @@ export class TetrisComponent implements OnInit {
         return false;
       });
 
-    this.gameService.getHighScores('tetris').subscribe( resArray => {
-      console.log(resArray);
-      this.highscoreUserArray = resArray;
-    });
+    this.updateHighScoreArray();
+    // this.gameService.getHighScores('tetris').subscribe( resArray => {
+    //   console.log(resArray);
+    //   this.highscoreUserArray = resArray;
+    // });
 
     this.initBoard();
     this.initNext();
@@ -313,6 +322,9 @@ export class TetrisComponent implements OnInit {
     }
     // this.highScore = this.points > this.highScore ? this.points : this.highScore;
 
+    // update high score array to pull any changes since game completed
+    this.updateHighScoreArray();
+
     this.highScore = this.points > this.highScore ? this.points : this.highScore;
     this.ctx.fillStyle = 'black';
     this.ctx.fillRect(1, 3, 8, 1.2);
@@ -334,6 +346,17 @@ export class TetrisComponent implements OnInit {
       this.pauseButtonClass = 'btn btn-warning';
       this.animate();
     }
+  }
+
+  updateHighScoreArray(): void {
+    this.gameService.getHighScores(this.game).subscribe( resArray => {
+      console.log(resArray);
+      this.highscoreUserArray = resArray;
+    });
+  }
+
+  updateHighScore(): void{
+
   }
 
 }
