@@ -253,12 +253,10 @@ export class BricksmashComponent implements OnInit {
     let velocityX = this.ball.velocity.x;
     let velocityY = this.ball.velocity.y
 
+    // reverse velocity if x is negative
     if (velocityX < 0){
-      velocityX *= -1;
-    }
-
-    if (velocityY > 0){
-      velocityY *= -1;
+      velocityX = -velocityX;
+      velocityY = -velocityY;
     }
 
     this.ball.spawn(velocityX, velocityY);
