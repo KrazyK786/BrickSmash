@@ -135,6 +135,8 @@ export class BricksmashComponent implements OnInit {
    // this.resetGame();
     // this.x = this.ctx.canvas.width/2;
     // this.y = this.ctx.canvas.height-30;
+
+
   }
 
   initBrickSmash(): void{
@@ -248,7 +250,18 @@ export class BricksmashComponent implements OnInit {
 
   // Reset game
   respawn(): void {
-    this.ball.spawn();
+    let velocityX = this.ball.velocity.x;
+    let velocityY = this.ball.velocity.y
+
+    if (velocityX < 0){
+      velocityX *= -1;
+    }
+
+    if (velocityY > 0){
+      velocityY *= -1;
+    }
+
+    this.ball.spawn(velocityX, velocityY);
     // this.paddle = new Paddle(this.ctx);
     this.paddle.spawn();
     // this.paused = true;
@@ -297,9 +310,29 @@ export class BricksmashComponent implements OnInit {
 
     // check if bricks are 0 and reset if so
     if (areAllBricksZero){
-      this.resetBrickStatus();
+      this.levelUp();
     }
 
+  }
+
+  levelUp(): void{
+    this.resetBrickStatus();
+
+    this.ball.velocity.x = this.raiseVelocity(this.ball.velocity.x);
+    this.ball.velocity.y = this.raiseVelocity(this.ball.velocity.y);
+    // this.raiseVelocity(this.ball.velocity.y);
+    // this.ball.velocity.y -= 1;
+  }
+
+  raiseVelocity(velocity: number): number{
+    if (velocity < 0){
+      velocity -= 1;
+    }
+    else{
+      velocity += 1;
+    }
+
+    return velocity;
   }
 
 

@@ -15,12 +15,12 @@ export class Ball {
     this.spawn();
   }
 
-  spawn(): void{
+  spawn(velocityX = 2, velocityY = -2): void{
     this.x = this.ctx.canvas.width/2;
     this.y = this.ctx.canvas.height-30;
     this.velocity = {
-      x: 2,
-      y: -2
+      x: velocityX,
+      y: velocityY
     };
     // this.velocity = {
     //   x: Math.random() * (5 - 2) + 2,
