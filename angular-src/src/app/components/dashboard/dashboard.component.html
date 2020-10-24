@@ -53,7 +53,7 @@
         <tr *ngFor="let comment of user.comments">
           <td>{{ comment.date | date }}</td>
           <td>{{ comment.body }}</td>
-          <td>{{ comment.user.username }}</td>
+          <td><a [routerLink]="['/profile', comment.user._id]">{{ comment.user.username }}</a></td>
           <td><button (click)="deleteComment(comment._id)" >Delete</button></td>
         </tr>
       </table>
