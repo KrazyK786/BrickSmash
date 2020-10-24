@@ -16,6 +16,9 @@ import {User} from "../../../models/User";
   styleUrls: ['./bricksmash.component.css']
 })
 export class BricksmashComponent implements OnInit {
+  // Set game
+  game: string;
+
   // Set User
   user: UserData;
 
@@ -104,7 +107,10 @@ export class BricksmashComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // TODO: use local storage?
+    // Set game
+    this.game = 'bricksmash';
+
+    // TODO: use local storage? (can that be 'hacked'?)
     this.authService.getProfile().subscribe(profile => {
       console.log(profile);
       this.user = profile.user;
@@ -119,10 +125,11 @@ export class BricksmashComponent implements OnInit {
     }
     );
 
-    this.gameService.getHighScores('bricksmash').subscribe( resArray => {
-      console.log(resArray);
-      this.highscoreUserArray = resArray;
-    });
+    this.updateHighScoreArray();
+    // this.gameService.getHighScores(this.game).subscribe( resArray => {
+    //   console.log(resArray);
+    //   this.highscoreUserArray = resArray;
+    // });
 
     this.initBrickSmash();
    // this.resetGame();
@@ -343,6 +350,9 @@ export class BricksmashComponent implements OnInit {
     }
     // this.highScore = this.score > this.highScore ? this.score : this.highScore;
 
+    // update high score array to pull any changes since game completed
+    this.updateHighScoreArray();
+
 
     this.ctx.fillStyle = 'black';
     this.ctx.fillRect(0, this.ctx.canvas.height/3, this.ctx.canvas.width, this.ctx.canvas.height/3);
@@ -355,5 +365,12 @@ export class BricksmashComponent implements OnInit {
     // this.ctx.fillText('GAME OVER', 1.8, 4);
     console.log('Game over');
     // return;
+  }
+
+  updateHighScoreArray(): void {
+    this.gameService.getHighScores(this.game).subscribe( resArray => {
+      console.log(resArray);
+      this.highscoreUserArray = resArray;
+    });
   }
 }
